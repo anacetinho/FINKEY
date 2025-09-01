@@ -72,9 +72,10 @@ class Assistant::Function::GetIncomeStatement < Assistant::Function
     end
 
     def calculate_savings_rate(total_income, total_expenses)
-      return 0 if total_income.zero?
-      savings = total_income - total_expenses
-      rate = (savings / total_income.to_f) * 100
+      return 0 if total_income.to_f == 0
+      # Use float arithmetic to avoid CoercedNumeric struct issues
+      savings_amount = total_income.to_f - total_expenses.to_f
+      rate = (savings_amount / total_income.to_f) * 100
       rate.round(2)
     end
 
@@ -108,7 +109,8 @@ class Assistant::Function::GetIncomeStatement < Assistant::Function
     end
 
     def get_insights(income_data, expense_data)
-      net_income = income_data.total - expense_data.total
+      # Use float arithmetic to avoid CoercedNumeric struct issues
+      net_income = income_data.total.to_f - expense_data.total.to_f
       savings_rate = calculate_savings_rate(income_data.total, expense_data.total)
       median_monthly_income = family.income_statement.median_income
       median_monthly_expenses = family.income_statement.median_expense

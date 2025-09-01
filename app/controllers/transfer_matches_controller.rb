@@ -37,13 +37,13 @@ class TransferMatchesController < ApplicationController
             amount: @entry.amount * -1,
             currency: @entry.currency,
             date: @entry.date,
-            name: "Transfer to #{@entry.amount.negative? ? @entry.account.name : target_account.name}",
+            name: "Transfer to #{@entry.amount.to_f < 0 ? @entry.account.name : target_account.name}",
           )
         )
 
         transfer = Transfer.find_or_initialize_by(
-          inflow_transaction: @entry.amount.positive? ? missing_transaction : @entry.transaction,
-          outflow_transaction: @entry.amount.positive? ? @entry.transaction : missing_transaction
+          inflow_transaction: @entry.amount.to_f > 0 ? missing_transaction : @entry.transaction,
+          outflow_transaction: @entry.amount.to_f > 0 ? @entry.transaction : missing_transaction
         )
         transfer.status = "confirmed"
         transfer
@@ -51,8 +51,8 @@ class TransferMatchesController < ApplicationController
         target_transaction = Current.family.entries.find(transfer_match_params[:matched_entry_id])
 
         transfer = Transfer.find_or_initialize_by(
-          inflow_transaction: @entry.amount.negative? ? @entry.transaction : target_transaction.transaction,
-          outflow_transaction: @entry.amount.negative? ? target_transaction.transaction : @entry.transaction
+          inflow_transaction: @entry.amount.to_f < 0 ? @entry.transaction : target_transaction.transaction,
+          outflow_transaction: @entry.amount.to_f < 0 ? target_transaction.transaction : @entry.transaction
         )
         transfer.status = "confirmed"
         transfer

@@ -8,7 +8,7 @@
   <div class="flex flex-col items-start gap-4 md:flex-row">
     <div class="w-full md:max-w-[300px] space-y-4">
       <div class="h-[300px] bg-container rounded-xl shadow-border-xs p-8">
-        <% if @budget.available_to_allocate.negative? %>
+        <% if @budget.available_to_allocate.to_f < 0 %>
           <%= render "budgets/over_allocation_warning", budget: @budget %>
         <% else %>
           <%= render "budgets/budget_donut", budget: @budget %>
@@ -17,7 +17,7 @@
 
       <div>
 
-        <% if @budget.initialized? && @budget.available_to_allocate.positive? %>
+        <% if @budget.initialized? && @budget.available_to_allocate.to_f > 0 %>
           <%= render DS::Tabs.new(active_tab: params[:tab].presence || "budgeted") do |tabs| %>
             <% tabs.with_nav do |nav| %>
               <% nav.with_btn(id: "budgeted", label: "Budgeted") %>

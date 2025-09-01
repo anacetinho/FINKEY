@@ -63,6 +63,73 @@ Only proceed with pull request creation if ALL checks pass.
 - Do not run `rails credentials`
 - Do not automatically run migrations
 
+## OpenAI Chat Functionality
+
+### Overview
+The Maybe app includes AI-powered chat functionality that uses OpenAI's API for:
+- Financial analysis and insights
+- Transaction categorization assistance
+- Merchant detection automation
+- Interactive financial Q&A
+
+### Configuration Requirements
+- **API Key**: Set `OPENAI_ACCESS_TOKEN` environment variable
+- **Models Used**: `gpt-4.1` (chat), `gpt-4.1-mini` (categorization)
+- **API Endpoint**: Uses OpenAI's Responses API (`/v1/responses`)
+- **Ruby Gem**: `ruby-openai` v8.1.0+ with Responses API support
+
+### Common Issues & Troubleshooting
+
+#### "Failed to generate response" Error
+**Symptoms**: Chat interface shows "Failed to generate response. Please try again."
+
+**Root Causes & Solutions**:
+
+1. **Missing/Invalid API Key**:
+   ```bash
+   # Check if API key is set
+   docker-compose exec web rails runner "puts ENV['OPENAI_ACCESS_TOKEN'].present?"
+   
+   # Test API key validity
+   docker-compose exec web rails runner "puts Provider::Registry.for_concept(:llm).get_provider(:openai)"
+   ```
+
+2. **Docker Environment Variable Configuration**:
+   ```yaml
+   # INCORRECT in compose.yml:
+   OPENAI_ACCESS_TOKEN: ${sk-proj-actual-api-key-here}
+   
+   # CORRECT in compose.yml:
+   OPENAI_ACCESS_TOKEN: ${OPENAI_ACCESS_TOKEN:-sk-proj-actual-api-key-here}
+   ```
+
+3. **Provider Initialization Issues**:
+   ```bash
+   # Check Rails logs for provider creation
+   docker-compose logs web | grep "Provider::Openai"
+   docker-compose logs web | grep "Provider::Registry"
+   ```
+
+#### Docker Rebuild Required
+After fixing environment variables, always rebuild containers:
+```bash
+docker-compose down
+docker-compose build
+docker-compose up -d
+```
+
+#### Debugging Steps
+1. Check Docker logs: `docker-compose logs web | grep -i openai`
+2. Test in Rails console: `Provider::Registry.for_concept(:llm).providers`
+3. Verify API key: `ENV['OPENAI_ACCESS_TOKEN'].present?`
+4. Test provider creation: `Provider::Openai.new(ENV['OPENAI_ACCESS_TOKEN'])`
+
+### Implementation Notes
+- OpenAI provider is loaded via `Provider::Registry.for_concept(:llm)`
+- Chat responses use streaming for real-time updates
+- Function calling enables data retrieval (accounts, transactions, etc.)
+- Rate limiting and error handling built into provider layer
+
 ## High-Level Architecture
 
 ### Application Modes

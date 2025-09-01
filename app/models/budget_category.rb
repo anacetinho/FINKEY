@@ -83,7 +83,7 @@ class BudgetCategory < ApplicationRecord
 
     segments = [ { color: category.color, amount: actual_spending, id: id } ]
 
-    if available_to_spend.negative?
+    if available_to_spend.to_f < 0
       segments.push({ color: "var(--color-destructive)", amount: available_to_spend.abs, id: overage_segment_id })
     else
       segments.push({ color: "var(--budget-unallocated-fill)", amount: available_to_spend, id: unused_segment_id })

@@ -6,7 +6,8 @@ module Security::Provided
   class_methods do
     def provider
       registry = Provider::Registry.for_concept(:securities)
-      registry.get_provider(:synth)
+      # Try Yahoo Finance first, fallback to Synth
+      registry.get_provider(:yahoo_finance) || registry.get_provider(:synth)
     end
 
     def search_provider(symbol, country_code: nil, exchange_operating_mic: nil)
@@ -36,10 +37,11 @@ module Security::Provided
     end
   end
 
-  def find_or_fetch_price(date: Date.current, cache: true)
-    price = prices.find_by(date: date)
-
-    return price if price.present?
+  def find_or_fetch_price(date: Date.current, cache: true, force_refresh: false)
+    unless force_refresh
+      price = prices.find_by(date: date)
+      return price if price.present?
+    end
 
     # Make sure we have a data provider before fetching
     return nil unless provider.present?
@@ -52,12 +54,30 @@ module Security::Provided
     return nil unless response.success? # Provider error
 
     price = response.data
-    Security::Price.find_or_create_by!(
-      security_id: self.id,
-      date: price.date,
-      price: price.price,
-      currency: price.currency
-    ) if cache
+    if cache
+      if force_refresh
+        # Update existing record or create new one
+        existing_price = prices.find_by(date: price.date)
+        if existing_price
+          existing_price.update!(price: price.price, currency: price.currency)
+          price = existing_price
+        else
+          price = Security::Price.create!(
+            security_id: self.id,
+            date: price.date,
+            price: price.price,
+            currency: price.currency
+          )
+        end
+      else
+        price = Security::Price.find_or_create_by!(
+          security_id: self.id,
+          date: price.date,
+          price: price.price,
+          currency: price.currency
+        )
+      end
+    end
     price
   end
 

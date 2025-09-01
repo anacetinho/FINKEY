@@ -27,10 +27,10 @@
       <p class="text-sm font-medium text-primary"><%= budget_category.category.name %></p>
 
       <% if budget_category.initialized? %>
-        <% if budget_category.available_to_spend.negative? %>
+        <% if budget_category.available_to_spend.to_f < 0 %>
           <p class="text-sm font-medium text-red-500"><%= format_money(budget_category.available_to_spend_money.abs) %> over</p>
-        <% elsif budget_category.available_to_spend.zero? %>
-          <p class="text-sm font-medium <%= budget_category.budgeted_spending.positive? ? "text-orange-500" : "text-secondary" %>">
+        <% elsif budget_category.available_to_spend.to_f == 0 %>
+          <p class="text-sm font-medium <%= budget_category.budgeted_spending.to_f > 0 ? "text-orange-500" : "text-secondary" %>">
             <%= format_money(budget_category.available_to_spend_money) %> left
           </p>
         <% else %>

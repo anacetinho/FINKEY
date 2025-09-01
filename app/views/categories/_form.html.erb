@@ -62,11 +62,15 @@
       <% end %>
 
       <div class="space-y-2">
-        <%= f.select :classification, [["Income", "income"], ["Expense", "expense"]], { label: "Classification" }, required: true %>
+        <%= f.select :classification, [["Income", "income"], ["Expense", "expense"]], { label: "Classification" }, required: true, data: { action: "change->category#handleClassificationChange" } %>
         <%= f.text_field :name, placeholder: t(".placeholder"), required: true, autofocus: true, label: "Name", data: { color_avatar_target: "name" } %>
         <% unless category.parent? %>
           <%= f.select :parent_id, categories.pluck(:name, :id), { include_blank: "(unassigned)", label: "Parent category (optional)" }, disabled: category.parent?, data: { action: "change->category#handleParentChange" } %>
         <% end %>
+        <div data-category-target="negativeExpenseOption" class="<%= 'hidden' unless category.classification == 'expense' %>">
+          <%= f.check_box :allows_negative_expenses, label: "Allow negative expenses (for reimbursements)" %>
+          <p class="text-sm text-secondary mt-1">When enabled, transactions in this category can have negative amounts that reduce your total expenses instead of increasing them.</p>
+        </div>
       </div>
     </section>
 

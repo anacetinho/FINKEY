@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     resource :preferences, only: :show
     resource :hosting, only: %i[show update] do
       delete :clear_cache, on: :collection
+      post :update_prices, on: :collection
     end
     resource :billing, only: :show
     resource :security, only: :show
@@ -93,6 +94,9 @@ Rails.application.routes.draw do
 
     resources :budget_categories, only: %i[index show update]
   end
+
+  resources :forecasts, only: [:index]
+  resources :future_events, only: [:create, :update, :destroy], path: "future_events"
 
   resources :family_merchants, only: %i[index new create edit update destroy]
 

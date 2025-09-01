@@ -1,10 +1,56 @@
-<div class="space-y-4">
+<div class="space-y-6">
   <div>
-    <h2 class="font-medium mb-1"><%= t(".title") %></h2>
+    <h2 class="font-medium mb-1">Financial Data Sources</h2>
+    <p class="text-secondary text-sm mb-4">Configure how the app fetches security prices and financial data.</p>
+  </div>
+
+  <!-- Yahoo Finance Section -->
+  <div class="space-y-4">
+    <div>
+      <h3 class="font-medium text-sm mb-1">Yahoo Finance (Recommended)</h3>
+      <p class="text-secondary text-xs mb-3">Use Yahoo Finance for security price updates. This is an unofficial but reliable data source.</p>
+    </div>
+
+    <%= styled_form_with model: Setting.new,
+                         url: settings_hosting_path,
+                         method: :patch,
+                         data: {
+                           controller: "auto-submit-form",
+                           "auto-submit-form-trigger-event-value": "change"
+                         } do |form| %>
+      <%= form.check_box :use_yahoo_finance,
+                         label: "Use Yahoo Finance for price updates",
+                         checked: Setting.use_yahoo_finance,
+                         container_class: "mb-4",
+                         data: { "auto-submit-form-target": "auto" } %>
+    <% end %>
+
+    <% if Setting.use_yahoo_finance %>
+      <div class="flex items-center gap-3">
+        <%= render DS::Button.new(
+          text: "Update All Prices Now",
+          variant: "primary",
+          size: "sm",
+          href: update_prices_settings_hosting_path,
+          method: :post,
+          confirm: CustomConfirm.new(
+            title: "Update All Prices",
+            body: "This will update prices for all securities in your portfolio. Continue?",
+            btn_text: "Update Prices"
+          )
+        ) %>
+        <span class="text-xs text-secondary">Manually update security prices from Yahoo Finance</span>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Synth API Section -->
+  <div>
+    <h3 class="font-medium text-sm mb-1"><%= t(".title") %></h3>
     <% if ENV["SYNTH_API_KEY"].present? %>
-      <p class="text-sm text-secondary">You have successfully configured your Synth API key through the SYNTH_API_KEY environment variable.</p>
+      <p class="text-sm text-secondary mb-2">You have successfully configured your Synth API key through the SYNTH_API_KEY environment variable.</p>
     <% else %>
-      <p class="text-secondary text-sm mb-4"><%= t(".description") %></p>
+      <p class="text-secondary text-xs mb-4"><%= t(".description") %></p>
     <% end %>
   </div>
 

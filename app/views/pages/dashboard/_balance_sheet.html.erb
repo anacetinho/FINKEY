@@ -86,7 +86,7 @@
                           <%
                               # Calculate weight as percentage of classification total
                               classification_total = classification_group.total_money.amount
-                              account_weight = classification_total.zero? ? 0 : account.converted_balance / classification_total * 100
+                              account_weight = classification_total.to_f == 0 ? 0 : account.converted_balance / classification_total * 100
                           %>
                           <%= render "pages/dashboard/group_weight", weight: account_weight, color: account_group.color %>
                         </div>

@@ -13,6 +13,7 @@ class Category < ApplicationRecord
 
   validate :category_level_limit
   validate :nested_category_matches_parent_classification
+  validate :allows_negative_expenses_only_for_expenses
 
   before_save :inherit_color_from_parent
 
@@ -20,6 +21,7 @@ class Category < ApplicationRecord
   scope :roots, -> { where(parent_id: nil) }
   scope :incomes, -> { where(classification: "income") }
   scope :expenses, -> { where(classification: "expense") }
+  scope :allows_negative_expenses, -> { where(allows_negative_expenses: true) }
 
   COLORS = %w[#e99537 #4da568 #6471eb #db5a54 #df4e92 #c44fe9 #eb5429 #61c9ea #805dee #6ad28a]
 
@@ -120,6 +122,12 @@ class Category < ApplicationRecord
     def nested_category_matches_parent_classification
       if subcategory? && parent.classification != classification
         errors.add(:parent, "must have the same classification as its parent")
+      end
+    end
+
+    def allows_negative_expenses_only_for_expenses
+      if allows_negative_expenses? && classification != "expense"
+        errors.add(:allows_negative_expenses, "can only be enabled for expense categories")
       end
     end
 

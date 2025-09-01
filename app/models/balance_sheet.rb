@@ -34,7 +34,15 @@ class BalanceSheet
   end
 
   def net_worth
-    assets.total - liabilities.total
+    assets_total = assets.total
+    liabilities_total = liabilities.total
+    
+    # Ensure both are Money objects before arithmetic
+    assets_money = assets_total.is_a?(Money) ? assets_total : Money.new(assets_total || 0, currency)
+    liabilities_money = liabilities_total.is_a?(Money) ? liabilities_total : Money.new(liabilities_total || 0, currency)
+    
+    # Use float arithmetic to avoid CoercedNumeric struct issues
+    Money.new(assets_money.to_f - liabilities_money.to_f, currency)
   end
 
   def net_worth_series(period: Period.last_30_days)

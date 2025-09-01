@@ -10,10 +10,10 @@
       <section class="space-y-4">
         <div class="space-y-2">
           <h2 class="text-sm font-medium text-gray-700">
-            <%= @entry.amount.positive? ? "From account: #{@entry.account.name}" : "From account" %>
+            <%= @entry.amount.to_f > 0 ? "From account: #{@entry.account.name}" : "From account" %>
           </h2>
 
-          <% if @entry.amount.positive? %>
+          <% if @entry.amount.to_f > 0 %>
             <%= f.select(
                   :entry_id,
                   [[entry_name_detailed(@entry), @entry.id]],
@@ -37,10 +37,10 @@
       <section class="space-y-4">
         <div class="space-y-2">
           <h2 class="text-sm font-medium text-gray-700">
-            <%= @entry.amount.negative? ? "To account: #{@entry.account.name}" : "To account" %>
+            <%= @entry.amount.to_f < 0 ? "To account: #{@entry.account.name}" : "To account" %>
           </h2>
 
-          <% if @entry.amount.negative? %>
+          <% if @entry.amount.to_f < 0 %>
             <%= f.select(
                   :entry_id,
                   [[entry_name_detailed(@entry), @entry.id]],

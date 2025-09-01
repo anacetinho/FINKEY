@@ -1,25 +1,70 @@
 
-<img width="1190" alt="maybe_hero" src="https://github.com/user-attachments/assets/5ed08763-a9ee-42b2-a436-e05038fcf573" />
-
-# Maybe: The personal finance app for everyone
+# Community-Enhanced Personal Finance App
 
 > [!IMPORTANT]
-> This repository is no longer actively maintained. You can read more about this in our [final release](https://github.com/maybe-finance/maybe/releases/tag/v0.6.0).
+> **This is a community-maintained fork** based on the original Maybe Finance app but is **NOT affiliated with or endorsed by Maybe Finance Inc.** The original repository is no longer actively maintained by Maybe Finance Inc. You can read more about this in their [final release](https://github.com/maybe-finance/maybe/releases/tag/v0.6.0).
 
-## Maybe Hosting
+## ✨ Enhanced Features
 
-Maybe is a fully working personal finance app that can be [self hosted with Docker](docs/hosting/docker.md).
+This community fork includes several major enhancements over the original Maybe app:
 
-## Forking and Attribution
+### 🔄 Yahoo Finance Integration
+- Replaced discontinued Synth API with reliable Yahoo Finance price data
+- Supports US and international markets (EU, Asia)
+- Simple ticker entry without complex search delays
 
-This repo is no longer maintained. You’re free to fork it under the AGPLv3. To stay compliant and avoid trademark issues:
+### 📊 Enhanced 24-Month Forecasting  
+- Rolling 24-month window for more responsive forecasts
+- Adapts quickly to recent income/expense changes
+- Better seasonal pattern recognition
 
-- Be sure to include the original [AGPLv3 license](https://github.com/maybe-finance/maybe/blob/main/LICENSE) and clearly state in your README that your fork is based on Maybe Finance but is **not affiliated with or endorsed by** Maybe Finance Inc.
-- "Maybe" is a trademark of Maybe Finance Inc. and therefore, use of it is NOT allowed in forked repositories (or the logo)
+### 💰 Expense Reimbursement Tracking
+- Proper accounting for business expense reimbursements
+- Accurate net worth and budget calculations
+- Integrated forecasting with net expense amounts
+
+**📖 [View Complete Feature Documentation](FEATURES.md)**  
+**📋 [View Changelog & Release Notes](CHANGELOG.md)**
+
+## 🚀 Quick Start (Self-Hosting)
+
+### Simple Setup
+
+1. **Clone or download** this repository
+2. **Navigate to folder**: `cd [repository-folder]`
+3. **Build and start**: 
+   ```bash
+   docker-compose build --no-cache
+   docker-compose up -d
+   ```
+4. **Access app**: Visit http://localhost:3000
+5. **Create account**: Register on first visit
+
+That's it! The app includes all enhanced features pre-configured.
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/engine/install/) installed and running
+- Environment already configured (SECRET_KEY_BASE set in compose.yml)
+
+### What You Get
+
+✅ **Yahoo Finance Integration** - Real-time security price updates  
+✅ **Enhanced 24-Month Forecasting** - More responsive financial forecasts  
+✅ **Expense Reimbursement Tracking** - Business expense management  
+✅ **All Original Features** - Complete Maybe Finance functionality
+
+For detailed setup and management, see [Docker Hosting Guide](docs/hosting/docker-enhanced.md).
+
+## Attribution and License
+
+This fork is based on the original Maybe Finance app but is **not affiliated with or endorsed by Maybe Finance Inc.** 
+
+This software is distributed under the [AGPLv3 license](LICENSE). "Maybe" is a trademark of Maybe Finance Inc.
 
 ## Local Development Setup
 
-**If you are trying to _self-host_ the Maybe app, stop here. You
+**If you are trying to _self-host_ this enhanced personal finance app, stop here. You
 should [read this guide to get started](docs/hosting/docker.md).**
 
 The instructions below are for developers to get started with contributing to the app.
@@ -32,7 +77,7 @@ The instructions below are for developers to get started with contributing to th
 After cloning the repo, the basic setup commands are:
 
 ```sh
-cd maybe
+cd [repository-name]
 cp .env.local.example .env.local
 bin/setup
 bin/dev
@@ -58,6 +103,6 @@ For further instructions, see guides below.
 
 ## Copyright & license
 
-Maybe is distributed under
-an [AGPLv3 license](https://github.com/maybe-finance/maybe/blob/main/LICENSE). "
-Maybe" is a trademark of Maybe Finance, Inc.
+This software is distributed under the [AGPLv3 license](LICENSE). Original Maybe code is copyright Maybe Finance, Inc. Community enhancements are contributed under the same license.
+
+"Maybe" is a trademark of Maybe Finance, Inc.

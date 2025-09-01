@@ -65,8 +65,24 @@ class Balance::ForwardCalculator < Balance::BaseCalculator
     # Positive entries amount on an "asset" account means, "account value has decreased"
     # Positive entries amount on a "liability" account means, "account debt has increased"
     def signed_entry_flows(entries)
-      entry_flows = entries.sum(&:amount)
-      account.asset? ? -entry_flows : entry_flows
+      # Handle expense reimbursements separately
+      expense_reimbursements = entries.select { |e| 
+        e.transaction? && e.amount > 0 && e.transaction.category&.allows_negative_expenses?
+      }
+      
+      regular_entries = entries.reject { |e| 
+        e.transaction? && e.amount > 0 && e.transaction.category&.allows_negative_expenses?
+      }
+      
+      # For expense reimbursements, positive amounts should increase asset account balances (no sign flip)
+      expense_reimbursement_flows = expense_reimbursements.sum(&:amount)
+      
+      # For regular entries, use standard logic
+      regular_entry_flows = regular_entries.sum(&:amount)
+      signed_regular_flows = account.asset? ? -regular_entry_flows : regular_entry_flows
+      
+      # Combine: expense reimbursements add directly, regular flows use standard logic
+      signed_regular_flows + expense_reimbursement_flows
     end
 
     # Derives cash balance, starting from the start-of-day, applying entries in forward to get the end-of-day balance

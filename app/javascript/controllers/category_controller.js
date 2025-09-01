@@ -16,6 +16,7 @@ export default class extends Controller {
     "selection",
     "colorPickerRadioBtn",
     "popup",
+    "negativeExpenseOption",
   ];
 
   static values = {
@@ -155,6 +156,22 @@ export default class extends Controller {
     const display =
       typeof parent === "string" && parent !== "" ? "none" : "flex";
     this.selectionTarget.style.display = display;
+  }
+
+  handleClassificationChange(e) {
+    const classification = e.currentTarget.value;
+    const option = this.negativeExpenseOptionTarget;
+    
+    if (classification === "expense") {
+      option.classList.remove("hidden");
+    } else {
+      option.classList.add("hidden");
+      // Uncheck the checkbox when hiding it
+      const checkbox = option.querySelector('input[type="checkbox"]');
+      if (checkbox) {
+        checkbox.checked = false;
+      }
+    }
   }
 
   backgroundColor([r, g, b, a], percentage) {

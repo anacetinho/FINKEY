@@ -62,10 +62,23 @@ class Provider::Registry
 
       def openai
         access_token = ENV.fetch("OPENAI_ACCESS_TOKEN", Setting.openai_access_token)
-
+        
+        Rails.logger.info("Provider::Registry: Checking OpenAI access token - present: #{access_token.present?}")
+        
         return nil unless access_token.present?
 
+        Rails.logger.info("Provider::Registry: Creating OpenAI provider")
         Provider::Openai.new(access_token)
+      end
+
+      def yahoo_finance
+        begin
+          Provider::YahooFinance.new
+        rescue => e
+          Rails.logger.warn("YahooFinance provider unavailable: #{e.message}")
+          Rails.logger.debug("YahooFinance provider error details: #{e.class.name} - #{e.backtrace&.first}")
+          nil
+        end
       end
   end
 
@@ -92,13 +105,13 @@ class Provider::Registry
     def available_providers
       case concept
       when :exchange_rates
-        %i[synth]
+        %i[yahoo_finance synth]
       when :securities
-        %i[synth]
+        %i[yahoo_finance synth]
       when :llm
         %i[openai]
       else
-        %i[synth plaid_us plaid_eu github openai]
+        %i[synth plaid_us plaid_eu github openai yahoo_finance]
       end
     end
 end

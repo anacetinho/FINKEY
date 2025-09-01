@@ -41,13 +41,13 @@
           <% if @budget_category.budget.initialized? %>
             <div class="flex items-center justify-between text-sm">
               <dt class="text-secondary">Status</dt>
-              <% if @budget_category.available_to_spend.negative? %>
+              <% if @budget_category.available_to_spend.to_f < 0 %>
                 <dd class="flex items-center gap-1 text-red-500 font-medium">
                   <%= icon "alert-circle", size: "sm", color: "destructive" %>
                   <%= format_money @budget_category.available_to_spend_money.abs %>
                   <span>overspent</span>
                 </dd>
-              <% elsif @budget_category.available_to_spend.zero? %>
+              <% elsif @budget_category.available_to_spend.to_f == 0 %>
                 <dd class="flex items-center gap-1 text-orange-500 font-medium">
                   <%= icon "x-circle", size: "sm", color: "warning" %>
                   <%= format_money @budget_category.available_to_spend_money %>

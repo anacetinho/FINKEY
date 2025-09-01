@@ -33,6 +33,8 @@ class Family < ApplicationRecord
   has_many :budgets, dependent: :destroy
   has_many :budget_categories, through: :budgets
 
+  has_many :future_events, dependent: :destroy
+
   validates :locale, inclusion: { in: I18n.available_locales.map(&:to_s) }
   validates :date_format, inclusion: { in: DATE_FORMATS.map(&:last) }
 
@@ -65,6 +67,10 @@ class Family < ApplicationRecord
     @income_statement ||= IncomeStatement.new(self)
   end
 
+  def forecast(timeline: "1Y", income_growth_rate: 0.0, expense_growth_rate: 0.0)
+    Forecast.new(self, timeline: timeline, income_growth_rate: income_growth_rate, expense_growth_rate: expense_growth_rate)
+  end
+
   def eu?
     country != "US" && country != "CA"
   end
@@ -85,7 +91,13 @@ class Family < ApplicationRecord
   end
 
   def missing_data_provider?
-    requires_data_provider? && Provider::Registry.get_provider(:synth).nil?
+    return false unless requires_data_provider?
+    
+    # Check if we have Yahoo Finance (preferred) or Synth API
+    yahoo_provider = Provider::Registry.get_provider(:yahoo_finance)
+    synth_provider = Provider::Registry.get_provider(:synth)
+    
+    yahoo_provider.nil? && synth_provider.nil?
   end
 
   def oldest_entry_date
@@ -110,6 +122,14 @@ class Family < ApplicationRecord
   def entries_cache_version
     @entries_cache_version ||= begin
       ts = entries.maximum(:updated_at)
+      ts.present? ? ts.to_i : 0
+    end
+  end
+
+  # Used for invalidating account-related aggregation queries
+  def accounts_cache_version
+    @accounts_cache_version ||= begin
+      ts = accounts.maximum(:updated_at)
       ts.present? ? ts.to_i : 0
     end
   end

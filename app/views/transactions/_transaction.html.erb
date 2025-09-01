@@ -60,7 +60,7 @@
 
                   <div class="flex items-center gap-1 flex-shrink-0">
                     <% if transaction.one_time? %>
-                      <span class="text-orange-500" title="One-time <%= entry.amount.negative? ? "income" : "expense" %> (excluded from averages)">
+                      <span class="text-orange-500" title="One-time <%= entry.amount.to_f < 0 ? "income" : "expense" %> (excluded from averages)">
                         <%= icon "asterisk", size: "sm", color: "current" %>
                       </span>
                     <% end %>
@@ -96,7 +96,7 @@
       <div class="col-span-2 ml-auto text-right">
         <%= content_tag :p,
             transaction.transfer? && view_ctx == "global" ? "+/- #{format_money(entry.amount_money.abs)}" : format_money(-entry.amount_money),
-            class: ["text-green-600": entry.amount.negative?] %>
+            class: ["text-green-600": entry.amount.to_f < 0] %>
       </div>
     </div>
   <% end %>

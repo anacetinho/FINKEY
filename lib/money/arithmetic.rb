@@ -58,6 +58,10 @@ module Money::Arithmetic
     amount.to_f
   end
 
+  def to_d
+    amount.to_d
+  end
+
   # Override Ruby's coerce method so the order of operands doesn't matter
   # Wrap in Coerced so we can distinguish between Money and other types
   def coerce(other)

@@ -1,42 +1,132 @@
-# Contributing to Maybe
+# Contributing to Community-Enhanced Personal Finance App
 
-It means so much that you're interested in contributing to Maybe! Seriously. Thank you. The entire community benefits from these contributions!
+Thank you for considering contributing to this community-maintained fork! This guide will help you get started with contributing to the enhanced features and improvements.
 
-## House Rules
+## Community Guidelines
 
-- Before contributing, familiarize yourself with our project conventions. You should read through our [Project Conventions Rule](https://github.com/maybe-finance/maybe/.cursor/rules/project-conventions.mdc), which is intended for LLMs, but is also an excellent primer on how we write code for Maybe.
-- While totally optional, consider using Cursor + VSCode as it will automatically apply our project conventions to your code via the `.cursor/rules` directory.
-- Before contributing, please check if it already exists in [issues](https://github.com/maybe-finance/maybe/issues) or [PRs](https://github.com/maybe-finance/maybe/pulls)
-- Given the speed at which we're moving on the codebase, we don't assign issues or "give" issues to anyone.
-- When multiple PRs are submitted for the same issue, we take the one that most succinctly & efficiently solves a given problem and stays within the scope of work.
-- Priority is generally given to previous committers as they've proven familiarity with the codebase and product.
+- **Be Respectful**: This is a community project - be kind and constructive
+- **Project Conventions**: Read [CLAUDE.md](CLAUDE.md) for development guidelines and Rails conventions
+- **Check Existing Work**: Search issues and PRs before starting new work
+- **Focus on Features**: Contributions should enhance the three main features: Yahoo Finance, Forecasting, or Expense Reimbursement
+- **Quality Over Speed**: We prioritize well-tested, maintainable code
+- **Attribution**: Remember this is a fork of Maybe Finance's work - respect their original contributions
 
 ## What should I contribute?
 
-As we are still in the early days of this project, we recommend [heading over to the Wiki](https://github.com/maybe-finance/maybe/wiki) to get a better idea of _what_ to contribute.
+This community fork focuses on enhancing and maintaining three core areas:
 
-In general, _full features_ that get us closer to [our Vision](https://github.com/maybe-finance/maybe/wiki/Vision) are the most valuable contributions at this stage.
+### 🔄 Yahoo Finance Integration
+- **Bug Fixes**: Improve error handling, add more exchanges
+- **Performance**: Optimize price update batching
+- **Features**: Support for more security types, better symbol validation
+
+### 📊 Enhanced Forecasting
+- **Configurability**: Allow users to choose forecast windows (12/18/24/36 months)
+- **Accuracy**: Improve seasonal pattern recognition
+- **Visualization**: Better forecast charts and explanations
+
+### 💰 Expense Reimbursement
+- **Matching**: Link specific expenses to reimbursements
+- **Reporting**: Dedicated reimbursement reports
+- **Workflow**: Approval workflows, integration with expense tools
+
+### 🛠️ General Improvements
+- **Documentation**: User guides, troubleshooting, setup instructions
+- **Testing**: Expand test coverage for enhanced features
+- **Performance**: Database optimization, query improvements
+- **Security**: Security enhancements, vulnerability fixes
+
+For ideas, check [FEATURES.md](FEATURES.md) for current features and potential improvements.
 
 ## Development
 
 ### Setup
 
-To get setup for local development, you have two options:
+The enhanced version requires Docker for the Python dependencies (Yahoo Finance integration):
 
-1. [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) with VSCode (see the `.devcontainer` folder)
-2. Local Development
-   - [Mac Setup Guide](https://github.com/maybe-finance/maybe/wiki/Mac-Dev-Setup-Guide)
-   - [Linux Setup Guide](https://github.com/maybe-finance/maybe/wiki/Linux-Dev-Setup-Guide)
-   - [Windows Setup Guide](https://github.com/maybe-finance/maybe/wiki/Windows-Dev-Setup-Guide)
+1. **Fork and Clone**:
+   ```bash
+   git clone https://github.com/[your-username]/[fork-name].git
+   cd [fork-name]
+   ```
+
+2. **Docker Setup** (Recommended):
+   ```bash
+   cp .env.local.example .env.local
+   docker-compose build --no-cache
+   docker-compose up -d
+   docker-compose exec web bin/setup
+   ```
+
+3. **Load Demo Data**:
+   ```bash
+   docker-compose exec web rake demo_data:default
+   ```
+
+4. **Verify Setup**:
+   - Visit http://localhost:3000
+   - Login: `user@maybe.local` / `password`
+   - Test Yahoo Finance: Settings → Hosting → "Update All Prices Now"
+
+See [Development Setup](README.md#local-development-setup) for detailed instructions.
 
 ### Making a Pull Request
 
-1. Fork the repo
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request, and be sure to check the [Allow edits from maintainers](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork) option while creating your PR. This allows maintainers to collaborate with you on your PR if needed.
-6. If possible, [link your pull request to an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword) by adding the appropriate keyword (e.g. `fixes issue #XXX`)
-7. Before requesting a review, please make sure that all [Github Checks](https://docs.github.com/en/rest/checks?apiVersion=2022-11-28) have passed and your branch is up-to-date with the `main` branch. After doing so, request a review and wait for a maintainer's approval.
+**Before submitting, ensure all checks pass**:
+```bash
+# Run tests
+docker-compose exec web bin/rails test
+
+# Run linting
+docker-compose exec web bin/rubocop -a
+docker-compose exec web bundle exec erb_lint ./app/**/*.erb -a
+
+# Security scan
+docker-compose exec web bin/brakeman --no-pager
+```
+
+**PR Process**:
+1. Fork the repo and create feature branch
+2. Make focused changes with good commit messages  
+3. Add/update tests for your changes
+4. Update documentation if needed
+5. Ensure all checks pass
+6. Create PR with clear description
+7. Link to relevant issues
+8. Allow maintainer edits
+9. Address review feedback
+
+**PR Description Template**:
+```markdown
+## Description
+Brief description of the changes
+
+## Type of Change
+- [ ] Bug fix
+- [ ] New feature  
+- [ ] Breaking change
+- [ ] Documentation update
+
+## Enhanced Features
+- [ ] Yahoo Finance improvements
+- [ ] Forecasting enhancements
+- [ ] Expense reimbursement updates
+
+## Testing
+- [ ] Unit tests added/updated
+- [ ] Manual testing completed
+- [ ] All checks pass
+
+## Documentation
+- [ ] User guides updated
+- [ ] API docs updated (if applicable)
+- [ ] FEATURES.md updated (if significant)
+```
 
 All PRs should target the `main` branch.
+
+## ⚖️ License
+
+By contributing, you agree your contributions will be licensed under the [AGPLv3 License](LICENSE).
+
+**Attribution**: This is a community-maintained fork based on Maybe Finance but **NOT affiliated with or endorsed by Maybe Finance Inc.**

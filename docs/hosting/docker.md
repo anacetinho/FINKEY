@@ -1,6 +1,6 @@
-# Self Hosting Maybe with Docker
+# Self Hosting Community-Enhanced Personal Finance App with Docker
 
-This guide will help you setup, update, and maintain your self-hosted Maybe application with Docker Compose. Docker Compose is the most popular and recommended way to self-host the Maybe app.
+This guide will help you setup, update, and maintain your self-hosted enhanced personal finance app with Docker Compose. This community fork includes Yahoo Finance integration, enhanced forecasting, and expense reimbursement tracking.
 
 ## Setup Guide
 

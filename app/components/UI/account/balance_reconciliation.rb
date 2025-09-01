@@ -130,19 +130,23 @@ class UI::Account::BalanceReconciliation < ApplicationComponent
     end
 
     def net_cash_flow
-      balance.cash_inflows_money - balance.cash_outflows_money
+      # Use float arithmetic to avoid CoercedNumeric struct issues
+      Money.new(balance.cash_inflows_money.to_f - balance.cash_outflows_money.to_f, balance.cash_inflows_money.currency)
     end
 
     def net_non_cash_flow
-      balance.non_cash_inflows_money - balance.non_cash_outflows_money
+      # Use float arithmetic to avoid CoercedNumeric struct issues
+      Money.new(balance.non_cash_inflows_money.to_f - balance.non_cash_outflows_money.to_f, balance.non_cash_inflows_money.currency)
     end
 
     def net_total_flow
-      net_cash_flow + net_non_cash_flow + balance.net_market_flows_money
+      # Use float arithmetic to avoid CoercedNumeric struct issues
+      Money.new(net_cash_flow.to_f + net_non_cash_flow.to_f + balance.net_market_flows_money.to_f, balance.net_market_flows_money.currency)
     end
 
     def total_adjustments
-      balance.cash_adjustments_money + balance.non_cash_adjustments_money
+      # Use float arithmetic to avoid CoercedNumeric struct issues
+      Money.new(balance.cash_adjustments_money.to_f + balance.non_cash_adjustments_money.to_f, balance.cash_adjustments_money.currency)
     end
 
     def has_adjustments?

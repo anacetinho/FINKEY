@@ -14,6 +14,8 @@ class Entry < ApplicationRecord
   validates :date, uniqueness: { scope: [ :account_id, :entryable_type ] }, if: -> { valuation? }
   validates :date, comparison: { greater_than: -> { min_supported_date } }
 
+  before_save :adjust_amount_for_expense_reimbursements
+
   scope :visible, -> {
     joins(:account).where(accounts: { status: [ "draft", "active" ] })
   }
@@ -35,7 +37,13 @@ class Entry < ApplicationRecord
   }
 
   def classification
-    amount.negative? ? "income" : "expense"
+    # For expense reimbursement categories, always classify as expense regardless of amount sign
+    if transaction? && transaction.category&.allows_negative_expenses?
+      "expense"
+    else
+      # Standard logic: negative amounts are income (credits), positive are expenses (debits)
+      amount.to_f < 0 ? "income" : "expense"
+    end
   end
 
   def lock_saved_attributes!
@@ -94,6 +102,20 @@ class Entry < ApplicationRecord
       end
 
       all.size
+    end
+  end
+
+  private
+
+  def adjust_amount_for_expense_reimbursements
+    # For expense reimbursement categories, ensure the amount is stored as positive
+    # so it increases the account balance (like income) while being classified as expense
+    if transaction? && transaction.category&.allows_negative_expenses?
+      # If amount is negative (entered as traditional expense), make it positive
+      if amount.to_f < 0
+        self.amount = amount.abs
+      end
+      # If amount is already positive, keep it positive (no change needed)
     end
   end
 end

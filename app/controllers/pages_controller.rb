@@ -82,9 +82,9 @@ class PagesController < ApplicationController
         next if ct.category.parent_id.present?
 
         val = ct.total.to_f.round(2)
-        next if val.zero?
+        next if val.to_f == 0
 
-        percentage_of_total_income = total_income_val.zero? ? 0 : (val / total_income_val * 100).round(1)
+        percentage_of_total_income = total_income_val.to_f == 0 ? 0 : (val / total_income_val * 100).round(1)
 
         node_display_name = ct.category.name
         node_color = ct.category.color.presence || Category::COLORS.sample
@@ -112,9 +112,9 @@ class PagesController < ApplicationController
         next if ct.category.parent_id.present?
 
         val = ct.total.to_f.round(2)
-        next if val.zero?
+        next if val.to_f == 0
 
-        percentage_of_total_expense = total_expense_val.zero? ? 0 : (val / total_expense_val * 100).round(1)
+        percentage_of_total_expense = total_expense_val.to_f == 0 ? 0 : (val / total_expense_val * 100).round(1)
 
         node_display_name = ct.category.name
         node_color = ct.category.color.presence || Category::UNCATEGORIZED_COLOR
@@ -138,8 +138,8 @@ class PagesController < ApplicationController
 
       # --- Process Surplus ---
       leftover = (total_income_val - total_expense_val).round(2)
-      if leftover.positive?
-        percentage_of_total_income_for_surplus = total_income_val.zero? ? 0 : (leftover / total_income_val * 100).round(1)
+      if leftover.to_f > 0
+        percentage_of_total_income_for_surplus = total_income_val.to_f == 0 ? 0 : (leftover / total_income_val * 100).round(1)
         surplus_idx = add_node.call("surplus_node", "Surplus", leftover, percentage_of_total_income_for_surplus, "var(--color-success)")
         links << { source: cash_flow_idx, target: surplus_idx, value: leftover, color: "var(--color-success)", percentage: percentage_of_total_income_for_surplus }
       end

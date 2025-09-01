@@ -7,7 +7,12 @@ class Provider::Openai < Provider
   MODELS = %w[gpt-4.1]
 
   def initialize(access_token)
+    Rails.logger.info("Provider::Openai: Initializing with token present: #{access_token.present?}")
     @client = ::OpenAI::Client.new(access_token: access_token)
+    Rails.logger.info("Provider::Openai: Client initialized successfully")
+  rescue => e
+    Rails.logger.error("Provider::Openai: Failed to initialize client: #{e.message}")
+    raise
   end
 
   def supports_model?(model)
@@ -39,6 +44,7 @@ class Provider::Openai < Provider
   end
 
   def chat_response(prompt, model:, instructions: nil, functions: [], function_results: [], streamer: nil, previous_response_id: nil)
+    Rails.logger.info("Provider::Openai: Starting chat_response with model: #{model}")
     with_provider_response do
       chat_config = ChatConfig.new(
         functions: functions,

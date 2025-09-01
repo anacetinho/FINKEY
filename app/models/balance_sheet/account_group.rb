@@ -38,9 +38,10 @@ class BalanceSheet::AccountGroup
   end
 
   def weight
-    return 0 if classification_group.total.zero?
+    return 0 if classification_group.total.to_f == 0
 
-    total / classification_group.total.to_d * 100
+    # Use float arithmetic to avoid CoercedNumeric struct issues
+    total.to_f / classification_group.total.to_f * 100
   end
 
   def syncing?

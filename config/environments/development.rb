@@ -76,6 +76,18 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+  
+  # Reduce ActionCable WebSocket error spam in logs
+  config.action_cable.log_tags = []
+  
+  # Filter out noisy ActionCable subscription errors and validation spam
+  Rails.logger.class.prepend(Module.new do
+    def add(severity, message = nil, progname = nil)
+      return if message&.include?("Unable to find subscription with identifier")
+      return if message&.include?("Date has already been taken") && severity == Logger::FATAL
+      super
+    end
+  end)
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true

@@ -10,7 +10,7 @@
 
     <div>
       <div class="flex h-1.5 mb-3 gap-1">
-        <% if budget.remaining_expected_income.negative? %>
+        <% if budget.remaining_expected_income.to_f < 0 %>
           <div class="rounded-md h-1.5 bg-green-500" style="width: <%= 100 - budget.surplus_percent %>%"></div>
           <div class="rounded-md h-1.5 bg-green-500" style="width: <%= budget.surplus_percent %>%"></div>
         <% else %>
@@ -21,7 +21,7 @@
       <div class="flex justify-between text-sm">
         <p class="text-secondary"><%= format_money(budget.actual_income_money) %> earned</p>
         <p class="font-medium">
-          <% if budget.remaining_expected_income.negative? %>
+          <% if budget.remaining_expected_income.to_f < 0 %>
             <span class="text-green-500"><%= format_money(budget.remaining_expected_income_money.abs) %> over</span>
           <% else %>
             <span class="text-primary"><%= format_money(budget.remaining_expected_income_money) %> left</span>
@@ -40,7 +40,7 @@
 
     <div>
       <div class="flex h-1.5 mb-3 gap-1">
-        <% if budget.available_to_spend.negative? %>
+        <% if budget.available_to_spend.to_f < 0 %>
           <div class="rounded-md h-1.5 bg-inverse" style="width: <%= 100 - budget.overage_percent %>%"></div>
           <div class="rounded-md h-1.5 bg-destructive" style="width: <%= budget.overage_percent %>%"></div>
         <% else %>
@@ -51,7 +51,7 @@
       <div class="flex justify-between text-sm">
         <p class="text-secondary"><%= format_money(budget.actual_spending_money) %> spent</p>
         <p class="font-medium">
-          <% if budget.available_to_spend.negative? %>
+          <% if budget.available_to_spend.to_f < 0 %>
             <span class="text-destructive"><%= format_money(budget.available_to_spend_money.abs) %> over</span>
           <% else %>
             <span class="text-primary"><%= format_money(budget.available_to_spend_money) %> left</span>

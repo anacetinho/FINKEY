@@ -17,17 +17,27 @@ class Assistant
   end
 
   def respond_to(message)
+    Rails.logger.info("Assistant: Starting response for message #{message.id}")
+    
     assistant_message = AssistantMessage.new(
       chat: chat,
       content: "",
       ai_model: message.ai_model
     )
 
+    llm_provider = get_model_provider(message.ai_model)
+    Rails.logger.info("Assistant: Got LLM provider: #{llm_provider.class.name if llm_provider}")
+    
+    unless llm_provider
+      Rails.logger.error("Assistant: No LLM provider found for model #{message.ai_model}")
+      raise "No LLM provider available for model #{message.ai_model}"
+    end
+
     responder = Assistant::Responder.new(
       message: message,
       instructions: instructions,
       function_tool_caller: function_tool_caller,
-      llm: get_model_provider(message.ai_model)
+      llm: llm_provider
     )
 
     latest_response_id = chat.latest_assistant_response_id

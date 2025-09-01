@@ -125,7 +125,7 @@ class Transfer < ApplicationRecord
         errors.add(:base, "Must have opposite amounts") if inflow_amount + outflow_amount != 0
       else
         # For different currencies, just check the signs are opposite
-        errors.add(:base, "Must have opposite amounts") unless inflow_amount.negative? && outflow_amount.positive?
+        errors.add(:base, "Must have opposite amounts") unless inflow_amount.to_f < 0 && outflow_amount.to_f > 0
       end
     end
 

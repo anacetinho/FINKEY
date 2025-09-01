@@ -2,13 +2,13 @@
 
 <div id="<%= dom_id(budget, :allocation_progress) %>" class="space-y-2 mb-6">
   <div class="flex items-center gap-2">
-    <% if budget.available_to_allocate.negative? %>
+    <% if budget.available_to_allocate.to_f < 0 %>
       <div class="rounded-full w-1.5 h-1.5 bg-red-500"></div>
     <% else %>
       <div class="rounded-full w-1.5 h-1.5 <%= budget.allocated_spending > 0 ? "bg-gray-900" : "bg-gray-100" %>"></div>
     <% end %>
 
-    <% if budget.available_to_allocate.negative? %>
+    <% if budget.available_to_allocate.to_f < 0 %>
       <p class="text-primary text-sm">&gt; 100% set</p>
     <% else %>
       <p class="text-secondary text-sm">
@@ -17,14 +17,14 @@
     <% end %>
 
     <p class="ml-auto text-sm space-x-1">
-      <span class="<%= budget.available_to_allocate.negative? ? "text-red-500" : "text-primary" %>"><%= format_money(budget.allocated_spending_money) %></span>
+      <span class="<%= budget.available_to_allocate.to_f < 0 ? "text-red-500" : "text-primary" %>"><%= format_money(budget.allocated_spending_money) %></span>
       <span class="text-secondary"> / </span>
       <span class="text-secondary"><%= format_money(budget.budgeted_spending_money) %></span>
     </p>
   </div>
 
   <div class="relative h-1.5 rounded-2xl bg-gray-100">
-    <% if budget.available_to_allocate.negative? %>
+    <% if budget.available_to_allocate.to_f < 0 %>
       <div class="absolute inset-0 bg-red-500 rounded-2xl" style="width: 100%;"></div>
     <% else %>
       <div class="absolute inset-0 bg-gray-900 rounded-2xl" style="width: <%= budget.allocated_percent %>%;"></div>
@@ -32,7 +32,7 @@
   </div>
 
   <div class="text-sm">
-    <% if budget.available_to_allocate.negative? %>
+    <% if budget.available_to_allocate.to_f < 0 %>
       <p class="text-secondary">
         Budget exceeded by <span class="text-red-500"><%= format_money(budget.available_to_allocate_money.abs) %></span>
       </p>

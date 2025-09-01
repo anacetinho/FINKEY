@@ -1,0 +1,58 @@
+<div class="bg-container shadow-border-xs rounded-xl space-y-2">
+  <div class="flex justify-between flex-col-reverse lg:flex-row gap-2 px-4 pt-4 mb-2">
+    <div class="space-y-2 w-full">
+      <div class="flex items-center gap-2">
+        <%= tag.p "Net Worth Forecast", class: "text-sm font-medium text-secondary" %>
+        <% if insufficient_data? %>
+          <%= helpers.icon("alert-triangle", size: "xs", class: "text-warning") %>
+        <% end %>
+      </div>
+      
+      <div class="space-y-1">
+        <div class="flex flex-row gap-2 items-baseline">
+          <%= tag.p "Current: #{current_net_worth_money.format}", class: "text-primary text-2xl font-medium truncate" %>
+        </div>
+        
+        <div class="flex flex-row gap-2 items-baseline">
+          <%= tag.p "Projected (#{timeline_label}): #{projected_net_worth_money.format}", class: "text-secondary text-lg font-medium truncate" %>
+        </div>
+        
+        <div class="flex items-center gap-2 mt-1">
+          <%= helpers.icon(projection_trend_icon, size: "xs", class: projection_trend_class) %>
+          <span class="text-sm font-medium <%= projection_trend_class %>">
+            <%= projection_change_money.format %> (<%= projection_change_percentage > 0 ? '+' : '' %><%= projection_change_percentage %>%)
+          </span>
+          <span class="text-xs text-secondary">over <%= timeline_label %></span>
+        </div>
+      </div>
+    </div>
+
+    <%= form_with url: forecasts_path, method: :get, local: true, data: { controller: "auto-submit-form" } do |form| %>
+      <div class="flex items-center gap-2">
+        <%= form.select :timeline,
+                timeline_options,
+                { selected: timeline },
+                data: { "auto-submit-form-target": "auto" },
+                class: "bg-container border border-secondary rounded-lg px-3 py-2 text-sm pr-7 cursor-pointer text-primary focus:outline-hidden focus:ring-0" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="h-80 pb-4">
+    <% if has_data? %>
+      <div
+        id="forecastChart"
+        class="w-full h-full"
+        data-controller="time-series-chart"
+        data-time-series-chart-data-value="<%= series.to_json %>"></div>
+    <% else %>
+      <div class="w-full h-full flex items-center justify-center">
+        <div class="text-center space-y-2">
+          <%= helpers.icon("trending-up", size: "lg", class: "text-secondary mx-auto") %>
+          <p class="text-secondary text-sm">No historical data available for forecasting</p>
+          <p class="text-secondary text-xs">Connect accounts or add transactions to see projections</p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

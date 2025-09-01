@@ -16,7 +16,7 @@ class Trade < ApplicationRecord
   end
 
   def unrealized_gain_loss
-    return nil if qty.negative?
+    return nil if qty.to_f < 0
     current_price = security.current_price
     return nil if current_price.nil?
 

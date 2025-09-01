@@ -10,12 +10,12 @@ class Loan < ApplicationRecord
 
   def monthly_payment
     return nil if term_months.nil? || interest_rate.nil? || rate_type.nil? || rate_type != "fixed"
-    return Money.new(0, account.currency) if account.loan.original_balance.amount.zero? || term_months.zero?
+    return Money.new(0, account.currency) if account.loan.original_balance.amount.to_f == 0 || term_months == 0
 
     annual_rate = interest_rate / 100.0
     monthly_rate = annual_rate / 12.0
 
-    if monthly_rate.zero?
+    if monthly_rate.to_f == 0
       payment = account.loan.original_balance.amount / term_months
     else
       payment = (account.loan.original_balance.amount * monthly_rate * (1 + monthly_rate)**term_months) / ((1 + monthly_rate)**term_months - 1)
