@@ -14,10 +14,10 @@
 
 <div class="grow flex flex-col gap-12 items-center justify-center">
   <div class="max-w-sm mx-auto flex flex-col items-center">
-    <%= image_tag "logo-color.png", class: "w-16 mb-6" %>
+    <%= image_tag "logo1.png", class: "w-16 mb-6" %>
 
     <p class="text-xl lg:text-3xl text-primary font-display font-medium">
-      Try Maybe for 14 days.
+      Try FINKEY for 14 days.
     </p>
 
     <h2 class="text-xl lg:text-3xl font-display text-secondary font-medium mb-2">
@@ -25,13 +25,13 @@
     </h2>
 
     <p class="text-sm text-secondary text-center mb-8">
-      Starting the trial activates your account for Maybe.  You won't need to enter payment details.
+      Starting the trial activates your account for FINKEY.  You won't need to enter payment details.
     </p>
 
     <div class="w-full">
       <% if Current.family.can_start_trial? %>
         <%= render DS::Button.new(
-        text: "Try Maybe for 14 days",
+        text: "Try FINKEY for 14 days",
         href: subscription_path,
         full_width: true,
         data: { turbo: false }
