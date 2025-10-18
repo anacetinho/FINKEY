@@ -53,7 +53,12 @@ class Sync < ApplicationRecord
 
   class << self
     def clean
-      incomplete.where("syncs.created_at < ?", STALE_AFTER.ago).find_each(&:mark_stale!)
+      # Batch update for better performance instead of individual updates
+      stale_count = incomplete.where("syncs.created_at < ?", STALE_AFTER.ago).update_all(
+        status: 'stale',
+        updated_at: Time.current
+      )
+      Rails.logger.info("Marked #{stale_count} syncs as stale") if stale_count > 0
     end
   end
 
@@ -155,9 +160,14 @@ class Sync < ApplicationRecord
     end
 
     def report_warnings
+      # Only check sync count if we haven't already reported today (reduce database queries)
+      return if Rails.cache.exist?("sync_warning_#{syncable_type}_#{syncable_id}_#{Date.current}")
+
       todays_sync_count = syncable.syncs.where(created_at: Date.current.all_day).count
 
       if todays_sync_count > 10
+        # Cache the warning for today to avoid repeated reports
+        Rails.cache.write("sync_warning_#{syncable_type}_#{syncable_id}_#{Date.current}", true, expires_in: 1.day)
         Sentry.capture_exception(
           Error.new("#{syncable_type} (#{syncable.id}) has exceeded 10 syncs today (count: #{todays_sync_count})"),
           level: :warning

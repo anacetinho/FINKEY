@@ -61,11 +61,46 @@ class Provider::Registry
       end
 
       def openai
-        access_token = ENV.fetch("OPENAI_ACCESS_TOKEN", Setting.openai_access_token)
+        # Return nil if AI assistant is disabled
+        return nil unless Setting.ai_assistant_enabled
 
-        return nil unless access_token.present?
+        provider_type = Setting.ai_provider || "openai"
 
-        Provider::Openai.new(access_token)
+        if provider_type == "local"
+          # Local LLM with OpenAI-compatible endpoint
+          base_url = Setting.local_llm_base_url
+          model = Setting.local_llm_model
+
+          Rails.logger.info("Provider::Registry: Using local LLM - base_url: #{base_url}, model: #{model}")
+
+          return nil unless base_url.present? && model.present?
+
+          Provider::Openai.new(
+            "dummy-key-for-local", # Local LLMs often don't need a real key
+            base_url: base_url,
+            model: model
+          )
+        else
+          # Standard OpenAI
+          access_token = ENV.fetch("OPENAI_ACCESS_TOKEN", Setting.openai_access_token)
+
+          Rails.logger.info("Provider::Registry: Checking OpenAI access token - present: #{access_token.present?}")
+
+          return nil unless access_token.present?
+
+          Rails.logger.info("Provider::Registry: Creating OpenAI provider")
+          Provider::Openai.new(access_token)
+        end
+      end
+
+      def yahoo_finance
+        begin
+          Provider::YahooFinance.new
+        rescue => e
+          Rails.logger.warn("YahooFinance provider unavailable: #{e.message}")
+          Rails.logger.debug("YahooFinance provider error details: #{e.class.name} - #{e.backtrace&.first}")
+          nil
+        end
       end
   end
 
@@ -92,13 +127,13 @@ class Provider::Registry
     def available_providers
       case concept
       when :exchange_rates
-        %i[synth]
+        %i[yahoo_finance synth]
       when :securities
-        %i[synth]
+        %i[yahoo_finance synth]
       when :llm
         %i[openai]
       else
-        %i[synth plaid_us plaid_eu github openai]
+        %i[synth plaid_us plaid_eu github openai yahoo_finance]
       end
     end
 end

@@ -59,7 +59,12 @@ class Money
   end
 
   def <=>(other)
-    raise TypeError, "Money can only be compared with other Money objects except for 0" unless other.is_a?(Money) || other.eql?(0)
+    unless other.is_a?(Money) || other.eql?(0)
+      Rails.logger.error "DEBUG: Money comparison failed - other: #{other.inspect} (#{other.class})"
+      Rails.logger.error "DEBUG: Money self: #{self.inspect} (#{self.class})"
+      Rails.logger.error "DEBUG: Caller: #{caller[0..10].join("\n")}"
+      raise TypeError, "Money can only be compared with other Money objects except for 0"
+    end
 
     if other.is_a?(Numeric)
       amount <=> other

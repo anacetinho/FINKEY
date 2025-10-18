@@ -4,7 +4,8 @@ module ExchangeRate::Provided
   class_methods do
     def provider
       registry = Provider::Registry.for_concept(:exchange_rates)
-      registry.get_provider(:synth)
+      # Try Yahoo Finance first, fallback to Synth
+      registry.get_provider(:yahoo_finance) || registry.get_provider(:synth)
     end
 
     def find_or_fetch_rate(from:, to:, date: Date.current, cache: true)

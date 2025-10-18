@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     resource :preferences, only: :show
     resource :hosting, only: %i[show update] do
       delete :clear_cache, on: :collection
+      post :update_prices, on: :collection
     end
     resource :billing, only: :show
     resource :security, only: :show
@@ -93,6 +94,9 @@ Rails.application.routes.draw do
 
     resources :budget_categories, only: %i[index show update]
   end
+
+  resources :forecasts, only: [:index]
+  resources :future_events, only: [:create, :update, :destroy], path: "future_events"
 
   resources :family_merchants, only: %i[index new create edit update destroy]
 
@@ -269,8 +273,8 @@ Rails.application.routes.draw do
 
   get "imports/:import_id/upload/sample_csv", to: "import/uploads#sample_csv", as: :import_upload_sample_csv
 
-  get "privacy", to: redirect("https://maybefinance.com/privacy")
-  get "terms", to: redirect("https://maybefinance.com/tos")
+  get "privacy", to: redirect("https://github.com/anacetinho/FINKEY")
+  get "terms", to: redirect("https://github.com/anacetinho/FINKEY")
 
   # Defines the root path route ("/")
   root "pages#dashboard"

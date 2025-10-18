@@ -15,7 +15,7 @@ module Transaction::Transferable
   end
 
   def transfer_match_candidates
-    candidates_scope = if self.entry.amount.negative?
+    candidates_scope = if self.entry.amount.to_f < 0
       family_matches_scope.where("inflow_candidates.entryable_id = ?", self.id)
     else
       family_matches_scope.where("outflow_candidates.entryable_id = ?", self.id)

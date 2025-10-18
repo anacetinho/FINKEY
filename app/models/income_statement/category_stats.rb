@@ -24,7 +24,8 @@ class IncomeStatement::CategoryStats
         {
           target_currency: @family.currency,
           interval: @interval,
-          family_id: @family.id
+          family_id: @family.id,
+          start_date: 24.months.ago.beginning_of_month
         }
       ])
     end
@@ -35,8 +36,18 @@ class IncomeStatement::CategoryStats
           SELECT
             c.id as category_id,
             date_trunc(:interval, ae.date) as period,
-            CASE WHEN ae.amount < 0 THEN 'income' ELSE 'expense' END as classification,
-            SUM(ae.amount * COALESCE(er.rate, 1)) as total
+            CASE 
+              WHEN c.allows_negative_expenses = true THEN 'expense'
+              WHEN ae.amount < 0 THEN 'income' 
+              ELSE 'expense' 
+            END as classification,
+            SUM(
+              CASE 
+                WHEN c.allows_negative_expenses = true 
+                  THEN ae.amount * COALESCE(NULLIF(er.rate, 0), 1) * -1
+                ELSE ae.amount * COALESCE(NULLIF(er.rate, 0), 1)
+              END
+            ) as total
           FROM transactions t
           JOIN entries ae ON ae.entryable_id = t.id AND ae.entryable_type = 'Transaction'
           JOIN accounts a ON a.id = ae.account_id
@@ -47,9 +58,15 @@ class IncomeStatement::CategoryStats
             er.to_currency = :target_currency
           )
           WHERE a.family_id = :family_id
+            AND a.status IN ('draft', 'active')
+            AND ae.date >= :start_date
             AND t.kind NOT IN ('funds_movement', 'one_time', 'cc_payment')
             AND ae.excluded = false
-          GROUP BY c.id, period, CASE WHEN ae.amount < 0 THEN 'income' ELSE 'expense' END
+          GROUP BY c.id, period, CASE 
+              WHEN c.allows_negative_expenses = true THEN 'expense'
+              WHEN ae.amount < 0 THEN 'income' 
+              ELSE 'expense' 
+            END
         )
         SELECT
           category_id,

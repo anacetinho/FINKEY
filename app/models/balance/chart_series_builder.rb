@@ -100,23 +100,23 @@ class Balance::ChartSeriesBuilder
         SELECT
           d.date,
           -- Use flows_factor: already handles asset (+1) vs liability (-1)
-          COALESCE(SUM(last_bal.end_balance * last_bal.flows_factor * COALESCE(er.rate, 1) * :sign_multiplier::integer), 0) AS end_balance,
-          COALESCE(SUM(last_bal.end_cash_balance * last_bal.flows_factor * COALESCE(er.rate, 1) * :sign_multiplier::integer), 0) AS end_cash_balance,
+          COALESCE(SUM(last_bal.end_balance * last_bal.flows_factor * COALESCE(NULLIF(er.rate, 0), 1) * :sign_multiplier::integer), 0) AS end_balance,
+          COALESCE(SUM(last_bal.end_cash_balance * last_bal.flows_factor * COALESCE(NULLIF(er.rate, 0), 1) * :sign_multiplier::integer), 0) AS end_cash_balance,
           -- Holdings only for assets (flows_factor = 1)
           COALESCE(SUM(
             CASE WHEN last_bal.flows_factor = 1
               THEN last_bal.end_non_cash_balance
               ELSE 0
-            END * COALESCE(er.rate, 1) * :sign_multiplier::integer
+            END * COALESCE(NULLIF(er.rate, 0), 1) * :sign_multiplier::integer
           ), 0) AS end_holdings_balance,
           -- Previous balances
-          COALESCE(SUM(last_bal.start_balance * last_bal.flows_factor * COALESCE(er.rate, 1) * :sign_multiplier::integer), 0) AS start_balance,
-          COALESCE(SUM(last_bal.start_cash_balance * last_bal.flows_factor * COALESCE(er.rate, 1) * :sign_multiplier::integer), 0) AS start_cash_balance,
+          COALESCE(SUM(last_bal.start_balance * last_bal.flows_factor * COALESCE(NULLIF(er.rate, 0), 1) * :sign_multiplier::integer), 0) AS start_balance,
+          COALESCE(SUM(last_bal.start_cash_balance * last_bal.flows_factor * COALESCE(NULLIF(er.rate, 0), 1) * :sign_multiplier::integer), 0) AS start_cash_balance,
           COALESCE(SUM(
             CASE WHEN last_bal.flows_factor = 1
               THEN last_bal.start_non_cash_balance
               ELSE 0
-            END * COALESCE(er.rate, 1) * :sign_multiplier::integer
+            END * COALESCE(NULLIF(er.rate, 0), 1) * :sign_multiplier::integer
           ), 0) AS start_holdings_balance
         FROM dates d
         CROSS JOIN accounts

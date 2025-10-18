@@ -64,10 +64,9 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
 
-  # "info" includes generic and useful information about system operation, but avoids logging too much
-  # information to avoid inadvertent exposure of personally identifiable information (PII). If you
-  # want to log everything, set the level to "debug".
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  # "warn" reduces log verbosity to only warnings and errors, significantly improving performance
+  # and reducing log volume while maintaining visibility into actual issues
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "warn")
 
   if ENV["CACHE_REDIS_URL"].present?
     config.cache_store = :redis_cache_store, { url: ENV["CACHE_REDIS_URL"] }

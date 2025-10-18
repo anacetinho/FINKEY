@@ -67,7 +67,8 @@ class Assistant::Function::GetBalanceSheet < Assistant::Function
     def insights_data
       assets = family.balance_sheet.assets.total
       liabilities = family.balance_sheet.liabilities.total
-      ratio = liabilities.zero? ? 0 : (liabilities / assets.to_f)
+      # Use float arithmetic to avoid CoercedNumeric struct issues
+      ratio = liabilities.to_f == 0 ? 0 : (liabilities.to_f / assets.to_f)
 
       {
         debt_to_asset_ratio: number_to_percentage(ratio * 100, precision: 0)

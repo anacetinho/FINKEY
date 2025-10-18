@@ -64,8 +64,26 @@ class Balance::BaseCalculator
       non_cash_inflows = 0
       non_cash_outflows = 0
 
-      txn_inflow_sum = entries.select { |e| e.amount < 0 && e.transaction? }.sum(&:amount)
-      txn_outflow_sum = entries.select { |e| e.amount >= 0 && e.transaction? }.sum(&:amount)
+      # Separate expense reimbursements from regular transactions
+      expense_reimbursements = entries.select { |e| 
+        e.transaction? && e.amount > 0 && e.transaction.category&.allows_negative_expenses?
+      }
+      
+      regular_transactions = entries.select { |e| 
+        e.transaction? && !(e.amount > 0 && e.transaction.category&.allows_negative_expenses?)
+      }
+
+      # For expense reimbursements, treat positive amounts as inflows (negative in the calculation)
+      expense_reimbursement_inflow_sum = -expense_reimbursements.sum(&:amount)
+      
+      # For regular transactions, use standard logic
+      regular_txn_inflow_sum = regular_transactions.select { |e| e.amount < 0 }.sum(&:amount)
+      regular_txn_outflow_sum = regular_transactions.select { |e| e.amount >= 0 }.sum(&:amount)
+
+      # Combine all transaction flows
+      txn_inflow_sum = regular_txn_inflow_sum + expense_reimbursement_inflow_sum
+      txn_outflow_sum = regular_txn_outflow_sum
+      
 
       trade_cash_inflow_sum = entries.select { |e| e.amount < 0 && e.trade? }.sum(&:amount)
       trade_cash_outflow_sum = entries.select { |e| e.amount >= 0 && e.trade? }.sum(&:amount)
@@ -81,6 +99,7 @@ class Balance::BaseCalculator
         non_cash_outflows = trade_cash_inflow_sum.abs
         non_cash_inflows = trade_cash_outflow_sum
       end
+
 
       {
         cash_inflows: cash_inflows,

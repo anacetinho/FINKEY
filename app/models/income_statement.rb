@@ -80,7 +80,7 @@ class IncomeStatement
 
         category_total = parent_category_total + children_totals
 
-        weight = (category_total.zero? ? 0 : category_total.to_f / classification_total) * 100
+        weight = (category_total.to_f == 0 ? 0 : category_total.to_f / classification_total) * 100
 
         CategoryTotal.new(
           category: category,
@@ -101,14 +101,14 @@ class IncomeStatement
     def family_stats(interval: "month")
       @family_stats ||= {}
       @family_stats[interval] ||= Rails.cache.fetch([
-        "income_statement", "family_stats", family.id, interval, family.entries_cache_version
+        "income_statement", "family_stats", family.id, interval, family.entries_cache_version, family.accounts_cache_version
       ]) { FamilyStats.new(family, interval:).call }
     end
 
     def category_stats(interval: "month")
       @category_stats ||= {}
       @category_stats[interval] ||= Rails.cache.fetch([
-        "income_statement", "category_stats", family.id, interval, family.entries_cache_version
+        "income_statement", "category_stats", family.id, interval, family.entries_cache_version, family.accounts_cache_version
       ]) { CategoryStats.new(family, interval:).call }
     end
 

@@ -7,3 +7,41 @@ db/schema.rb linguist-generated
 vendor/* linguist-vendored
 config/credentials/*.yml.enc diff=rails_credentials
 config/credentials.yml.enc diff=rails_credentials
+
+# Set default behavior to automatically normalize line endings
+* text=auto eol=lf
+
+# Force Unix line endings for scripts and Ruby files
+bin/* text eol=lf
+*.rb text eol=lf
+*.rake text eol=lf
+*.ru text eol=lf
+Rakefile text eol=lf
+Gemfile text eol=lf
+Gemfile.lock text eol=lf
+
+# Force Windows line endings for Windows batch files
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files (don't modify these)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+
+# Docker files should use LF
+Dockerfile text eol=lf
+*.dockerfile text eol=lf
+docker-compose*.yml text eol=lf
+compose*.yml text eol=lf
+
+# Configuration files
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.env* text eol=lf

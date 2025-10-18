@@ -16,9 +16,13 @@ class Trend
   end
 
   def direction
-    if current == previous
+    # Use float comparisons to avoid Money comparison issues
+    current_val = current.respond_to?(:to_f) ? current.to_f : current
+    previous_val = previous.respond_to?(:to_f) ? previous.to_f : previous
+    
+    if current_val == previous_val
       "flat"
-    elsif current > previous
+    elsif current_val > previous_val
       "up"
     else
       "down"
@@ -47,14 +51,20 @@ class Trend
   end
 
   def value
-    current - previous
+    # Use float arithmetic to avoid CoercedNumeric struct issues
+    if current.respond_to?(:to_f) && previous.respond_to?(:to_f)
+      current.to_f - previous.to_f
+    else
+      current - previous
+    end
   end
 
   def percent
-    return 0.0 if previous.zero? && current.zero?
-    return Float::INFINITY if previous.zero?
+    return 0.0 if previous.to_f == 0 && current.to_f == 0
+    return Float::INFINITY if previous.to_f == 0
 
-    change = (current - previous).to_f
+    # Use float arithmetic to avoid CoercedNumeric struct issues
+    change = current.respond_to?(:to_f) ? current.to_f - previous.to_f : (current - previous).to_f
 
     (change / previous.to_f * 100).round(1)
   end

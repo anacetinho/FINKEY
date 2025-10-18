@@ -2,9 +2,15 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.3"
 	},
-	"name": "maybe",
-	"version": "1.0.0",
-	"description": "The OS for your personal finances",
+	"name": "finkey",
+	"version": "1.2.0",
+	"description": "Your Personal Finance Command Center - A powerful, self-hosted personal finance application",
+	"keywords": ["finance", "personal-finance", "budgeting", "self-hosted", "docker", "rails"],
+	"homepage": "https://github.com/your-username/finkey",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/your-username/finkey.git"
+	},
 	"scripts": {
 		"style:check": "biome check",
 		"style:fix": "biome check --write",
@@ -13,6 +19,10 @@
 		"format:check": "biome format",
 		"format": "biome format --write"
 	},
-	"author": "",
-	"license": "ISC"
+	"author": "FinKey Contributors",
+	"license": "AGPL-3.0",
+	"engines": {
+		"node": ">=18.0.0",
+		"npm": ">=8.0.0"
+	}
 }

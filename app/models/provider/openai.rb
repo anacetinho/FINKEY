@@ -6,11 +6,29 @@ class Provider::Openai < Provider
 
   MODELS = %w[gpt-4.1]
 
-  def initialize(access_token)
-    @client = ::OpenAI::Client.new(access_token: access_token)
+  def initialize(access_token, base_url: nil, model: nil)
+    Rails.logger.info("Provider::Openai: Initializing with token present: #{access_token.present?}")
+
+    client_options = { access_token: access_token }
+
+    # Support for custom base URL (local LLMs)
+    if base_url.present?
+      client_options[:uri_base] = base_url
+      Rails.logger.info("Provider::Openai: Using custom base URL: #{base_url}")
+    end
+
+    @client = ::OpenAI::Client.new(client_options)
+    @custom_model = model # Store custom model for local LLMs
+    Rails.logger.info("Provider::Openai: Client initialized successfully")
+  rescue => e
+    Rails.logger.error("Provider::Openai: Failed to initialize client: #{e.message}")
+    raise
   end
 
   def supports_model?(model)
+    # If using a custom model (local LLM), accept any model
+    return true if @custom_model.present?
+
     MODELS.include?(model)
   end
 
@@ -39,6 +57,10 @@ class Provider::Openai < Provider
   end
 
   def chat_response(prompt, model:, instructions: nil, functions: [], function_results: [], streamer: nil, previous_response_id: nil)
+    # Use custom model if specified (for local LLMs)
+    effective_model = @custom_model.present? ? @custom_model : model
+
+    Rails.logger.info("Provider::Openai: Starting chat_response with model: #{effective_model}")
     with_provider_response do
       chat_config = ChatConfig.new(
         functions: functions,
@@ -62,7 +84,7 @@ class Provider::Openai < Provider
       end
 
       raw_response = client.responses.create(parameters: {
-        model: model,
+        model: effective_model,
         input: chat_config.build_input(prompt),
         instructions: instructions,
         tools: chat_config.tools,

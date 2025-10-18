@@ -9,6 +9,7 @@ export default class extends Controller {
     strokeWidth: { type: Number, default: 2 },
     useLabels: { type: Boolean, default: true },
     useTooltip: { type: Boolean, default: true },
+    isForecast: { type: Boolean, default: false },
   };
 
   _d3SvgMemo = null;
@@ -57,6 +58,7 @@ export default class extends Controller {
       date_formatted: d.date_formatted,
       value: d.value,
       trend: d.trend,
+      is_forecast: d.is_forecast || false,
     }));
   }
 
@@ -117,17 +119,57 @@ export default class extends Controller {
   }
 
   _drawTrendline() {
-    this._installTrendlineSplit();
+    if (this.isForecastValue) {
+      this._drawForecastTrendline();
+    } else {
+      this._installTrendlineSplit();
 
-    this._d3Group
-      .append("path")
-      .datum(this._normalDataPoints)
-      .attr("fill", "none")
-      .attr("stroke", `url(#${this.element.id}-split-gradient)`)
-      .attr("d", this._d3Line)
-      .attr("stroke-linejoin", "round")
-      .attr("stroke-linecap", "round")
-      .attr("stroke-width", this.strokeWidthValue);
+      this._d3Group
+        .append("path")
+        .datum(this._normalDataPoints)
+        .attr("fill", "none")
+        .attr("stroke", `url(#${this.element.id}-split-gradient)`)
+        .attr("d", this._d3Line)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", this.strokeWidthValue);
+    }
+  }
+
+  _drawForecastTrendline() {
+    // Separate historical and forecast data
+    const historicalData = this._normalDataPoints.filter(d => !d.is_forecast);
+    const forecastData = this._normalDataPoints.filter(d => d.is_forecast);
+    
+    // Draw historical line (solid)
+    if (historicalData.length > 1) {
+      this._d3Group
+        .append("path")
+        .datum(historicalData)
+        .attr("fill", "none")
+        .attr("stroke", this._trendColor)
+        .attr("d", this._d3Line)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", this.strokeWidthValue);
+    }
+    
+    // Draw forecast line (dashed) - connect from last historical point
+    if (forecastData.length > 0 && historicalData.length > 0) {
+      const connectionData = [historicalData[historicalData.length - 1], ...forecastData];
+      
+      this._d3Group
+        .append("path")
+        .datum(connectionData)
+        .attr("fill", "none")
+        .attr("stroke", this._trendColor)
+        .attr("stroke-dasharray", "5,5")
+        .attr("d", this._d3Line)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", this.strokeWidthValue)
+        .attr("opacity", 0.7);
+    }
   }
 
   _installTrendlineSplit() {
@@ -373,6 +415,23 @@ export default class extends Controller {
   }
 
   _tooltipTemplate(datum) {
+    // Handle null trend data (e.g., forecast points)
+    if (!datum.trend || !datum.trend.current) {
+      return `
+        <div style="margin-bottom: 4px; color: var(--color-gray-500);">
+          ${datum.date_formatted}
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2 text-primary">
+            <div class="flex items-center justify-center h-4 w-4">
+              ${this._getTrendIcon(datum)}
+            </div>
+            ${this._extractFormattedValue(datum.value)}
+          </div>
+        </div>
+      `;
+    }
+
     return `
       <div style="margin-bottom: 4px; color: var(--color-gray-500);">
         ${datum.date_formatted}
@@ -399,6 +458,11 @@ export default class extends Controller {
   }
 
   _getTrendIcon(datum) {
+    // Handle null trend data (e.g., forecast points)
+    if (!datum.trend || !datum.trend.previous || !datum.trend.current) {
+      return '<i data-icon="minus" class="text-secondary"></i>';
+    }
+    
     const isIncrease =
       Number(datum.trend.previous.amount) < Number(datum.trend.current.amount);
     const isDecrease =

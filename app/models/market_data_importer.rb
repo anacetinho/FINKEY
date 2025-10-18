@@ -23,14 +23,21 @@ class MarketDataImporter
     end
 
     # Import all securities that aren't marked as "offline" (i.e. they're available from the provider)
+    # Single attempt per security, no fallbacks per user preference
     Security.online.find_each do |security|
-      security.import_provider_prices(
-        start_date: get_first_required_price_date(security),
-        end_date: end_date,
-        clear_cache: clear_cache
-      )
+      begin
+        security.import_provider_prices(
+          start_date: get_first_required_price_date(security),
+          end_date: end_date,
+          clear_cache: clear_cache
+        )
 
-      security.import_provider_details(clear_cache: clear_cache)
+        security.import_provider_details(clear_cache: clear_cache)
+      rescue => e
+        Rails.logger.error("Error updating #{security.ticker}: #{e.message}")
+        # Mark failing securities as offline to prevent future attempts (no fallbacks)
+        security.update(offline: true)
+      end
     end
   end
 

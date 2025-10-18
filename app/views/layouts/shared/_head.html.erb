@@ -1,5 +1,5 @@
 <head>
-  <title><%= content_for(:title) || "Maybe" %></title>
+  <title><%= content_for(:title) || "FinKey" %></title>
 
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -17,10 +17,16 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Maybe">
+  <meta name="apple-mobile-web-app-title" content="FinKey">
 
   <meta name="msapplication-TileColor" content="#F9F9F9">
   <meta name="theme-color" content="#F9F9F9">
+
+  <!-- Favicon links for all browsers -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon-16x16.svg">
+  <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32x32.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
   <link rel="manifest" href="<%= pwa_manifest_path %>">
   <link rel="apple-touch-icon" href="/logo-pwa.png">

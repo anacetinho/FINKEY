@@ -1,0 +1,5 @@
+<div class="flex justify-center items-center gap-2">
+      <a class="text-secondary" target="_blank" href="/privacy">Privacy Policy</a>
+      <span>•</span>
+      <a class="text-secondary" target="_blank" href="/terms">Terms of Service</a>
+    </div>

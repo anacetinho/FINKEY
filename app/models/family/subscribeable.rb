@@ -34,7 +34,7 @@ module Family::Subscribeable
   end
 
   def trialing?
-    subscription&.trialing? && days_left_in_trial.positive?
+    subscription&.trialing? && days_left_in_trial.to_f > 0
   end
 
   def has_active_subscription?

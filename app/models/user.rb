@@ -87,7 +87,21 @@ class User < ApplicationRecord
   end
 
   def ai_available?
-    !Rails.application.config.app_mode.self_hosted? || ENV["OPENAI_ACCESS_TOKEN"].present?
+    return true unless Rails.application.config.app_mode.self_hosted?
+
+    # Check if AI assistant is enabled via settings
+    return false unless Setting.ai_assistant_enabled
+
+    # Check if provider is properly configured
+    provider_type = Setting.ai_provider || "openai"
+
+    if provider_type == "local"
+      # Local LLM: needs base URL and model
+      Setting.local_llm_base_url.present? && Setting.local_llm_model.present?
+    else
+      # OpenAI: needs access token (from env or settings)
+      ENV["OPENAI_ACCESS_TOKEN"].present? || Setting.openai_access_token.present?
+    end
   end
 
   def ai_enabled?

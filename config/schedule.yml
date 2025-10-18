@@ -1,17 +1,17 @@
 import_market_data:
-  cron: "0 22 * * 1-5" # 5:00 PM EST / 6:00 PM EDT (NY time) Monday through Friday
+  cron: "0 * * * *" # Every hour
   class: "ImportMarketDataJob"
   queue: "scheduled"
-  description: "Imports market data daily at 5:00 PM EST (1 hour after market close)"
+  description: "Imports market data hourly (reduced frequency for better performance)"
   args:
-    mode: "full"
+    mode: "snapshot"
     clear_cache: false
   
 clean_syncs:
-  cron: "0 * * * *" # every hour
+  cron: "0 */3 * * *" # every 3 hours (reduced frequency for better performance)
   class: "SyncCleanerJob"
   queue: "scheduled"
-  description: "Cleans up stale syncs"
+  description: "Cleans up stale syncs every 3 hours"
 
 run_security_health_checks:
   cron: "0 2 * * 1-5" # 2:00 AM EST / 3:00 AM EDT (NY time) Monday through Friday

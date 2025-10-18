@@ -1,0 +1,248 @@
+<% content_for :title, "Net Worth Forecasting" %>
+
+<%= render "layouts/shared/page_header", title: "Net Worth Forecasting", description: "Project your financial future" do %>
+  <div class="flex items-center gap-2">
+    <%= render DS::Link.new(
+      text: "Learn more",
+      href: "javascript:void(0)",
+      icon: "help-circle",
+      variant: "ghost",
+      size: "sm"
+    ) %>
+  </div>
+<% end %>
+
+<div class="space-y-6">
+  <!-- Main Forecast Chart -->
+  <div class="space-y-4">
+    <%= render UI::ForecastChart.new(
+      forecast: @forecast,
+      timeline: @timeline
+    ) %>
+  </div>
+
+  <!-- Forecast Parameters Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Configuration Panel -->
+    <div class="bg-container shadow-border-xs rounded-xl p-4">
+      <h3 class="text-lg font-semibold text-primary mb-4">Forecast Settings</h3>
+      
+      <%= form_with url: forecasts_path, method: :get, local: true, class: "space-y-4" do |form| %>
+        <%= form.hidden_field :timeline, value: @timeline %>
+        
+        <div class="space-y-3">
+          <div>
+            <%= form.label :income_growth_rate, "Expected annual income growth", class: "block text-sm font-medium text-secondary mb-1" %>
+            <%= form.number_field :income_growth_rate, 
+                value: @income_growth_rate,
+                step: 0.1,
+                min: -50,
+                max: 100,
+                placeholder: "0.0",
+                class: "w-full px-3 py-2 border border-secondary rounded-lg text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" %>
+            <p class="text-xs text-secondary mt-1">Percentage (e.g., 3.0 for 3% annual growth)</p>
+          </div>
+
+          <div>
+            <%= form.label :expense_growth_rate, "Expected annual expense growth", class: "block text-sm font-medium text-secondary mb-1" %>
+            <%= form.number_field :expense_growth_rate,
+                value: @expense_growth_rate,
+                step: 0.1,
+                min: -50,
+                max: 100,
+                placeholder: "0.0",
+                class: "w-full px-3 py-2 border border-secondary rounded-lg text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" %>
+            <p class="text-xs text-secondary mt-1">Percentage (e.g., 2.5 for 2.5% annual growth)</p>
+          </div>
+
+          <div class="pt-2">
+            <%= render DS::Button.new(
+              text: "Update Forecast",
+              type: "submit",
+              variant: "primary",
+              size: "sm",
+              class: "w-full"
+            ) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Insights Panel -->
+    <div class="bg-container shadow-border-xs rounded-xl p-4">
+      <h3 class="text-lg font-semibold text-primary mb-4">Cash Flow Analysis</h3>
+      
+      <div class="space-y-4">
+        <div class="flex justify-between items-center py-2 border-b border-secondary/20">
+          <span class="text-sm text-secondary">Monthly Income (median)</span>
+          <span class="text-sm font-medium text-primary"><%= @forecast.monthly_income.format %></span>
+        </div>
+        
+        <div class="flex justify-between items-center py-2 border-b border-secondary/20">
+          <span class="text-sm text-secondary">Monthly Expenses (median)</span>
+          <span class="text-sm font-medium text-primary"><%= @forecast.monthly_expenses.format %></span>
+        </div>
+        
+        <div class="flex justify-between items-center py-2">
+          <span class="text-sm text-secondary">Net Monthly Cash Flow</span>
+          <span class="text-sm font-medium <%= @forecast.monthly_cash_flow.to_f > 0 ? 'text-success' : 'text-destructive' %>">
+            <%= @forecast.monthly_cash_flow.format %>
+          </span>
+        </div>
+        
+        <div class="mt-4 p-3 bg-surface rounded-lg">
+          <p class="text-xs text-secondary leading-relaxed">
+            Forecast is based on historical net worth trends and cash flow patterns from your transaction data. 
+            Projections become less accurate over longer time periods and should be used as general guidance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% unless @has_sufficient_data %>
+    <!-- Insufficient Data Warning -->
+    <div class="bg-container shadow-border-xs rounded-xl p-4 border-l-4 border-warning">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <%= icon("triangle-alert", size: "sm", class: "text-warning") %>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-primary">Limited Forecast Accuracy</h3>
+          <div class="mt-2 text-sm text-secondary">
+            <p>Your forecast may be less accurate due to limited transaction history. For better projections:</p>
+            <ul class="mt-1 list-disc list-inside">
+              <li>Add more historical transactions</li>
+              <li>Connect bank accounts for automatic data sync</li>
+              <li>Import transaction data from your bank or other financial tools</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Future Events Section -->
+  <div class="bg-container shadow-border-xs rounded-xl p-4">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-semibold text-primary">Future Events</h3>
+      <%= link_to "#", 
+          class: "inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors",
+          onclick: "document.getElementById('future-event-dialog').showModal(); return false;" do %>
+        <%= icon("plus", size: "sm") %>
+        Add Event
+      <% end %>
+    </div>
+    
+    <p class="text-sm text-secondary mb-4">Plan for major income or expense events</p>
+    
+    <% if Current.family.future_events.any? %>
+      <div class="space-y-3">
+        <% Current.family.future_events.ordered.each do |event| %>
+          <div class="flex items-center justify-between p-3 bg-surface rounded-lg">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-medium text-primary"><%= event.name %></span>
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium <%= event.income? ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
+                  <%= event.event_type.capitalize %>
+                </span>
+              </div>
+              <div class="text-xs text-secondary">
+                <%= event.date.strftime("%B %d, %Y") %> • <%= event.amount_money.format %>
+              </div>
+            </div>
+            <div class="flex items-center gap-1">
+              <%= link_to "#", class: "text-secondary hover:text-primary p-1" do %>
+                <%= icon("edit-2", size: "xs") %>
+              <% end %>
+              <%= link_to future_event_path(event), 
+                  data: { 
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?" 
+                  },
+                  class: "text-secondary hover:text-destructive p-1" do %>
+                <%= icon("trash-2", size: "xs") %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-6 text-secondary">
+        <div class="mb-3">
+          <%= icon("calendar-plus", size: "lg", class: "mx-auto opacity-50") %>
+        </div>
+        <p class="text-sm">No future events planned</p>
+        <p class="text-xs mt-1">Add events like bonuses, major purchases, or inheritance to improve your forecast</p>
+      </div>
+    <% end %>
+    
+    <!-- Future Event Dialog -->
+    <%= render DS::Dialog.new(
+      id: "future-event-dialog",
+      title: "Add Future Event",
+      size: "md",
+      auto_open: false,
+      disable_frame: true
+    ) do %>
+      <%= form_with url: future_events_path, method: :post, local: true, scope: :future_event, data: { turbo: false }, class: "space-y-4" do |form| %>
+        <div>
+          <%= form.label :name, "Event Name", class: "block text-sm font-medium text-primary mb-1" %>
+          <%= form.text_field :name, 
+              placeholder: "e.g., Salary bonus, House purchase",
+              class: "w-full px-3 py-2 border border-secondary rounded-lg text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" %>
+        </div>
+        
+        <div>
+          <%= form.label :date, "Date", class: "block text-sm font-medium text-primary mb-1" %>
+          <%= form.date_field :date,
+              min: Date.current + 1,
+              class: "w-full px-3 py-2 border border-secondary rounded-lg text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" %>
+        </div>
+        
+        <div>
+          <%= form.label :event_type, "Type", class: "block text-sm font-medium text-primary mb-1" %>
+          <%= form.select :event_type, 
+              [["Income (bonus, inheritance, etc.)", "income"], ["Expense (purchase, payment, etc.)", "expense"]], 
+              { prompt: "Select type" },
+              { class: "w-full px-3 py-2 border border-secondary rounded-lg text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" } %>
+        </div>
+        
+        <div>
+          <%= form.label :amount, "Amount", class: "block text-sm font-medium text-primary mb-1" %>
+          <div class="relative">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-sm">€</span>
+            <%= form.number_field :amount,
+                step: 0.01,
+                min: 0.01,
+                placeholder: "0.00",
+                class: "w-full pl-8 pr-3 py-2 border border-secondary rounded-lg text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" %>
+          </div>
+        </div>
+        
+        <div>
+          <%= form.label :description, "Description (optional)", class: "block text-sm font-medium text-primary mb-1" %>
+          <%= form.text_area :description,
+              rows: 2,
+              placeholder: "Additional details about this event...",
+              class: "w-full px-3 py-2 border border-secondary rounded-lg text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20 resize-none" %>
+        </div>
+        
+        <div class="flex justify-end gap-3 pt-4">
+          <%= render DS::Button.new(
+            text: "Cancel",
+            variant: "ghost",
+            size: "sm",
+            data: { action: "DS--dialog#close" }
+          ) %>
+          <%= render DS::Button.new(
+            text: "Add Event",
+            type: "submit",
+            variant: "primary",
+            size: "sm"
+          ) %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

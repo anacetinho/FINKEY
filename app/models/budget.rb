@@ -103,11 +103,11 @@ class Budget < ApplicationRecord
   end
 
   def income_category_totals
-    income_totals.category_totals.reject { |ct| ct.category.subcategory? || ct.total.zero? }.sort_by(&:weight).reverse
+    income_totals.category_totals.reject { |ct| ct.category.subcategory? || ct.total.to_f == 0 }.sort_by(&:weight).reverse
   end
 
   def expense_category_totals
-    expense_totals.category_totals.reject { |ct| ct.category.subcategory? || ct.total.zero? }.sort_by(&:weight).reverse
+    expense_totals.category_totals.reject { |ct| ct.category.subcategory? || ct.total.to_f == 0 }.sort_by(&:weight).reverse
   end
 
   def current?
@@ -140,7 +140,7 @@ class Budget < ApplicationRecord
       { color: bc.category.color, amount: budget_category_actual_spending(bc), id: bc.id }
     end
 
-    if available_to_spend.positive?
+    if available_to_spend.to_f > 0
       segments.push({ color: "var(--budget-unallocated-fill)", amount: available_to_spend, id: unused_segment_id })
     end
 
@@ -181,7 +181,7 @@ class Budget < ApplicationRecord
   end
 
   def overage_percent
-    return 0 unless available_to_spend.negative?
+    return 0 unless available_to_spend.to_f < 0
 
     available_to_spend.abs / actual_spending.to_f * 100
   end
@@ -229,7 +229,7 @@ class Budget < ApplicationRecord
   end
 
   def surplus_percent
-    return 0 unless remaining_expected_income.negative?
+    return 0 unless remaining_expected_income.to_f < 0
 
     remaining_expected_income.abs / expected_income.to_f * 100
   end

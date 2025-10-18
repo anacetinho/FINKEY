@@ -21,7 +21,15 @@ class BalanceSheet::ClassificationGroup
   end
 
   def total
-    accounts.sum(&:converted_balance)
+    balance_sum = accounts.sum(&:converted_balance)
+    
+    # Ensure we always return a proper Money object
+    if balance_sum.is_a?(Money)
+      balance_sum
+    else
+      # Fallback for empty collections that return 0
+      Money.new(balance_sum || 0, currency)
+    end
   end
 
   def syncing?

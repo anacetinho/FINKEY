@@ -1,4 +1,4 @@
-module Maybe
+module FinKey
   class << self
     def version
       Semver.new(semver)
@@ -14,7 +14,7 @@ module Maybe
 
     private
       def semver
-        "0.6.0"
+        "1.2.0"
       end
   end
 end

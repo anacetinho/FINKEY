@@ -12,7 +12,8 @@ class UI::Account::Chart < ApplicationComponent
   end
 
   def holdings_value_money
-    account.balance_money - account.cash_balance_money
+    # Use float arithmetic to avoid CoercedNumeric struct issues
+    Money.new(account.balance_money.to_f - account.cash_balance_money.to_f, account.balance_money.currency)
   end
 
   def view_balance_money

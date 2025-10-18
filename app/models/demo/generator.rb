@@ -781,14 +781,14 @@ class Demo::Generator
         # --- Monthly payments (5 days after month end) ------------------------
         payment_date = (date_cursor.end_of_month + 5.days)
 
-        if amex_total.positive?
+        if amex_total.to_f > 0
           amex_payment = (amex_total * rand(0.90..0.95)).round
           create_transfer!(@chase_checking, @amex_gold, amex_payment, "Amex Payment", payment_date)
           amex_balance -= amex_payment
           payments_this_run += 1
         end
 
-        if sapphire_total.positive?
+        if sapphire_total.to_f > 0
           sapphire_payment = (sapphire_total * rand(0.90..0.95)).round
           create_transfer!(@chase_checking, @chase_sapphire, sapphire_payment, "Sapphire Payment", payment_date)
           sapphire_balance -= sapphire_payment
@@ -808,13 +808,13 @@ class Demo::Generator
       diff_sapphire = sapphire_balance - target_sapphire
 
       if diff_amex.abs > 250
-        adjust_payment = diff_amex.positive? ? diff_amex : 0
+        adjust_payment = diff_amex.to_f > 0 ? diff_amex : 0
         create_transfer!(@chase_checking, @amex_gold, adjust_payment, "Amex Balance Adjust", Date.current)
         amex_balance -= adjust_payment
       end
 
       if diff_sapphire.abs > 250
-        adjust_payment = diff_sapphire.positive? ? diff_sapphire : 0
+        adjust_payment = diff_sapphire.to_f > 0 ? diff_sapphire : 0
         create_transfer!(@chase_checking, @chase_sapphire, adjust_payment, "Sapphire Balance Adjust", Date.current)
         sapphire_balance -= adjust_payment
       end

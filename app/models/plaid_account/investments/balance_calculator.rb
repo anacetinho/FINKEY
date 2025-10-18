@@ -12,7 +12,7 @@ class PlaidAccount::Investments::BalanceCalculator
   def balance
     total_value = total_investment_account_value
 
-    if total_value.negative?
+    if total_value.to_f < 0
       Sentry.capture_exception(
         NegativeTotalValueError.new("Total value is negative for plaid investment account"),
         level: :warning
@@ -30,7 +30,7 @@ class PlaidAccount::Investments::BalanceCalculator
   def cash_balance
     cash_balance = calculate_investment_brokerage_cash
 
-    if cash_balance.negative?
+    if cash_balance.to_f < 0
       Sentry.capture_exception(
         NegativeCashBalanceError.new("Cash balance is negative for plaid investment account"),
         level: :warning

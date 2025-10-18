@@ -9,7 +9,7 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libvips postgresql-client libyaml-0-2
+    apt-get install --no-install-recommends -y curl libvips postgresql-client libyaml-0-2 python3 python3-pip python3-venv
 
 # Set production environment
 ARG BUILD_COMMIT_SHA
@@ -51,6 +51,9 @@ RUN rm -rf /var/lib/apt/lists /var/cache/apt/archives
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
+
+# Install Python dependencies for Yahoo Finance
+RUN pip3 install --no-cache-dir --break-system-packages yfinance pandas requests
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \

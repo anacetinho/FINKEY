@@ -1,6 +1,7 @@
 class Transaction::Search
   include ActiveModel::Model
   include ActiveModel::Attributes
+  include AmountCalculator
 
   attribute :search, :string
   attribute :amount, :string
@@ -46,9 +47,10 @@ class Transaction::Search
     @totals ||= begin
       Rails.cache.fetch("transaction_search_totals/#{cache_key_base}") do
         result = transactions_scope
+                  .left_joins(:category)
                   .select(
-                    "COALESCE(SUM(CASE WHEN entries.amount >= 0 AND transactions.kind NOT IN ('funds_movement', 'cc_payment') THEN ABS(entries.amount * COALESCE(er.rate, 1)) ELSE 0 END), 0) as expense_total",
-                    "COALESCE(SUM(CASE WHEN entries.amount < 0 AND transactions.kind NOT IN ('funds_movement', 'cc_payment') THEN ABS(entries.amount * COALESCE(er.rate, 1)) ELSE 0 END), 0) as income_total",
+                    "COALESCE(SUM(#{search_expense_amount_sql}), 0) as expense_total",
+                    "COALESCE(SUM(CASE WHEN entries.amount < 0 AND transactions.kind NOT IN ('funds_movement', 'cc_payment') THEN ABS(entries.amount * COALESCE(NULLIF(er.rate, 0), 1)) ELSE 0 END), 0) as income_total",
                     "COUNT(entries.id) as transactions_count"
                   )
                   .joins(
@@ -78,6 +80,10 @@ class Transaction::Search
 
   private
     Totals = Data.define(:count, :income_money, :expense_money)
+
+    def search_expense_amount_sql
+      self.class.search_expense_amount_sql
+    end
 
     def apply_active_accounts_filter(query, active_accounts_only_filter)
       if active_accounts_only_filter

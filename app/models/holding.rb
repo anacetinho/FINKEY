@@ -20,9 +20,9 @@ class Holding < ApplicationRecord
 
   def weight
     return nil unless amount
-    return 0 if amount.zero?
+    return 0 if amount.to_f == 0
 
-    account.balance.zero? ? 1 : amount / account.balance * 100
+    account.balance.to_f == 0 ? 1 : amount / account.balance * 100
   end
 
   # Basic approximation of cost-basis
@@ -45,6 +45,10 @@ class Holding < ApplicationRecord
 
   def trend
     @trend ||= calculate_trend
+  end
+
+  def clear_trend_cache
+    @trend = nil
   end
 
   def trades

@@ -24,18 +24,7 @@
         }} %>
 
       <% if %w[buy sell].include?(type) %>
-        <% if Security.provider.present? %>
-          <div class="form-field combobox">
-            <%= form.combobox :ticker,
-                            securities_path(country_code: Current.family.country),
-                            name_when_new: "entry[manual_ticker]",
-                            label: t(".holding"),
-                            placeholder: t(".ticker_placeholder"),
-                            required: true %>
-          </div>
-        <% else %>
-          <%= form.text_field :manual_ticker, label: "Ticker symbol", placeholder: "AAPL", required: true %>
-        <% end %>
+        <%= form.text_field :manual_ticker, label: "Ticker symbol", placeholder: "AAPL", required: true %>
       <% end %>
 
       <%= form.date_field :date, label: true, value: model.date || Date.current, required: true %>

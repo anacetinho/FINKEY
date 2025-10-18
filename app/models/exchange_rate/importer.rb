@@ -35,6 +35,12 @@ class ExchangeRate::Importer
     gapfilled_rates = effective_start_date.upto(end_date).map do |date|
       db_rate_value = db_rates[date]&.rate
       provider_rate_value = provider_rates[date]&.rate
+      
+      # If no provider rate for exact date, look for most recent provider rate (for weekends/holidays)
+      if provider_rate_value.nil? && provider_rates.any?
+        latest_provider_rate = provider_rates.select { |pd, _| pd <= date }.max_by { |pd, _| pd }&.last
+        provider_rate_value = latest_provider_rate&.rate
+      end
 
       chosen_rate = if clear_cache
         provider_rate_value || db_rate_value   # overwrite when possible
@@ -85,7 +91,7 @@ class ExchangeRate::Importer
     def start_rate_value
       provider_rate_value = provider_rates.select { |date, _| date <= start_date }.max_by { |date, _| date }&.last
       db_rate_value = db_rates[start_date]&.rate
-      provider_rate_value || db_rate_value
+      provider_rate_value&.rate || db_rate_value
     end
 
     # No need to fetch/upsert rates for dates that we already have in the DB

@@ -1,49 +1,130 @@
-<div class="space-y-4">
+<div class="space-y-6">
   <div>
-    <h2 class="font-medium mb-1"><%= t(".title") %></h2>
-    <% if ENV["SYNTH_API_KEY"].present? %>
-      <p class="text-sm text-secondary">You have successfully configured your Synth API key through the SYNTH_API_KEY environment variable.</p>
-    <% else %>
-      <p class="text-secondary text-sm mb-4"><%= t(".description") %></p>
+    <h2 class="font-medium mb-1">Financial Data Sources</h2>
+    <p class="text-secondary text-sm mb-4">Configure how the app fetches security prices and financial data.</p>
+  </div>
+
+  <!-- Yahoo Finance Section -->
+  <div class="space-y-4">
+    <div>
+      <h3 class="font-medium text-sm mb-1">Yahoo Finance (Recommended)</h3>
+      <p class="text-secondary text-xs mb-3">Use Yahoo Finance for security price updates. This is an unofficial but reliable data source.</p>
+    </div>
+
+    <%= styled_form_with model: Setting.new,
+                         url: settings_hosting_path,
+                         method: :patch,
+                         data: {
+                           controller: "auto-submit-form",
+                           "auto-submit-form-trigger-event-value": "change"
+                         } do |form| %>
+      <%= form.check_box :use_yahoo_finance,
+                         label: "Use Yahoo Finance for price updates",
+                         checked: Setting.use_yahoo_finance,
+                         container_class: "mb-4",
+                         data: { "auto-submit-form-target": "auto" } %>
+    <% end %>
+
+    <% if Setting.use_yahoo_finance %>
+      <div class="flex items-center gap-3">
+        <%= render DS::Button.new(
+          text: "Update All Prices Now",
+          variant: "primary",
+          size: "sm",
+          href: update_prices_settings_hosting_path,
+          method: :post,
+          confirm: CustomConfirm.new(
+            title: "Update All Prices",
+            body: "This will update prices for all securities in your portfolio. Continue?",
+            btn_text: "Update Prices"
+          )
+        ) %>
+        <span class="text-xs text-secondary">Manually update security prices from Yahoo Finance</span>
+      </div>
     <% end %>
   </div>
 
-  <%= styled_form_with model: Setting.new,
-                       url: settings_hosting_path,
-                       method: :patch,
-                       data: {
-                         controller: "auto-submit-form",
-                         "auto-submit-form-trigger-event-value": "blur"
-                       } do |form| %>
-    <%= form.text_field :synth_api_key,
-                        label: t(".label"),
-                        type: "password",
-                        placeholder: t(".placeholder"),
-                        value: ENV.fetch("SYNTH_API_KEY", Setting.synth_api_key),
-                        disabled: ENV["SYNTH_API_KEY"].present?,
-                        container_class: @synth_usage.present? && !@synth_usage.success? ? "border-red-500" : "",
-                        data: { "auto-submit-form-target": "auto" } %>
-  <% end %>
-
-  <% if @synth_usage.present? && @synth_usage.success? %>
-    <div class="space-y-4">
-      <div class="space-y-2">
-        <p class="text-sm text-secondary">
-          <%= t(".api_calls_used",
-                used: number_with_delimiter(@synth_usage.data.used),
-                limit: number_with_delimiter(@synth_usage.data.limit),
-                percentage: number_to_percentage(@synth_usage.data.utilization, precision: 1)) %>
-        </p>
-        <div class="w-52 h-1.5 bg-gray-100 rounded-2xl">
-          <div class="h-full bg-green-500 rounded-2xl"
-               style="width: <%= [@synth_usage.data.utilization, 2].max %>%;"></div>
-        </div>
-      </div>
-      <div class="bg-gray-100 rounded-md px-1.5 py-0.5 w-fit">
-        <p class="text-xs font-medium text-secondary uppercase">
-          <%= t(".plan", plan: @synth_usage.data.plan) %>
-        </p>
-      </div>
+  <!-- AI Assistant Configuration -->
+  <div class="space-y-4">
+    <div>
+      <h3 class="font-medium text-sm mb-1">AI Assistant</h3>
+      <p class="text-secondary text-xs mb-3">Configure AI-powered chat and categorization features.</p>
     </div>
-  <% end %>
+
+    <%= styled_form_with model: Setting.new,
+                         url: settings_hosting_path,
+                         method: :patch,
+                         data: {
+                           controller: "auto-submit-form",
+                           "auto-submit-form-trigger-event-value": "change"
+                         } do |form| %>
+      <%= form.check_box :ai_assistant_enabled,
+                         label: "Enable AI Assistant",
+                         checked: Setting.ai_assistant_enabled,
+                         container_class: "mb-4",
+                         data: { "auto-submit-form-target": "auto" } %>
+    <% end %>
+
+    <% if Setting.ai_assistant_enabled %>
+      <%= styled_form_with model: Setting.new,
+                           url: settings_hosting_path,
+                           method: :patch,
+                           data: {
+                             controller: "auto-submit-form",
+                             "auto-submit-form-trigger-event-value": "change"
+                           } do |form| %>
+        <%= form.select :ai_provider,
+                        options_for_select([["OpenAI", "openai"], ["Local LLM (OpenAI-compatible)", "local"]], Setting.ai_provider),
+                        {},
+                        label: "AI Provider",
+                        container_class: "mb-4",
+                        data: { "auto-submit-form-target": "auto" } %>
+      <% end %>
+
+      <% if Setting.ai_provider == "openai" %>
+        <%= styled_form_with model: Setting.new,
+                             url: settings_hosting_path,
+                             method: :patch,
+                             data: {
+                               controller: "auto-submit-form",
+                               "auto-submit-form-trigger-event-value": "blur"
+                             } do |form| %>
+          <%= form.text_field :openai_access_token,
+                              label: "OpenAI API Key",
+                              type: "password",
+                              placeholder: "sk-...",
+                              value: ENV.fetch("OPENAI_ACCESS_TOKEN", Setting.openai_access_token),
+                              disabled: ENV["OPENAI_ACCESS_TOKEN"].present?,
+                              container_class: "mb-4",
+                              data: { "auto-submit-form-target": "auto" } %>
+        <% end %>
+        <% if ENV["OPENAI_ACCESS_TOKEN"].present? %>
+          <p class="text-xs text-secondary mb-4">API key configured via OPENAI_ACCESS_TOKEN environment variable.</p>
+        <% end %>
+      <% elsif Setting.ai_provider == "local" %>
+        <%= styled_form_with model: Setting.new,
+                             url: settings_hosting_path,
+                             method: :patch,
+                             data: {
+                               controller: "auto-submit-form",
+                               "auto-submit-form-trigger-event-value": "blur"
+                             } do |form| %>
+          <%= form.text_field :local_llm_base_url,
+                              label: "Base URL",
+                              type: "text",
+                              placeholder: "http://localhost:11434/v1",
+                              value: Setting.local_llm_base_url,
+                              container_class: "mb-4",
+                              data: { "auto-submit-form-target": "auto" } %>
+          <%= form.text_field :local_llm_model,
+                              label: "Model Name",
+                              type: "text",
+                              placeholder: "llama3.2",
+                              value: Setting.local_llm_model,
+                              container_class: "mb-4",
+                              data: { "auto-submit-form-target": "auto" } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
 </div>

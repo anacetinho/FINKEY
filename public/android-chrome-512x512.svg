@@ -1,0 +1,29 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- FinKey PWA icon 512x512 based on Logo.svg -->
+  <rect width="512" height="512" rx="64" fill="#2D3748"/>
+
+  <!-- Key head (circular) with multiple rings -->
+  <circle cx="128" cy="256" r="80" fill="none" stroke="white" stroke-width="8"/>
+  <circle cx="128" cy="256" r="64" fill="none" stroke="white" stroke-width="6"/>
+  <circle cx="128" cy="256" r="48" fill="none" stroke="white" stroke-width="4"/>
+  <circle cx="128" cy="256" r="32" fill="none" stroke="white" stroke-width="3"/>
+
+  <!-- Euro symbol in center -->
+  <text x="128" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" fill="white" font-weight="bold">€</text>
+
+  <!-- Key shaft -->
+  <rect x="208" y="248" width="240" height="16" fill="white"/>
+
+  <!-- Key teeth -->
+  <rect x="416" y="224" width="12" height="20" fill="white"/>
+  <rect x="432" y="232" width="12" height="16" fill="white"/>
+  <rect x="416" y="268" width="12" height="20" fill="white"/>
+  <rect x="432" y="272" width="12" height="12" fill="white"/>
+
+  <!-- Financial chart elements on shaft -->
+  <path d="M220 240 L240 236 L260 244 L280 238 L300 242 L320 236 L340 240 L360 238 L380 240" stroke="#4299E1" stroke-width="6" fill="none"/>
+  <path d="M220 272 L240 276 L260 268 L280 274 L300 270 L320 276 L340 272 L360 274 L380 272" stroke="#4299E1" stroke-width="6" fill="none"/>
+  <path d="M224 256 L244 252 L264 260 L284 256 L304 258 L324 254 L344 256 L364 254 L376 256" stroke="#38B2AC" stroke-width="4" fill="none"/>
+  <path d="M228 248 L248 250 L268 246 L288 249 L308 247 L328 250 L348 248 L368 250 L372 248" stroke="#38B2AC" stroke-width="3" fill="none"/>
+  <path d="M228 264 L248 262 L268 266 L288 263 L308 265 L328 262 L348 264 L368 262 L372 264" stroke="#38B2AC" stroke-width="3" fill="none"/>
+</svg>
