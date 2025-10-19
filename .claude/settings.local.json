@@ -29,7 +29,8 @@
       "Bash(lsof:*)",
       "Bash(python3:*)",
       "Bash(convert:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(cat bin/dev)"
     ],
     "deny": []
   }

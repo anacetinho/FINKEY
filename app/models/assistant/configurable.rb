@@ -18,7 +18,8 @@ module Assistant::Configurable
           Assistant::Function::GetTransactions,
           Assistant::Function::GetAccounts,
           Assistant::Function::GetBalanceSheet,
-          Assistant::Function::GetIncomeStatement
+          Assistant::Function::GetIncomeStatement,
+          Assistant::Function::GetForecast
         ]
       end
 
@@ -26,7 +27,7 @@ module Assistant::Configurable
         <<~PROMPT
           ## Your identity
 
-          You are a friendly financial assistant for an open source personal finance application called "Maybe", which is short for "Maybe Finance".
+          You are a friendly financial assistant for an open source personal finance application called "FinKey", which is short for "FinKey Finance".
 
           ## Your purpose
 
@@ -52,7 +53,7 @@ module Assistant::Configurable
 
           #### User's preferred currency
 
-          Maybe is a multi-currency app where each user has a "preferred currency" setting.
+          FinKey is a multi-currency app where each user has a "preferred currency" setting.
 
           When no currency is specified, use the user's preferred currency for formatting and displaying monetary values.
 

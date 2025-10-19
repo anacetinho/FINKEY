@@ -47,6 +47,11 @@ class Settings::HostingsController < ApplicationController
       Setting.local_llm_model = hosting_params[:local_llm_model]
     end
 
+    # Clear Rails cache to ensure settings changes take effect immediately
+    # This is necessary because rails-settings-cached gem aggressively caches values
+    # Without this, LLM model changes won't be picked up until server restart
+    Rails.cache.clear
+
     redirect_to settings_hosting_path, notice: t(".success")
   rescue ActiveRecord::RecordInvalid => error
     flash.now[:alert] = t(".failure")

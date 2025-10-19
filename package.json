@@ -3,7 +3,7 @@
 		"@biomejs/biome": "^1.9.3"
 	},
 	"name": "finkey",
-	"version": "1.2.0",
+	"version": "1.4.0",
 	"description": "Your Personal Finance Command Center - A powerful, self-hosted personal finance application",
 	"keywords": ["finance", "personal-finance", "budgeting", "self-hosted", "docker", "rails"],
 	"homepage": "https://github.com/your-username/finkey",

@@ -50,13 +50,18 @@ class PagesController < ApplicationController
     @release_notes = {
       avatar: nil,
       username: "finkey-contributors",
-      name: "FinKey v1.2",
-      published_at: Date.new(2025, 10, 18),
+      name: "FinKey v1.4",
+      published_at: Date.new(2025, 10, 19),
       body: <<~HTML
-        <h1>Welcome to FinKey 1.2</h1>
+        <h1>Welcome to FinKey 1.4</h1>
         <p>FinKey is a fork of Maybe Finance with enhanced features for self-hosted personal finance management.</p>
 
-        <h2>What's New in v1.2</h2>
+        <h2>What's New in v1.4</h2>
+        <ul>
+          <li><strong>🔧 Fixed Local AI Model Caching Issue</strong> - Local LLM model changes now take effect immediately without requiring a server restart. The settings cache has been updated to properly refresh when you change the model name.</li>
+        </ul>
+
+        <h2>Previous Updates (v1.2)</h2>
         <ul>
           <li><strong>🤖 AI Assistant Configuration via UI</strong> - Configure your AI assistant directly in the settings interface without editing environment variables. Choose between OpenAI or local LLM providers (like Ollama, LM Studio, etc.) with OpenAI-compatible endpoints.</li>
         </ul>

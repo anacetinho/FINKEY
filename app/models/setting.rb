@@ -1,6 +1,6 @@
 # Dynamic settings the user can change within the app (helpful for self-hosting)
 class Setting < RailsSettings::Base
-  cache_prefix { "v1" }
+  cache_prefix { "v2" }
 
   # Legacy Synth API (deprecated, kept for backward compatibility)
   field :synth_api_key, type: :string, default: ENV["SYNTH_API_KEY"]

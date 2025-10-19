@@ -53,7 +53,7 @@ class Chat < ApplicationRecord
   end
 
   def assistant
-    @assistant ||= Assistant.for_chat(self)
+    Assistant.for_chat(self)
   end
 
   def ask_assistant_later(message)

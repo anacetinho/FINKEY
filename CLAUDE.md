@@ -2,6 +2,40 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## About FinKey
+
+FinKey is a fork of Maybe Finance with enhanced features:
+- **Flexible AI Assistant**: UI-based configuration for OpenAI or local LLMs (Ollama, LM Studio, etc.)
+- **Yahoo Finance Integration**: Real-time exchange rates and market data via `Provider::YahooFinance`
+- **Advanced Expense Reimbursement**: Complex transaction handling
+- **Extended Forecasting**: 24-month financial projections
+- **Enhanced Docker Setup**: Improved deployment experience
+
+The app runs in two modes via `Rails.application.config.app_mode`:
+- `"managed"`: Hosted by the Maybe team
+- `"self_hosted"`: User-hosted via Docker (FinKey's primary mode)
+
+## Tech Stack
+
+- **Web Framework**: Ruby on Rails 7.2.x (see `.ruby-version` for Ruby version)
+- **Database**: PostgreSQL >9.3
+- **Jobs**: Sidekiq + Redis with sidekiq-cron for scheduled tasks
+- **Frontend**:
+  - Hotwire (Turbo + Stimulus) for reactive UI
+  - TailwindCSS v4.x with custom design system
+  - ViewComponent for reusable components
+  - D3.js for financial visualizations
+  - Lucide Icons (via custom `icon` helper)
+- **Asset Pipeline**: Propshaft + Importmap (no webpack/vite)
+- **Testing**: Minitest + fixtures (no RSpec/FactoryBot)
+- **Code Quality**: Rubocop (rails-omakase), Biome (JS/TS), ERB Lint, Brakeman (security)
+- **External Integrations**:
+  - Plaid (bank syncing)
+  - Stripe (payments, managed mode only)
+  - OpenAI (AI assistant via `ruby-openai` gem)
+  - Yahoo Finance (market data, FinKey exclusive)
+  - Synth API (Maybe's market data)
+
 ## Common Development Commands
 
 ### Development Server
@@ -17,11 +51,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `bin/rails test test/models/account_test.rb:42` - Run specific test at line
 
 ### Linting & Formatting
-- `bin/rubocop` - Run Ruby linter
-- `npm run lint` - Check JavaScript/TypeScript code
-- `npm run lint:fix` - Fix JavaScript/TypeScript issues
-- `npm run format` - Format JavaScript/TypeScript code
+- `bin/rubocop` - Run Ruby linter (uses rubocop-rails-omakase)
+- `npm run lint` - Check JavaScript/TypeScript code (Biome)
+- `npm run lint:fix` - Fix JavaScript/TypeScript issues (Biome)
+- `npm run format` - Format JavaScript/TypeScript code (Biome)
+- `npm run style:check` - Check all JS/TS style issues (Biome)
+- `npm run style:fix` - Fix all JS/TS style issues (Biome)
 - `bin/brakeman` - Run security analysis
+- `bundle exec erb_lint ./app/**/*.erb -a` - Lint ERB templates with auto-fix
 
 ### Database
 - `bin/rails db:prepare` - Create and migrate database
@@ -31,6 +68,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Setup
 - `bin/setup` - Initial project setup (installs dependencies, prepares database)
+- `setup.bat` (Windows) / `setup.sh` (Linux/macOS) - One-click Docker setup for self-hosting
+
+### Demo Data
+- `rake demo_data:default` - Load demo data for development (credentials: `user@finkey.local` / `password`)
 
 ## Pre-Pull Request CI Workflow
 
@@ -63,20 +104,28 @@ Only proceed with pull request creation if ALL checks pass.
 - Do not run `rails credentials`
 - Do not automatically run migrations
 
-## OpenAI Chat Functionality
+## AI Assistant (FinKey Enhanced)
 
 ### Overview
-The Maybe app includes AI-powered chat functionality that uses OpenAI's API for:
+FinKey's AI assistant provides financial insights via OpenAI or local LLMs:
 - Financial analysis and insights
 - Transaction categorization assistance
 - Merchant detection automation
 - Interactive financial Q&A
 
-### Configuration Requirements
-- **API Key**: Set `OPENAI_ACCESS_TOKEN` environment variable
-- **Models Used**: `gpt-4.1` (chat), `gpt-4.1-mini` (categorization)
-- **API Endpoint**: Uses OpenAI's Responses API (`/v1/responses`)
-- **Ruby Gem**: `ruby-openai` v8.1.0+ with Responses API support
+### Configuration (UI-Based)
+**IMPORTANT**: Unlike Maybe Finance, FinKey allows AI configuration through the UI at `/settings/hosting`:
+- **Provider Selection**: Choose OpenAI or Local LLM
+- **OpenAI**: Set `openai_access_token` via UI (stored in `Setting` model)
+- **Local LLM**: Configure `local_llm_base_url` and `local_llm_model` via UI
+- No need to edit `.env` files or rebuild Docker containers
+
+### Technical Details
+- **Models**: `gpt-4.1` (chat), `gpt-4.1-mini` (categorization) for OpenAI
+- **API Endpoint**: OpenAI's Responses API (`/v1/responses`)
+- **Ruby Gem**: `ruby-openai` v8.1.0+
+- **Provider Registry**: `Provider::Registry.for_concept(:llm)` manages providers
+- **Settings Controller**: `Settings::HostingsController` handles UI-based configuration
 
 ### Common Issues & Troubleshooting
 
@@ -130,12 +179,30 @@ docker-compose up -d
 - Function calling enables data retrieval (accounts, transactions, etc.)
 - Rate limiting and error handling built into provider layer
 
-## High-Level Architecture
+## Important File Locations
 
-### Application Modes
-The Maybe app runs in two distinct modes:
-- **Managed**: The Maybe team operates and manages servers for users (Rails.application.config.app_mode = "managed")
-- **Self Hosted**: Users host the Maybe app on their own infrastructure, typically through Docker Compose (Rails.application.config.app_mode = "self_hosted")
+### Configuration & Setup
+- `config/routes.rb` - Application routes
+- `config/application.rb` - Rails application configuration (includes `app_mode` setting)
+- `Procfile.dev` - Foreman process definitions (web, css, worker)
+- `.env.example` / `.env.local.example` - Environment variable templates
+- `app/assets/tailwind/maybe-design-system.css` - Design system tokens (read-only, never modify)
+
+### Key Directories
+- `app/models/` - Domain models and business logic (skinny controllers, fat models)
+- `app/models/provider/` - External integration providers (OpenAI, Yahoo Finance, Plaid, etc.)
+- `app/components/DS/` - Design system components (buttons, badges, dialogs)
+- `app/components/UI/` - Feature-specific UI components
+- `app/controllers/settings/` - Self-hosted configuration (`HostingsController`)
+- `app/javascript/controllers/` - Global Stimulus controllers
+- `app/helpers/application_helper.rb` - Includes `icon` helper (always use this, not `lucide_icon`)
+
+### Services & Background Jobs
+- `app/models/**/syncer.rb` - Data sync logic (e.g., `Account::Syncer`, `Holding::Syncer`)
+- `app/jobs/` - Sidekiq background jobs (e.g., `SyncAccountsJob`, `CreateChatResponseJob`)
+- `app/services/yahoo_finance_service.rb` - Yahoo Finance API wrapper (FinKey exclusive)
+
+## High-Level Architecture
 
 ### Core Domain Model
 The application is built around financial data management with these key relationships:
@@ -180,11 +247,25 @@ Sidekiq handles asynchronous tasks:
   - Prefer semantic HTML elements over JS components
   - Use `icon` helper for icons, never `lucide_icon` directly
 
-### Multi-Currency Support
+### Multi-Currency Support (FinKey Enhanced)
 - All monetary values stored in base currency (user's primary currency)
-- Exchange rates fetched from Synth API
+- **Exchange rates**: Fetched from Yahoo Finance (`Provider::YahooFinance`) or Synth API
+- **Yahoo Finance Integration**: Toggle via UI at `/settings/hosting` (`Setting.use_yahoo_finance`)
 - `Money` objects handle currency conversion and formatting
 - Historical exchange rates for accurate reporting
+- Exchange rate providers implement `ExchangeRateConcept` interface
+
+### Provider Architecture (FinKey Core)
+FinKey uses a provider pattern for external integrations:
+- **Provider::Registry**: Central registry managing providers by concept (`:llm`, `:security`, `:exchange_rate`)
+- **Base Provider**: `Provider` model with `with_provider_response` error handling
+- **Concepts**: Ruby modules defining provider interfaces (e.g., `SecurityConcept`, `ExchangeRateConcept`)
+- **Available Providers**:
+  - `Provider::Openai`: AI chat and categorization (via `ruby-openai` gem)
+  - `Provider::YahooFinance`: Exchange rates and security prices (FinKey exclusive)
+  - `Provider::Synth`: Maybe's market data API (original)
+  - `Provider::Plaid`: Bank account syncing
+  - `Provider::Stripe`: Payment processing (managed mode)
 
 ### Security & Authentication
 - Session-based auth for web users
@@ -210,6 +291,14 @@ Sidekiq handles asynchronous tasks:
 - Background jobs for heavy operations
 - Caching strategies for expensive calculations
 - Turbo Frames for partial page updates
+
+### Self-Hosted Configuration (FinKey)
+Settings managed via UI (`/settings/hosting`) and stored in `Setting` model (using `rails-settings-cached` gem):
+- **AI Assistant**: `ai_assistant_enabled`, `ai_provider`, `openai_access_token`, `local_llm_base_url`, `local_llm_model`
+- **Data Sources**: `use_yahoo_finance`, `synth_api_key`
+- **User Management**: `require_invite_for_signup`, `require_email_confirmation`
+- All settings accessible via `Setting.setting_name` (e.g., `Setting.use_yahoo_finance`)
+- Changes take effect immediately without container rebuilds
 
 ### Development Workflow
 - Feature branches merged to `main`
@@ -259,6 +348,16 @@ Sidekiq handles asynchronous tasks:
 - **Always generate semantic HTML**
 
 ## Component Architecture
+
+### Component Organization
+Components are organized in `app/components/` with two main directories:
+- **DS/** (Design System): Core UI components (buttons, badges, icons, dialogs)
+- **UI/** (User Interface): Feature-specific components (account cards, transaction lists)
+
+Each component consists of:
+- `component_name_component.rb` - Ruby class defining component logic
+- `component_name_component.html.erb` - ERB template
+- `component_name_controller.js` - Stimulus controller (if needed, located alongside component)
 
 ### ViewComponent vs Partials Decision Making
 
@@ -338,3 +437,34 @@ end
 - Use `mocha` gem
 - Prefer `OpenStruct` for mock instances
 - Only mock what's necessary
+
+## FinKey-Specific Features
+
+### Yahoo Finance Integration
+- **Location**: `app/models/provider/yahoo_finance.rb`, `app/services/yahoo_finance_service.rb`
+- **Purpose**: Free alternative to Synth API for market data and exchange rates
+- **Toggle**: UI setting at `/settings/hosting` (`Setting.use_yahoo_finance`)
+- **Implements**: `SecurityConcept` (security prices) and `ExchangeRateConcept` (exchange rates)
+- **Python Backend**: Uses Python `yfinance` library via subprocess calls
+- **Exchange Mapping**: MIC codes to Yahoo suffixes (e.g., `XLON` → `.L` for London)
+
+### UI-Based LLM Configuration
+- **Location**: `app/controllers/settings/hostings_controller.rb`, `app/models/setting.rb`
+- **Purpose**: Configure AI providers without editing `.env` or rebuilding Docker
+- **Settings**:
+  - `ai_assistant_enabled` - Toggle AI assistant on/off
+  - `ai_provider` - Choose "openai" or "local_llm"
+  - `openai_access_token` - OpenAI API key
+  - `local_llm_base_url` - Ollama/LM Studio endpoint (e.g., `http://localhost:11434`)
+  - `local_llm_model` - Model name (e.g., `llama2`, `mistral`)
+- **Storage**: `rails-settings-cached` gem stores in database, cached in memory
+
+### Enhanced Forecasting
+- **Location**: `app/models/forecast.rb`
+- **Purpose**: 24-month financial projections with trend analysis
+- **Features**: Extended from Maybe's forecasting with longer projection periods
+
+### One-Click Docker Setup
+- **Scripts**: `setup.bat` (Windows), `setup.sh` (Linux/macOS)
+- **Purpose**: Automated Docker deployment with environment setup
+- **Process**: Checks Docker, creates `.env`, builds containers, starts services, opens browser
