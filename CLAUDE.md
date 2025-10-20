@@ -17,7 +17,7 @@ The app runs in two modes via `Rails.application.config.app_mode`:
 
 ## Tech Stack
 
-- **Web Framework**: Ruby on Rails 7.2.x (see `.ruby-version` for Ruby version)
+- **Web Framework**: Ruby on Rails 7.2.x with Ruby 3.4.4
 - **Database**: PostgreSQL >9.3
 - **Jobs**: Sidekiq + Redis with sidekiq-cron for scheduled tasks
 - **Frontend**:
@@ -264,8 +264,9 @@ FinKey uses a provider pattern for external integrations:
   - `Provider::Openai`: AI chat and categorization (via `ruby-openai` gem)
   - `Provider::YahooFinance`: Exchange rates and security prices (FinKey exclusive)
   - `Provider::Synth`: Maybe's market data API (original)
-  - `Provider::Plaid`: Bank account syncing
+  - `Provider::Plaid`: Bank account syncing (includes `Provider::PlaidSandbox` for testing)
   - `Provider::Stripe`: Payment processing (managed mode)
+  - `Provider::Github`: GitHub integration for version updates and releases
 
 ### Security & Authentication
 - Session-based auth for web users

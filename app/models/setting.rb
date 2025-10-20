@@ -14,6 +14,7 @@ class Setting < RailsSettings::Base
   field :openai_access_token, type: :string, default: ENV["OPENAI_ACCESS_TOKEN"]
   field :local_llm_base_url, type: :string, default: ""
   field :local_llm_model, type: :string, default: ""
+  field :ai_assistant_max_transactions, type: :integer, default: 500 # Max transactions per AI request
 
   # User management settings
   field :require_invite_for_signup, type: :boolean, default: false

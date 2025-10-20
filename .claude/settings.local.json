@@ -30,7 +30,8 @@
       "Bash(python3:*)",
       "Bash(convert:*)",
       "Bash(git add:*)",
-      "Bash(cat bin/dev)"
+      "Bash(cat bin/dev)",
+      "Bash(cat .ruby-version)"
     ],
     "deny": []
   }

@@ -93,18 +93,31 @@ class Assistant::Function::GetIncomeStatement < Assistant::Function
       end
 
       hierarchical_groups.sort_by { |name, data| -data.dig(:category_total).total }.map do |name, data|
-        {
+        category_total = data.dig(:category_total)
+        category = category_total.category
+
+        category_data = {
           name: name,
-          total: format_money(data.dig(:category_total).total),
-          percentage_of_total: number_to_percentage(data.dig(:category_total).weight, precision: 1),
+          total: format_money(category_total.total),
+          percentage_of_total: number_to_percentage(category_total.weight, precision: 1),
+          category_metadata: {
+            color: category.color,
+            icon: category.lucide_icon
+          },
           subcategory_totals: data.dig(:subcategory_totals).map do |st|
             {
               name: st.category.name,
               total: format_money(st.total),
-              percentage_of_total: number_to_percentage(st.weight, precision: 1)
+              percentage_of_total: number_to_percentage(st.weight, precision: 1),
+              category_metadata: {
+                color: st.category.color,
+                icon: st.category.lucide_icon
+              }
             }
           end
         }
+
+        category_data
       end
     end
 

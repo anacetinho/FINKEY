@@ -3,7 +3,12 @@ class Assistant::Function::GetTransactions < Assistant::Function
 
   class << self
     def default_page_size
-      50
+      # Adaptive pagination based on AI provider
+      if Setting.ai_provider == "local"
+        Setting.ai_assistant_max_transactions || 500
+      else
+        50 # Conservative limit for OpenAI to save tokens
+      end
     end
 
     def name
@@ -154,8 +159,9 @@ class Assistant::Function::GetTransactions < Assistant::Function
 
     normalized_transactions = paginated_transactions.map do |txn|
       entry = txn.entry
-      {
+      transaction_data = {
         date: entry.date,
+        name: txn.name,
         amount: entry.amount.abs,
         currency: entry.currency,
         formatted_amount: entry.amount_money.abs.format,
@@ -164,8 +170,22 @@ class Assistant::Function::GetTransactions < Assistant::Function
         category: txn.category&.name,
         merchant: txn.merchant&.name,
         tags: txn.tags.map(&:name),
+        notes: txn.notes,
+        excluded: txn.excluded,
         is_transfer: txn.transfer?
       }
+
+      # Add category metadata if category exists
+      if txn.category.present?
+        transaction_data[:category_metadata] = {
+          color: txn.category.color,
+          icon: txn.category.lucide_icon,
+          is_parent: txn.category.parent_id.nil?,
+          parent_category: txn.category.parent&.name
+        }
+      end
+
+      transaction_data
     end
 
     {

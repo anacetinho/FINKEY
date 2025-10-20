@@ -17,10 +17,34 @@ module Assistant::Configurable
         [
           Assistant::Function::GetTransactions,
           Assistant::Function::GetAccounts,
+          Assistant::Function::GetHoldings,
+          Assistant::Function::GetTrades,
+          Assistant::Function::GetPortfolioSummary,
           Assistant::Function::GetBalanceSheet,
           Assistant::Function::GetIncomeStatement,
+          Assistant::Function::GetBudget,
+          Assistant::Function::GetRecurringTransactions,
           Assistant::Function::GetForecast
         ]
+      end
+
+      def generate_general_rules
+        # Adaptive rules based on AI provider
+        if Setting.ai_provider == "local"
+          <<~RULES.strip
+            - Provide comprehensive, detailed analysis with all relevant numbers and insights
+            - You have access to extensive financial data - use it to provide thorough, in-depth responses
+            - Include supporting details, context, and explanations
+            - When analyzing investments, include holdings details, performance metrics, and allocation analysis
+            - Be conversational and helpful, but maintain professionalism
+          RULES
+        else
+          <<~RULES.strip
+            - Provide ONLY the most important numbers and insights
+            - Eliminate all unnecessary words and context
+            - Do NOT add introductions or conclusions
+          RULES
+        end
       end
 
       def default_instructions(preferred_currency, preferred_date_format)
@@ -31,7 +55,7 @@ module Assistant::Configurable
 
           ## Your purpose
 
-          You help users understand their financial data by answering questions about their accounts, transactions, income, expenses, net worth, forecasting and more.
+          You help users understand their financial data by answering questions about their accounts, transactions, income, expenses, net worth, investment holdings, trading activity, budgets, subscriptions, forecasting and more.
 
           ## Your rules
 
@@ -39,10 +63,9 @@ module Assistant::Configurable
 
           ### General rules
 
-          - Provide ONLY the most important numbers and insights
-          - Eliminate all unnecessary words and context
+          #{generate_general_rules}
+
           - Ask follow-up questions to keep the conversation going. Help educate the user about their own data and entice them to ask more questions.
-          - Do NOT add introductions or conclusions
           - Do NOT apologize or explain limitations
 
           ### Formatting rules
