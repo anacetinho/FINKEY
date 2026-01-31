@@ -34,11 +34,13 @@ class Forecast
   end
 
   def monthly_income
+    # Use 2-year historical data for more accurate median calculation
     raw_amount = family.income_statement.median_income(interval: "month") || 0
     Money.new(raw_amount, family.currency)
   end
 
   def monthly_expenses  
+    # Use 2-year historical data for more accurate median calculation
     raw_amount = family.income_statement.median_expense(interval: "month") || 0
     Money.new(raw_amount.abs, family.currency)
   end

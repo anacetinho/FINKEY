@@ -48,8 +48,28 @@ class IncomeStatement
     end
   end
 
-  def median_income(interval: "month")
-    family_stats(interval: interval).find { |stat| stat.classification == "income" }&.median || 0
+  def median_income(interval: "month", period: nil)
+    if period.present?
+      # Use the specified period for calculation
+      scope = family.transactions.visible.in_period(period)
+      result = totals_query(transactions_scope: scope)
+      
+      income_totals = result.select { |t| t.classification == "income" }
+      return 0 if income_totals.empty?
+      
+      # Calculate median value from income transactions
+      amounts = income_totals.map(&:total).sort
+      size = amounts.size
+      
+      if size.odd?
+        amounts[size/2]
+      else
+        (amounts[size/2 - 1] + amounts[size/2]) / 2.0
+      end
+    else
+      # Default behavior without period parameter
+      family_stats(interval: interval).find { |stat| stat.classification == "income" }&.median || 0
+    end
   end
 
   private
