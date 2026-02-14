@@ -1,0 +1,12 @@
+# 1. Drop the existing database
+docker exec -it finkey-db-1 psql -U maybe_user -c "DROP DATABASE IF EXISTS maybe_production;"
+
+# 2. Create a fresh database
+docker exec -it finkey-db-1 psql -U maybe_user -c "CREATE DATABASE maybe_production;"
+
+# 3. Load the backup file into the new database
+
+docker exec -i finkey-db-1 psql -U maybe_user -d maybe_production < "C:\Users\migue\Documents\GitHub\backup.sql"
+
+# 4. Create a backup of the database
+docker exec -i finkey-db-1 pg_dump -U maybe_user -d maybe_production > "C:\Users\migue\Documents\GitHub\backup.sql"

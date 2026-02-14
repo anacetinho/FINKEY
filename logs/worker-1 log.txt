@@ -1,6 +1,0 @@
-2026-01-30 08:07:09.341 | INFO  2026-01-30T08:07:09.341Z pid=1 tid=1t5: Booted Rails 7.2.2.1 application in production environment
-2026-01-30 08:07:09.342 | INFO  2026-01-30T08:07:09.341Z pid=1 tid=1t5: Running in ruby 3.4.4 (2025-05-14 revision a38531fd3f) +YJIT +PRISM [aarch64-linux]
-2026-01-30 08:07:09.342 | INFO  2026-01-30T08:07:09.341Z pid=1 tid=1t5: See LICENSE and the LGPL-3.0 for licensing details.
-2026-01-30 08:07:09.342 | INFO  2026-01-30T08:07:09.341Z pid=1 tid=1t5: Upgrade to Sidekiq Pro for more features and support: https://sidekiq.org
-2026-01-30 08:07:09.342 | INFO  2026-01-30T08:07:09.341Z pid=1 tid=1t5: Sidekiq 8.0.5 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://redis:6379/1"}
-2026-01-30 08:07:09.352 | INFO  2026-01-30T08:07:09.351Z pid=1 tid=1t5: Sidekiq 8.0.5 connecting to Redis with options {size: 3, pool_name: "default", url: "redis://redis:6379/1"}

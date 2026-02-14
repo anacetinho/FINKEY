@@ -65,6 +65,8 @@ services:
   worker:
     build: .
     command: bundle exec sidekiq
+    volumes:
+      - app-storage:/rails/storage
     restart: unless-stopped
     depends_on:
       redis:

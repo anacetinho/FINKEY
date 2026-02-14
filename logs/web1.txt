@@ -1,0 +1,12 @@
+2026-02-14 18:04:53.039 | => Booting Puma
+2026-02-14 18:04:53.039 | => Rails 7.2.2.1 application starting in production 
+2026-02-14 18:04:53.039 | => Run `bin/rails server --help` for more startup options
+2026-02-14 18:04:55.029 | Puma starting in single mode...
+2026-02-14 18:04:55.030 | * Puma version: 6.6.0 ("Return to Forever")
+2026-02-14 18:04:55.030 | * Ruby version: ruby 3.4.4 (2025-05-14 revision a38531fd3f) +YJIT +PRISM [aarch64-linux]
+2026-02-14 18:04:55.030 | *  Min threads: 3
+2026-02-14 18:04:55.030 | *  Max threads: 3
+2026-02-14 18:04:55.030 | *  Environment: production
+2026-02-14 18:04:55.030 | *          PID: 1
+2026-02-14 18:04:55.030 | * Listening on http://0.0.0.0:3000
+2026-02-14 18:04:55.036 | Use Ctrl-C to stop
