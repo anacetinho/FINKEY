@@ -3,12 +3,13 @@ class BalanceSheet::NetWorthSeriesBuilder
     @family = family
   end
 
-  def net_worth_series(period: Period.last_30_days)
-    Rails.cache.fetch(cache_key(period)) do
+  def net_worth_series(period: Period.last_30_days, interval: nil)
+    Rails.cache.fetch(cache_key(period, interval)) do
       builder = Balance::ChartSeriesBuilder.new(
         account_ids: visible_account_ids,
         currency: family.currency,
         period: period,
+        interval: interval || period.interval,
         favorable_direction: "up"
       )
 
@@ -23,11 +24,12 @@ class BalanceSheet::NetWorthSeriesBuilder
       @visible_account_ids ||= family.accounts.visible.with_attached_logo.pluck(:id)
     end
 
-    def cache_key(period)
+    def cache_key(period, interval)
       key = [
         "balance_sheet_net_worth_series",
         period.start_date,
-        period.end_date
+        period.end_date,
+        interval
       ].compact.join("_")
 
       family.build_cache_key(

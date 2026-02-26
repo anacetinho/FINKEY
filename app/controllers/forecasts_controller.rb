@@ -5,7 +5,9 @@ class ForecastsController < ApplicationController
     @forecast = Current.family.forecast(
       timeline: @timeline,
       income_growth_rate: @income_growth_rate,
-      expense_growth_rate: @expense_growth_rate
+      expense_growth_rate: @expense_growth_rate,
+      property_growth_rate: @property_growth_rate,
+      investment_growth_rate: @investment_growth_rate
     )
     
     @has_sufficient_data = @forecast.has_sufficient_data?
@@ -34,6 +36,8 @@ class ForecastsController < ApplicationController
     @timeline = params[:timeline] || "1Y"
     @income_growth_rate = params[:income_growth_rate].to_f
     @expense_growth_rate = params[:expense_growth_rate].to_f
+    @property_growth_rate = params[:property_growth_rate].to_f
+    @investment_growth_rate = params[:investment_growth_rate].to_f
     
     # Validate timeline parameter
     unless %w[1Y 2Y 5Y].include?(@timeline)
@@ -43,5 +47,7 @@ class ForecastsController < ApplicationController
     # Cap growth rates to reasonable ranges
     @income_growth_rate = @income_growth_rate.clamp(-50.0, 100.0)
     @expense_growth_rate = @expense_growth_rate.clamp(-50.0, 100.0)
+    @property_growth_rate = @property_growth_rate.clamp(-50.0, 100.0)
+    @investment_growth_rate = @investment_growth_rate.clamp(-50.0, 100.0)
   end
 end

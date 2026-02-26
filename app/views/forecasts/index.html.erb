@@ -55,6 +55,30 @@
             <p class="text-xs text-secondary mt-1">Percentage (e.g., 2.5 for 2.5% annual growth)</p>
           </div>
 
+          <div>
+            <%= form.label :property_growth_rate, "Expected annual property appreciation", class: "block text-sm font-medium text-secondary mb-1" %>
+            <%= form.number_field :property_growth_rate,
+                value: @property_growth_rate,
+                step: 0.1,
+                min: -50,
+                max: 100,
+                placeholder: "2.0",
+                class: "w-full px-3 py-2 border border-secondary rounded-lg text-primary bg-container text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" %>
+            <p class="text-xs text-secondary mt-1">Annual appreciation rate for real estate</p>
+          </div>
+
+          <div>
+            <%= form.label :investment_growth_rate, "Expected annual investment return", class: "block text-sm font-medium text-secondary mb-1" %>
+            <%= form.number_field :investment_growth_rate,
+                value: @investment_growth_rate,
+                step: 0.1,
+                min: -50,
+                max: 100,
+                placeholder: "5.0",
+                class: "w-full px-3 py-2 border border-secondary rounded-lg text-primary bg-container text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" %>
+            <p class="text-xs text-secondary mt-1">Expected annual return on investments (stocks, etc.)</p>
+          </div>
+
           <div class="pt-2">
             <%= render DS::Button.new(
               text: "Update Forecast",

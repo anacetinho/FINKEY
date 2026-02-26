@@ -1,0 +1,40 @@
+<div class="bg-container shadow-border-xs rounded-xl p-4">
+      <h3 class="text-lg font-semibold text-primary mb-4">Forecast Settings</h3>
+      
+      <form class="space-y-4" action="/forecasts" accept-charset="UTF-8" method="get">
+        <input value="1Y" autocomplete="off" type="hidden" name="timeline" id="timeline">
+        
+        <div class="space-y-3">
+          <div>
+            <label class="block text-sm font-medium text-secondary mb-1" for="income_growth_rate">Expected annual income growth</label>
+            <input value="0.0" step="0.1" min="-50" max="100" placeholder="0.0" class="w-full px-3 py-2 border border-secondary rounded-lg text-primary bg-container text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" type="number" name="income_growth_rate" id="income_growth_rate">
+            <p class="text-xs text-secondary mt-1">Percentage (e.g., 3.0 for 3% annual growth)</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-secondary mb-1" for="expense_growth_rate">Expected annual expense growth</label>
+            <input value="0.0" step="0.1" min="-50" max="100" placeholder="0.0" class="w-full px-3 py-2 border border-secondary rounded-lg text-primary bg-container text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" type="number" name="expense_growth_rate" id="expense_growth_rate">
+            <p class="text-xs text-secondary mt-1">Percentage (e.g., 2.5 for 2.5% annual growth)</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-secondary mb-1" for="property_growth_rate">Expected annual property appreciation</label>
+            <input value="0.0" step="0.1" min="-50" max="100" placeholder="2.0" class="w-full px-3 py-2 border border-secondary rounded-lg text-primary bg-container text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" type="number" name="property_growth_rate" id="property_growth_rate">
+            <p class="text-xs text-secondary mt-1">Annual appreciation rate for real estate</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-secondary mb-1" for="investment_growth_rate">Expected annual investment return</label>
+            <input value="0.0" step="0.1" min="-50" max="100" placeholder="5.0" class="w-full px-3 py-2 border border-secondary rounded-lg text-primary bg-container text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/20" type="number" name="investment_growth_rate" id="investment_growth_rate">
+            <p class="text-xs text-secondary mt-1">Expected annual return on investments (stocks, etc.)</p>
+          </div>
+
+          <div class="pt-2">
+            <button type="submit" class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-md w-full px-2 py-1 text-sm text-inverse bg-inverse hover:bg-inverse-hover disabled:bg-gray-500 theme-dark:disabled:bg-gray-400">
+
+    Update Forecast
+
+</button>
+          </div>
+        </div>
+</form>    </div>

@@ -67,8 +67,8 @@ class Family < ApplicationRecord
     @income_statement ||= IncomeStatement.new(self)
   end
 
-  def forecast(timeline: "1Y", income_growth_rate: 0.0, expense_growth_rate: 0.0)
-    Forecast.new(self, timeline: timeline, income_growth_rate: income_growth_rate, expense_growth_rate: expense_growth_rate)
+  def forecast(timeline: "1Y", income_growth_rate: 0.0, expense_growth_rate: 0.0, property_growth_rate: 0.0, investment_growth_rate: 0.0)
+    Forecast.new(self, timeline: timeline, income_growth_rate: income_growth_rate, expense_growth_rate: expense_growth_rate, property_growth_rate: property_growth_rate, investment_growth_rate: investment_growth_rate)
   end
 
   def eu?

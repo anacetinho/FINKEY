@@ -59,6 +59,7 @@ class IncomeStatement::FamilyStats
             AND a.status IN ('draft', 'active')
             AND ae.date >= :start_date
             AND t.kind NOT IN ('funds_movement', 'one_time', 'cc_payment')
+            AND a.accountable_type NOT IN ('Investment', 'Crypto')
             AND ae.excluded = false
           GROUP BY period, CASE 
               WHEN c.allows_negative_expenses = true THEN 'expense'

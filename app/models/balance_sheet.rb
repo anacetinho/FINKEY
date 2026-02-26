@@ -45,8 +45,8 @@ class BalanceSheet
     Money.new(assets_money.to_f - liabilities_money.to_f, currency)
   end
 
-  def net_worth_series(period: Period.last_30_days)
-    net_worth_series_builder.net_worth_series(period: period)
+  def net_worth_series(period: Period.last_30_days, interval: nil)
+    net_worth_series_builder.net_worth_series(period: period, interval: interval)
   end
 
   def currency
