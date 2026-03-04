@@ -28,6 +28,11 @@
     </div>
 
     <%= form_with url: forecasts_path, method: :get, local: true, data: { controller: "auto-submit-form" } do |form| %>
+      <%= form.hidden_field :income_growth_rate, value: income_growth_rate_pct %>
+      <%= form.hidden_field :expense_growth_rate, value: expense_growth_rate_pct %>
+      <%= form.hidden_field :property_growth_rate, value: property_growth_rate_pct %>
+      <%= form.hidden_field :investment_growth_rate, value: investment_growth_rate_pct %>
+
       <div class="flex items-center gap-2">
         <%= form.select :timeline,
                 timeline_options,

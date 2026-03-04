@@ -20,8 +20,14 @@ class ForecastsController < ApplicationController
     Rails.logger.error "Forecast error: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
     
-    # Fallback to basic forecast with default parameters
-    @forecast = Current.family.forecast(timeline: "1Y")
+    # Fallback to basic forecast with passed parameters
+    @forecast = Current.family.forecast(
+      timeline: @timeline,
+      income_growth_rate: @income_growth_rate,
+      expense_growth_rate: @expense_growth_rate,
+      property_growth_rate: @property_growth_rate,
+      investment_growth_rate: @investment_growth_rate
+    )
     @has_sufficient_data = false
     
     respond_to do |format|

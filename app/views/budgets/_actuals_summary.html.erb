@@ -4,9 +4,11 @@
   <div class="p-4 border-b border-secondary">
     <h3 class="text-sm text-secondary mb-2">Income</h3>
 
-    <span class="inline-block mb-2 text-xl font-medium text-primary">
-      <%= budget.actual_income_money.format %>
-    </span>
+    <%= link_to transactions_path(q: { start_date: budget.start_date, end_date: budget.end_date, types: ["income"] }), class: "group inline-block mb-2" do %>
+      <span class="text-xl font-medium text-primary group-hover:underline">
+        <%= budget.actual_income_money.format %>
+      </span>
+    <% end %>
 
     <% if budget.income_category_totals.any? %>
       <div>
@@ -18,11 +20,11 @@
 
         <div class="flex flex-wrap gap-x-2.5 gap-y-1 text-xs">
           <% budget.income_category_totals.each do |category_total| %>
-            <div class="flex items-center gap-1.5">
+            <%= link_to transactions_path(q: { start_date: budget.start_date, end_date: budget.end_date, categories: [category_total.category.name] }), class: "group flex items-center gap-1.5" do %>
               <div class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: <%= category_total.category.color %>"></div>
-              <span class="text-secondary"><%= category_total.category.name %></span>
+              <span class="text-secondary group-hover:underline group-hover:text-primary transition-colors"><%= category_total.category.name %></span>
               <span class="text-primary"><%= number_to_percentage(category_total.weight, precision: 0) %></span>
-            </div>
+            <% end %>
           <% end %>
         </div>
       </div>
@@ -32,7 +34,11 @@
   <div class="p-4">
     <h3 class="text-sm text-secondary mb-2">Expenses</h3>
 
-    <span class="inline-block mb-2 text-xl font-medium text-primary"><%= budget.actual_spending_money.format %></span>
+    <%= link_to transactions_path(q: { start_date: budget.start_date, end_date: budget.end_date, types: ["expense"] }), class: "group inline-block mb-2" do %>
+      <span class="text-xl font-medium text-primary group-hover:underline">
+        <%= budget.actual_spending_money.format %>
+      </span>
+    <% end %>
 
     <% if budget.expense_category_totals.any? %>
       <div>
@@ -44,11 +50,11 @@
 
         <div class="flex flex-wrap gap-x-2.5 gap-y-1 text-xs">
           <% budget.expense_category_totals.each do |category_total| %>
-            <div class="flex items-center gap-1.5">
+            <%= link_to transactions_path(q: { start_date: budget.start_date, end_date: budget.end_date, categories: [category_total.category.name] }), class: "group flex items-center gap-1.5" do %>
               <div class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: <%= category_total.category.color %>"></div>
-              <span class="text-secondary"><%= category_total.category.name %></span>
+              <span class="text-secondary group-hover:underline group-hover:text-primary transition-colors"><%= category_total.category.name %></span>
               <span class="text-primary"><%= number_to_percentage(category_total.weight, precision: 0) %></span>
-            </div>
+            <% end %>
           <% end %>
         </div>
       </div>

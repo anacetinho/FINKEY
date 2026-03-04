@@ -97,15 +97,27 @@ class Transaction::Search
     def apply_category_filter(query, categories)
       return query unless categories.present?
 
-      query = query.left_joins(:category).where(
-        "categories.name IN (?) OR (
-        categories.id IS NULL AND (transactions.kind NOT IN ('funds_movement', 'cc_payment'))
-      )",
-        categories
-      )
+      # Find all categories matching the names, and their subcategories
+      category_ids = family.categories.where(name: categories).pluck(:id)
+      subcategory_ids = family.categories.where(parent_id: category_ids).pluck(:id)
+      all_matching_category_ids = (category_ids + subcategory_ids).uniq
 
-      if categories.exclude?("Uncategorized")
-        query = query.where.not(category_id: nil)
+      conditions = []
+      params = []
+
+      if all_matching_category_ids.any?
+        conditions << "transactions.category_id IN (?)"
+        params << all_matching_category_ids
+      end
+
+      if categories.include?("Uncategorized")
+        conditions << "(transactions.category_id IS NULL AND transactions.kind NOT IN ('funds_movement', 'cc_payment'))"
+      end
+
+      if conditions.any?
+        query = query.where(conditions.join(" OR "), *params)
+      else
+        query = query.none
       end
 
       query

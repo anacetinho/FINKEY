@@ -6,6 +6,11 @@ class UI::ForecastChart < ApplicationComponent
     @timeline = timeline
   end
 
+  def income_growth_rate_pct = forecast.income_growth_rate * 100
+  def expense_growth_rate_pct = forecast.expense_growth_rate * 100
+  def property_growth_rate_pct = forecast.property_growth_rate * 100
+  def investment_growth_rate_pct = forecast.investment_growth_rate * 100
+
   def current_net_worth_money
     forecast.current_net_worth
   end

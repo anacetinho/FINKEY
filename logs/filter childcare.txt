@@ -1,0 +1,1116 @@
+<div id="transactions" data-controller="bulk-select" data-bulk-select-singular-label-value="transaction" data-bulk-select-plural-label-value="transactions" class="flex flex-col bg-container rounded-xl shadow-border-xs p-4">
+    <form id="transactions-search" data-controller="auto-submit-form" action="/transactions" accept-charset="UTF-8" method="get">
+  <input type="hidden" name="per_page" id="per_page" autocomplete="off">
+
+  <div class="flex gap-2 mb-4">
+    <div class="grow">
+      <div class="flex items-center px-3 py-2 gap-2 border border-secondary rounded-lg focus-within:ring-secondary focus-within:border-secondary">
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <input placeholder="Search transactions ..." class="form-field__input placeholder:text-sm placeholder:text-secondary" data-auto-submit-form-target="auto" type="text" name="q[search]" id="q_search">
+      </div>
+    </div>
+
+    <div data-controller="DS--menu" data-ds--menu-placement-value="bottom-end" data-ds--menu-offset-value="12">
+    <button id="transaction-filters-button" type="button" class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm text-primary border border-secondary bg-transparent hover:bg-surface-hover" data-ds--menu-target="button">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="M3 6h18"></path><path d="M7 12h10"></path><path d="M10 18h4"></path></svg>
+
+    Filter
+
+</button>
+
+  <div data-ds--menu-target="content" class="px-2 lg:px-0 max-w-full hidden z-50" style="position: fixed; left: 1052.89px; top: 298.172px;">
+    <div class="mx-auto min-w-[200px] shadow-border-xs bg-container rounded-lg">
+      
+
+      <div class="">
+
+                
+<div data-controller="DS--tabs" data-ds--tabs-nav-btn-active-class="bg-surface text-primary" data-ds--tabs-nav-btn-inactive-class="text-secondary hover:bg-container-inset">
+    
+  <div id="transaction-filters-menu" class="flex flex-col md:flex-row h-[50vh] lg:max-h-auto z-10 md:h-80 w-full md:w-[540px] top-12 right-0 overflow-hidden">
+    <nav class="shrink-0 flex w-full md:w-44 flex-row md:flex-col items-start p-3 text-sm font-medium text-secondary border-b md:border-b-0 md:border-r border-secondary overflow-x-auto md:overflow-x-visible">
+    <button id="account_filter" type="button" class="bg-surface text-primary w-full px-3 py-2 flex gap-2 items-center rounded-md" data-id="account_filter" data-action="DS--tabs#show" data-ds--tabs-target="navBtn">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"></path><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"></path><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"></path></svg>
+          <span class="text-sm font-medium">Account</span>
+</button>
+    <button id="date_filter" type="button" class="text-secondary hover:bg-container-inset w-full px-3 py-2 flex gap-2 items-center rounded-md" data-id="date_filter" data-action="DS--tabs#show" data-ds--tabs-target="navBtn">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+          <span class="text-sm font-medium">Date</span>
+</button>
+    <button id="type_filter" type="button" class="text-secondary hover:bg-container-inset w-full px-3 py-2 flex gap-2 items-center rounded-md" data-id="type_filter" data-action="DS--tabs#show" data-ds--tabs-target="navBtn">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>
+          <span class="text-sm font-medium">Type</span>
+</button>
+    <button id="amount_filter" type="button" class="text-secondary hover:bg-container-inset w-full px-3 py-2 flex gap-2 items-center rounded-md" data-id="amount_filter" data-action="DS--tabs#show" data-ds--tabs-target="navBtn">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><line x1="4" x2="20" y1="9" y2="9"></line><line x1="4" x2="20" y1="15" y2="15"></line><line x1="10" x2="8" y1="3" y2="21"></line><line x1="16" x2="14" y1="3" y2="21"></line></svg>
+          <span class="text-sm font-medium">Amount</span>
+</button>
+    <button id="category_filter" type="button" class="text-secondary hover:bg-container-inset w-full px-3 py-2 flex gap-2 items-center rounded-md" data-id="category_filter" data-action="DS--tabs#show" data-ds--tabs-target="navBtn">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+          <span class="text-sm font-medium">Category</span>
+</button>
+    <button id="tag_filter" type="button" class="text-secondary hover:bg-container-inset w-full px-3 py-2 flex gap-2 items-center rounded-md" data-id="tag_filter" data-action="DS--tabs#show" data-ds--tabs-target="navBtn">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19"></path><path d="M9.586 5.586A2 2 0 0 0 8.172 5H3a1 1 0 0 0-1 1v5.172a2 2 0 0 0 .586 1.414L8.29 18.29a2.426 2.426 0 0 0 3.42 0l3.58-3.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="6.5" cy="9.5" r=".5" fill="currentColor"></circle></svg>
+          <span class="text-sm font-medium">Tag</span>
+</button>
+    <button id="merchant_filter" type="button" class="text-secondary hover:bg-container-inset w-full px-3 py-2 flex gap-2 items-center rounded-md" data-id="merchant_filter" data-action="DS--tabs#show" data-ds--tabs-target="navBtn">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path><path d="M2 7h20"></path><path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"></path></svg>
+          <span class="text-sm font-medium">Merchant</span>
+</button>
+</nav>
+    <div class="flex flex-col grow overflow-y-auto">
+      <div class="grow p-3 border-b border-secondary overflow-y-auto">
+          <div data-id="account_filter" data-ds--tabs-target="panel">
+            <div data-controller="list-filter">
+  <div class="relative">
+    <input type="search" autocomplete="off" placeholder="Filter accounts" data-list-filter-target="input" data-action="input-&gt;list-filter#filter" class="block w-full border border-secondary rounded-md py-2 pl-10 pr-3 bg-container focus:ring-gray-500 sm:text-sm">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray absolute inset-y-0 left-2 top-1/2 transform -translate-y-1/2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+  </div>
+  <div class="my-2" id="list" data-list-filter-target="list">
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Algés - Loja (1/2)">
+        <input class="checkbox checkbox--light" type="checkbox" value="Algés - Loja (1/2)" name="q[accounts][]" id="q_accounts_algés_-_loja_12">
+        <label class="text-sm text-primary" for="q_accounts_algés_-_loja_12">Algés - Loja (1/2)</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Algés - T1 - 1º DRT (1/2)">
+        <input class="checkbox checkbox--light" type="checkbox" value="Algés - T1 - 1º DRT (1/2)" name="q[accounts][]" id="q_accounts_algés_-_t1_-_1º_drt_12">
+        <label class="text-sm text-primary" for="q_accounts_algés_-_t1_-_1º_drt_12">Algés - T1 - 1º DRT (1/2)</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Algés - T1 - RC (1/2)">
+        <input class="checkbox checkbox--light" type="checkbox" value="Algés - T1 - RC (1/2)" name="q[accounts][]" id="q_accounts_algés_-_t1_-_rc_12">
+        <label class="text-sm text-primary" for="q_accounts_algés_-_t1_-_rc_12">Algés - T1 - RC (1/2)</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Baloise">
+        <input class="checkbox checkbox--light" type="checkbox" value="Baloise" name="q[accounts][]" id="q_accounts_baloise">
+        <label class="text-sm text-primary" for="q_accounts_baloise">Baloise</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="BIG - Acções + Opções">
+        <input class="checkbox checkbox--light" type="checkbox" value="BIG - Acções + Opções" name="q[accounts][]" id="q_accounts_big_-_acções__opções">
+        <label class="text-sm text-primary" for="q_accounts_big_-_acções__opções">BIG - Acções + Opções</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="BIG - Obrigações e fundos">
+        <input class="checkbox checkbox--light" type="checkbox" value="BIG - Obrigações e fundos" name="q[accounts][]" id="q_accounts_big_-_obrigações_e_fundos">
+        <label class="text-sm text-primary" for="q_accounts_big_-_obrigações_e_fundos">BIG - Obrigações e fundos</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="BIG Ordem">
+        <input class="checkbox checkbox--light" type="checkbox" value="BIG Ordem" name="q[accounts][]" id="q_accounts_big_ordem">
+        <label class="text-sm text-primary" for="q_accounts_big_ordem">BIG Ordem</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="BIG Prazo">
+        <input class="checkbox checkbox--light" type="checkbox" value="BIG Prazo" name="q[accounts][]" id="q_accounts_big_prazo">
+        <label class="text-sm text-primary" for="q_accounts_big_prazo">BIG Prazo</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Caução / Deposit">
+        <input class="checkbox checkbox--light" type="checkbox" value="Caução / Deposit" name="q[accounts][]" id="q_accounts_caução__deposit">
+        <label class="text-sm text-primary" for="q_accounts_caução__deposit">Caução / Deposit</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Caução Sap">
+        <input class="checkbox checkbox--light" type="checkbox" value="Caução Sap" name="q[accounts][]" id="q_accounts_caução_sap">
+        <label class="text-sm text-primary" for="q_accounts_caução_sap">Caução Sap</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Cauções Arrendamentos">
+        <input class="checkbox checkbox--light" type="checkbox" value="Cauções Arrendamentos" name="q[accounts][]" id="q_accounts_cauções_arrendamentos">
+        <label class="text-sm text-primary" for="q_accounts_cauções_arrendamentos">Cauções Arrendamentos</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Certificados Aforro">
+        <input class="checkbox checkbox--light" type="checkbox" value="Certificados Aforro" name="q[accounts][]" id="q_accounts_certificados_aforro">
+        <label class="text-sm text-primary" for="q_accounts_certificados_aforro">Certificados Aforro</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Conjunta - Ativo Poupança">
+        <input class="checkbox checkbox--light" type="checkbox" value="Conjunta - Ativo Poupança" name="q[accounts][]" id="q_accounts_conjunta_-_ativo_poupança">
+        <label class="text-sm text-primary" for="q_accounts_conjunta_-_ativo_poupança">Conjunta - Ativo Poupança</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Conjunta - BIG Investimento">
+        <input class="checkbox checkbox--light" type="checkbox" value="Conjunta - BIG Investimento" name="q[accounts][]" id="q_accounts_conjunta_-_big_investimento">
+        <label class="text-sm text-primary" for="q_accounts_conjunta_-_big_investimento">Conjunta - BIG Investimento</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Conjunta - Big Ordem">
+        <input class="checkbox checkbox--light" type="checkbox" value="Conjunta - Big Ordem" name="q[accounts][]" id="q_accounts_conjunta_-_big_ordem">
+        <label class="text-sm text-primary" for="q_accounts_conjunta_-_big_ordem">Conjunta - Big Ordem</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Conjunta Caução Casa">
+        <input class="checkbox checkbox--light" type="checkbox" value="Conjunta Caução Casa" name="q[accounts][]" id="q_accounts_conjunta_caução_casa">
+        <label class="text-sm text-primary" for="q_accounts_conjunta_caução_casa">Conjunta Caução Casa</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Conjunta - Envelope">
+        <input class="checkbox checkbox--light" type="checkbox" value="Conjunta - Envelope" name="q[accounts][]" id="q_accounts_conjunta_-_envelope">
+        <label class="text-sm text-primary" for="q_accounts_conjunta_-_envelope">Conjunta - Envelope</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Conjunta - Mealheiro Miudos">
+        <input class="checkbox checkbox--light" type="checkbox" value="Conjunta - Mealheiro Miudos" name="q[accounts][]" id="q_accounts_conjunta_-_mealheiro_miudos">
+        <label class="text-sm text-primary" for="q_accounts_conjunta_-_mealheiro_miudos">Conjunta - Mealheiro Miudos</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Conjunta (USD)">
+        <input class="checkbox checkbox--light" type="checkbox" value="Conjunta (USD)" name="q[accounts][]" id="q_accounts_conjunta_usd">
+        <label class="text-sm text-primary" for="q_accounts_conjunta_usd">Conjunta (USD)</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="CoverFlex">
+        <input class="checkbox checkbox--light" type="checkbox" value="CoverFlex" name="q[accounts][]" id="q_accounts_coverflex">
+        <label class="text-sm text-primary" for="q_accounts_coverflex">CoverFlex</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Coverflex food + wallet">
+        <input class="checkbox checkbox--light" type="checkbox" value="Coverflex food + wallet" name="q[accounts][]" id="q_accounts_coverflex_food__wallet">
+        <label class="text-sm text-primary" for="q_accounts_coverflex_food__wallet">Coverflex food + wallet</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Euros">
+        <input class="checkbox checkbox--light" type="checkbox" value="Euros" name="q[accounts][]" id="q_accounts_euros">
+        <label class="text-sm text-primary" for="q_accounts_euros">Euros</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="GAB">
+        <input class="checkbox checkbox--light" type="checkbox" value="GAB" name="q[accounts][]" id="q_accounts_gab">
+        <label class="text-sm text-primary" for="q_accounts_gab">GAB</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Lu Ativo Ordem">
+        <input class="checkbox checkbox--light" type="checkbox" value="Lu Ativo Ordem" name="q[accounts][]" id="q_accounts_lu_ativo_ordem">
+        <label class="text-sm text-primary" for="q_accounts_lu_ativo_ordem">Lu Ativo Ordem</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Lu Ativo Poupança">
+        <input class="checkbox checkbox--light" type="checkbox" value="Lu Ativo Poupança" name="q[accounts][]" id="q_accounts_lu_ativo_poupança">
+        <label class="text-sm text-primary" for="q_accounts_lu_ativo_poupança">Lu Ativo Poupança</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="LU Ativo Poupança 2">
+        <input class="checkbox checkbox--light" type="checkbox" value="LU Ativo Poupança 2" name="q[accounts][]" id="q_accounts_lu_ativo_poupança_2">
+        <label class="text-sm text-primary" for="q_accounts_lu_ativo_poupança_2">LU Ativo Poupança 2</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="LU Bonus SAP">
+        <input class="checkbox checkbox--light" type="checkbox" value="LU Bonus SAP" name="q[accounts][]" id="q_accounts_lu_bonus_sap">
+        <label class="text-sm text-primary" for="q_accounts_lu_bonus_sap">LU Bonus SAP</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="LU Cartão Alimentação">
+        <input class="checkbox checkbox--light" type="checkbox" value="LU Cartão Alimentação" name="q[accounts][]" id="q_accounts_lu_cartão_alimentação">
+        <label class="text-sm text-primary" for="q_accounts_lu_cartão_alimentação">LU Cartão Alimentação</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="LU Equate Plus">
+        <input class="checkbox checkbox--light" type="checkbox" value="LU Equate Plus" name="q[accounts][]" id="q_accounts_lu_equate_plus">
+        <label class="text-sm text-primary" for="q_accounts_lu_equate_plus">LU Equate Plus</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Lu Netfuturo">
+        <input class="checkbox checkbox--light" type="checkbox" value="Lu Netfuturo" name="q[accounts][]" id="q_accounts_lu_netfuturo">
+        <label class="text-sm text-primary" for="q_accounts_lu_netfuturo">Lu Netfuturo</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="LU RSU">
+        <input class="checkbox checkbox--light" type="checkbox" value="LU RSU" name="q[accounts][]" id="q_accounts_lu_rsu">
+        <label class="text-sm text-primary" for="q_accounts_lu_rsu">LU RSU</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Montepio Ordem">
+        <input class="checkbox checkbox--light" type="checkbox" value="Montepio Ordem" name="q[accounts][]" id="q_accounts_montepio_ordem">
+        <label class="text-sm text-primary" for="q_accounts_montepio_ordem">Montepio Ordem</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Montepio Prazo">
+        <input class="checkbox checkbox--light" type="checkbox" value="Montepio Prazo" name="q[accounts][]" id="q_accounts_montepio_prazo">
+        <label class="text-sm text-primary" for="q_accounts_montepio_prazo">Montepio Prazo</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Mutualista 1">
+        <input class="checkbox checkbox--light" type="checkbox" value="Mutualista 1" name="q[accounts][]" id="q_accounts_mutualista_1">
+        <label class="text-sm text-primary" for="q_accounts_mutualista_1">Mutualista 1</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Mutualista 5">
+        <input class="checkbox checkbox--light" type="checkbox" value="Mutualista 5" name="q[accounts][]" id="q_accounts_mutualista_5">
+        <label class="text-sm text-primary" for="q_accounts_mutualista_5">Mutualista 5</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Mutualista Montepio">
+        <input class="checkbox checkbox--light" type="checkbox" value="Mutualista Montepio" name="q[accounts][]" id="q_accounts_mutualista_montepio">
+        <label class="text-sm text-primary" for="q_accounts_mutualista_montepio">Mutualista Montepio</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Nicehash">
+        <input class="checkbox checkbox--light" type="checkbox" value="Nicehash" name="q[accounts][]" id="q_accounts_nicehash">
+        <label class="text-sm text-primary" for="q_accounts_nicehash">Nicehash</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Ouro">
+        <input class="checkbox checkbox--light" type="checkbox" value="Ouro" name="q[accounts][]" id="q_accounts_ouro">
+        <label class="text-sm text-primary" for="q_accounts_ouro">Ouro</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Ovar outros (1/6)">
+        <input class="checkbox checkbox--light" type="checkbox" value="Ovar outros (1/6)" name="q[accounts][]" id="q_accounts_ovar_outros_16">
+        <label class="text-sm text-primary" for="q_accounts_ovar_outros_16">Ovar outros (1/6)</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Ovar Quinta (1/6)">
+        <input class="checkbox checkbox--light" type="checkbox" value="Ovar Quinta (1/6)" name="q[accounts][]" id="q_accounts_ovar_quinta_16">
+        <label class="text-sm text-primary" for="q_accounts_ovar_quinta_16">Ovar Quinta (1/6)</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="PPR - PT">
+        <input class="checkbox checkbox--light" type="checkbox" value="PPR - PT" name="q[accounts][]" id="q_accounts_ppr_-_pt">
+        <label class="text-sm text-primary" for="q_accounts_ppr_-_pt">PPR - PT</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="seg social">
+        <input class="checkbox checkbox--light" type="checkbox" value="seg social" name="q[accounts][]" id="q_accounts_seg_social">
+        <label class="text-sm text-primary" for="q_accounts_seg_social">seg social</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Seguros por receber">
+        <input class="checkbox checkbox--light" type="checkbox" value="Seguros por receber" name="q[accounts][]" id="q_accounts_seguros_por_receber">
+        <label class="text-sm text-primary" for="q_accounts_seguros_por_receber">Seguros por receber</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Swiss Francs">
+        <input class="checkbox checkbox--light" type="checkbox" value="Swiss Francs" name="q[accounts][]" id="q_accounts_swiss_francs">
+        <label class="text-sm text-primary" for="q_accounts_swiss_francs">Swiss Francs</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Tech (valor em 2ª mão)">
+        <input class="checkbox checkbox--light" type="checkbox" value="Tech (valor em 2ª mão)" name="q[accounts][]" id="q_accounts_tech_valor_em_2ª_mão">
+        <label class="text-sm text-primary" for="q_accounts_tech_valor_em_2ª_mão">Tech (valor em 2ª mão)</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Tomas Arantes e Oliveira">
+        <input class="checkbox checkbox--light" type="checkbox" value="Tomas Arantes e Oliveira" name="q[accounts][]" id="q_accounts_tomas_arantes_e_oliveira">
+        <label class="text-sm text-primary" for="q_accounts_tomas_arantes_e_oliveira">Tomas Arantes e Oliveira</label>
+      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="UBS">
+        <input class="checkbox checkbox--light" type="checkbox" value="UBS" name="q[accounts][]" id="q_accounts_ubs">
+        <label class="text-sm text-primary" for="q_accounts_ubs">UBS</label>
+      </div>
+  </div>
+</div>
+
+</div>          <div class="hidden" data-id="date_filter" data-ds--tabs-target="panel">
+            <div class="p-3">
+  <input placeholder="Start date" value="2026-02-01" class="block w-full border border-secondary rounded-md bg-container py-2 pl-3 pr-3  focus:ring-gray-500 sm:text-sm" type="date" name="q[start_date]" id="q_start_date">
+  <input placeholder="End date" value="2026-02-28" class="block w-full border border-secondary rounded-md bg-container py-2 pl-3 pr-3  focus:ring-gray-500 sm:text-sm mt-2" type="date" name="q[end_date]" id="q_end_date">
+</div>
+
+</div>          <div class="hidden" data-id="type_filter" data-ds--tabs-target="panel">
+            
+<div class="p-2 space-y-3">
+  <div class="flex items-center gap-3" data-filter-name="income">
+    <input class="checkbox checkbox--light" type="checkbox" value="income" name="q[types][]" id="q_types_income">
+    <label class="text-sm text-primary" for="q_types_income">Income</label>
+  </div>
+  <div class="flex items-center gap-3" data-filter-name="expense">
+    <input class="checkbox checkbox--light" type="checkbox" value="expense" name="q[types][]" id="q_types_expense">
+    <label class="text-sm text-primary" for="q_types_expense">Expense</label>
+  </div>
+  <div class="flex items-center gap-3" data-filter-name="transfer">
+    <input class="checkbox checkbox--light" type="checkbox" value="transfer" name="q[types][]" id="q_types_transfer">
+    <label class="text-sm text-primary" for="q_types_transfer">Transfer</label>
+  </div>
+</div>
+
+</div>          <div class="hidden" data-id="amount_filter" data-ds--tabs-target="panel">
+            
+<div class="space-y-2">
+  <div class="form-field">
+    <select class="form-field__input" name="q[amount_operator]" id="q_amount_operator"><option selected="selected" value="equal">Equal to</option>
+<option value="greater">Greater than</option>
+<option value="less">Less than</option></select>
+  </div>
+
+  <div class="form-field">
+    <input step="0.01" class="form-field__input" placeholder="0" type="number" name="q[amount]" id="q_amount">
+  </div>
+</div>
+
+</div>          <div class="hidden" data-id="category_filter" data-ds--tabs-target="panel">
+            <div data-controller="list-filter">
+  <div class="relative">
+    <input type="search" autocomplete="off" placeholder="Filter category" data-list-filter-target="input" data-action="input-&gt;list-filter#filter" class="block w-full bg-container border border-secondary rounded-md py-2 pl-10 pr-3 focus:ring-gray-500 sm:text-sm">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray absolute inset-y-0 left-2 top-1/2 transform -translate-y-1/2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+  </div>
+  <div class="my-2" id="list" data-list-filter-target="list">
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Uncategorized">
+        <input class="checkbox checkbox--light" type="checkbox" value="Uncategorized" name="q[categories][]" id="q_categories_uncategorized">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_uncategorized">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #737373 10%, transparent);
+          border-color: color-mix(in oklab, #737373 10%, transparent);
+          color: #737373;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M10.1 2.182a10 10 0 0 1 3.8 0"></path><path d="M13.9 21.818a10 10 0 0 1-3.8 0"></path><path d="M17.609 3.721a10 10 0 0 1 2.69 2.7"></path><path d="M2.182 13.9a10 10 0 0 1 0-3.8"></path><path d="M20.279 17.609a10 10 0 0 1-2.7 2.69"></path><path d="M21.818 10.1a10 10 0 0 1 0 3.8"></path><path d="M3.721 6.391a10 10 0 0 1 2.7-2.69"></path><path d="M6.391 20.279a10 10 0 0 1-2.69-2.7"></path></svg>
+    Uncategorized
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Base Salary">
+        <input class="checkbox checkbox--light" type="checkbox" value="Base Salary" name="q[categories][]" id="q_categories_base_salary">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_base_salary">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #e99537 10%, transparent);
+          border-color: color-mix(in oklab, #e99537 10%, transparent);
+          color: #e99537;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Base Salary
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Bonus">
+        <input class="checkbox checkbox--light" type="checkbox" value="Bonus" name="q[categories][]" id="q_categories_bonus">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_bonus">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #e99537 10%, transparent);
+          border-color: color-mix(in oklab, #e99537 10%, transparent);
+          color: #e99537;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Bonus
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Childcare">
+        <input class="checkbox checkbox--light" type="checkbox" value="Childcare" checked="checked" name="q[categories][]" id="q_categories_childcare">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_childcare">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #c44fe9 10%, transparent);
+          border-color: color-mix(in oklab, #c44fe9 10%, transparent);
+          color: #c44fe9;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Childcare
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Education">
+        <input class="checkbox checkbox--light" type="checkbox" value="Education" name="q[categories][]" id="q_categories_education">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_education">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #c44fe9 10%, transparent);
+          border-color: color-mix(in oklab, #c44fe9 10%, transparent);
+          color: #c44fe9;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Education
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Entertainment">
+        <input class="checkbox checkbox--light" type="checkbox" value="Entertainment" name="q[categories][]" id="q_categories_entertainment">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_entertainment">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #df4e92 10%, transparent);
+          border-color: color-mix(in oklab, #df4e92 10%, transparent);
+          color: #df4e92;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M10 11h.01"></path><path d="M14 6h.01"></path><path d="M18 6h.01"></path><path d="M6.5 13.1h.01"></path><path d="M22 5c0 9-4 12-6 12s-6-3-6-12c0-2 2-3 6-3s6 1 6 3"></path><path d="M17.4 9.9c-.8.8-2 .8-2.8 0"></path><path d="M10.1 7.1C9 7.2 7.7 7.7 6 8.6c-3.5 2-4.7 3.9-3.7 5.6 4.5 7.8 9.5 8.4 11.2 7.4.9-.5 1.9-2.1 1.9-4.7"></path><path d="M9.1 16.5c.3-1.1 1.4-1.7 2.4-1.4"></path></svg>
+    Entertainment
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Expense Reimbursement 2">
+        <input class="checkbox checkbox--light" type="checkbox" value="Expense Reimbursement 2" name="q[categories][]" id="q_categories_expense_reimbursement_2">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_expense_reimbursement_2">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #db5a54 10%, transparent);
+          border-color: color-mix(in oklab, #db5a54 10%, transparent);
+          color: #db5a54;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Expense Reimbursement 2
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Fees">
+        <input class="checkbox checkbox--light" type="checkbox" value="Fees" name="q[categories][]" id="q_categories_fees">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_fees">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #6471eb 10%, transparent);
+          border-color: color-mix(in oklab, #6471eb 10%, transparent);
+          color: #6471eb;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+    Fees
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Food &amp; Drink">
+        <input class="checkbox checkbox--light" type="checkbox" value="Food &amp; Drink" name="q[categories][]" id="q_categories_food__drink">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_food__drink">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #eb5429 10%, transparent);
+          border-color: color-mix(in oklab, #eb5429 10%, transparent);
+          color: #eb5429;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path><path d="M7 2v20"></path><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path></svg>
+    Food &amp; Drink
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Gasoline">
+        <input class="checkbox checkbox--light" type="checkbox" value="Gasoline" name="q[categories][]" id="q_categories_gasoline">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_gasoline">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #df4e92 10%, transparent);
+          border-color: color-mix(in oklab, #df4e92 10%, transparent);
+          color: #df4e92;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Gasoline
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Gifts &amp; Donations">
+        <input class="checkbox checkbox--light" type="checkbox" value="Gifts &amp; Donations" name="q[categories][]" id="q_categories_gifts__donations">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_gifts__donations">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #61c9ea 10%, transparent);
+          border-color: color-mix(in oklab, #61c9ea 10%, transparent);
+          color: #61c9ea;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M11 12h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14"></path><path d="m7 18 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"></path><path d="m2 13 6 6"></path></svg>
+    Gifts &amp; Donations
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Gifts Received">
+        <input class="checkbox checkbox--light" type="checkbox" value="Gifts Received" name="q[categories][]" id="q_categories_gifts_received">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_gifts_received">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #6ad28a 10%, transparent);
+          border-color: color-mix(in oklab, #6ad28a 10%, transparent);
+          color: #6ad28a;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Gifts Received
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Healthcare">
+        <input class="checkbox checkbox--light" type="checkbox" value="Healthcare" name="q[categories][]" id="q_categories_healthcare">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_healthcare">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #4da568 10%, transparent);
+          border-color: color-mix(in oklab, #4da568 10%, transparent);
+          color: #4da568;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path><path d="m8.5 8.5 7 7"></path></svg>
+    Healthcare
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Home Improvement">
+        <input class="checkbox checkbox--light" type="checkbox" value="Home Improvement" name="q[categories][]" id="q_categories_home_improvement">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_home_improvement">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #6471eb 10%, transparent);
+          border-color: color-mix(in oklab, #6471eb 10%, transparent);
+          color: #6471eb;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+    Home Improvement
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Income">
+        <input class="checkbox checkbox--light" type="checkbox" value="Income" name="q[categories][]" id="q_categories_income">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_income">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #e99537 10%, transparent);
+          border-color: color-mix(in oklab, #e99537 10%, transparent);
+          color: #e99537;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><path d="M12 18V6"></path></svg>
+    Income
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Interest">
+        <input class="checkbox checkbox--light" type="checkbox" value="Interest" name="q[categories][]" id="q_categories_interest">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_interest">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #e99537 10%, transparent);
+          border-color: color-mix(in oklab, #e99537 10%, transparent);
+          color: #e99537;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Interest
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Loan Payments">
+        <input class="checkbox checkbox--light" type="checkbox" value="Loan Payments" name="q[categories][]" id="q_categories_loan_payments">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_loan_payments">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #6471eb 10%, transparent);
+          border-color: color-mix(in oklab, #6471eb 10%, transparent);
+          color: #6471eb;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+    Loan Payments
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Personal Care">
+        <input class="checkbox checkbox--light" type="checkbox" value="Personal Care" name="q[categories][]" id="q_categories_personal_care">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_personal_care">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #4da568 10%, transparent);
+          border-color: color-mix(in oklab, #4da568 10%, transparent);
+          color: #4da568;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path><path d="m8.5 8.5 7 7"></path></svg>
+    Personal Care
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Public Transportation">
+        <input class="checkbox checkbox--light" type="checkbox" value="Public Transportation" name="q[categories][]" id="q_categories_public_transportation">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_public_transportation">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #df4e92 10%, transparent);
+          border-color: color-mix(in oklab, #df4e92 10%, transparent);
+          color: #df4e92;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Public Transportation
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Rental Income">
+        <input class="checkbox checkbox--light" type="checkbox" value="Rental Income" name="q[categories][]" id="q_categories_rental_income">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_rental_income">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #e99537 10%, transparent);
+          border-color: color-mix(in oklab, #e99537 10%, transparent);
+          color: #e99537;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Rental Income
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Rent &amp; Utilities">
+        <input class="checkbox checkbox--light" type="checkbox" value="Rent &amp; Utilities" name="q[categories][]" id="q_categories_rent__utilities">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_rent__utilities">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #db5a54 10%, transparent);
+          border-color: color-mix(in oklab, #db5a54 10%, transparent);
+          color: #db5a54;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>
+    Rent &amp; Utilities
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Restaurants">
+        <input class="checkbox checkbox--light" type="checkbox" value="Restaurants" name="q[categories][]" id="q_categories_restaurants">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_restaurants">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #eb5429 10%, transparent);
+          border-color: color-mix(in oklab, #eb5429 10%, transparent);
+          color: #eb5429;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Restaurants
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Services">
+        <input class="checkbox checkbox--light" type="checkbox" value="Services" name="q[categories][]" id="q_categories_services">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_services">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #4da568 10%, transparent);
+          border-color: color-mix(in oklab, #4da568 10%, transparent);
+          color: #4da568;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path><rect width="20" height="14" x="2" y="6" rx="2"></rect></svg>
+    Services
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Shopping">
+        <input class="checkbox checkbox--light" type="checkbox" value="Shopping" name="q[categories][]" id="q_categories_shopping">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_shopping">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #e99537 10%, transparent);
+          border-color: color-mix(in oklab, #e99537 10%, transparent);
+          color: #e99537;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+    Shopping
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Subscriptions">
+        <input class="checkbox checkbox--light" type="checkbox" value="Subscriptions" name="q[categories][]" id="q_categories_subscriptions">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_subscriptions">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #4da568 10%, transparent);
+          border-color: color-mix(in oklab, #4da568 10%, transparent);
+          color: #4da568;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Subscriptions
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Subsidies">
+        <input class="checkbox checkbox--light" type="checkbox" value="Subsidies" name="q[categories][]" id="q_categories_subsidies">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_subsidies">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #eb5429 10%, transparent);
+          border-color: color-mix(in oklab, #eb5429 10%, transparent);
+          color: #eb5429;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Subsidies
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Supermarket">
+        <input class="checkbox checkbox--light" type="checkbox" value="Supermarket" name="q[categories][]" id="q_categories_supermarket">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_supermarket">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #eb5429 10%, transparent);
+          border-color: color-mix(in oklab, #eb5429 10%, transparent);
+          color: #eb5429;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Supermarket
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Take Away">
+        <input class="checkbox checkbox--light" type="checkbox" value="Take Away" name="q[categories][]" id="q_categories_take_away">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_take_away">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #eb5429 10%, transparent);
+          border-color: color-mix(in oklab, #eb5429 10%, transparent);
+          color: #eb5429;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Take Away
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Taxes">
+        <input class="checkbox checkbox--light" type="checkbox" value="Taxes" name="q[categories][]" id="q_categories_taxes">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_taxes">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #db5a54 10%, transparent);
+          border-color: color-mix(in oklab, #db5a54 10%, transparent);
+          color: #db5a54;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Taxes
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Taxi / Uber / Bolt">
+        <input class="checkbox checkbox--light" type="checkbox" value="Taxi / Uber / Bolt" name="q[categories][]" id="q_categories_taxi__uber__bolt">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_taxi__uber__bolt">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #df4e92 10%, transparent);
+          border-color: color-mix(in oklab, #df4e92 10%, transparent);
+          color: #df4e92;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Taxi / Uber / Bolt
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Transportation">
+        <input class="checkbox checkbox--light" type="checkbox" value="Transportation" name="q[categories][]" id="q_categories_transportation">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_transportation">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #df4e92 10%, transparent);
+          border-color: color-mix(in oklab, #df4e92 10%, transparent);
+          color: #df4e92;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8 6v6"></path><path d="M15 6v6"></path><path d="M2 12h19.6"></path><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"></path><circle cx="7" cy="18" r="2"></circle><path d="M9 18h5"></path><circle cx="16" cy="18" r="2"></circle></svg>
+    Transportation
+  </span>
+</div>
+
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Travel &amp; Leisure">
+        <input class="checkbox checkbox--light" type="checkbox" value="Travel &amp; Leisure" name="q[categories][]" id="q_categories_travel__leisure">
+        <label class="text-sm text-primary cursor-pointer" for="q_categories_travel__leisure">
+          
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #df4e92 10%, transparent);
+          border-color: color-mix(in oklab, #df4e92 10%, transparent);
+          color: #df4e92;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path></svg>
+    Travel &amp; Leisure
+  </span>
+</div>
+
+</label>      </div>
+  </div>
+</div>
+
+</div>          <div class="hidden" data-id="tag_filter" data-ds--tabs-target="panel">
+            <div data-controller="list-filter">
+  <div class="relative">
+    <input type="search" autocomplete="off" placeholder="Filter tags" data-list-filter-target="input" data-action="input-&gt;list-filter#filter" class="block w-full bg-container border border-secondary rounded-md py-2 pl-10 pr-3 focus:ring-gray-500 sm:text-sm">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray absolute inset-y-0 left-2 top-1/2 transform -translate-y-1/2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+  </div>
+  <div class="my-2" id="list" data-list-filter-target="list">
+  </div>
+</div>
+
+</div>          <div class="hidden" data-id="merchant_filter" data-ds--tabs-target="panel">
+            <div data-controller="list-filter">
+  <div class="relative">
+    <input type="search" autocomplete="off" placeholder="Filter merchants" data-list-filter-target="input" data-action="input-&gt;list-filter#filter" class="block w-full bg-container border border-secondary rounded-md py-2 pl-10 pr-3 focus:ring-gray-500 sm:text-sm">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray absolute inset-y-0 left-2 top-1/2 transform -translate-y-1/2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+  </div>
+  <div class="my-2" id="list" data-list-filter-target="list">
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Deloitte">
+        <input class="checkbox checkbox--light" type="checkbox" value="Deloitte" name="q[merchants][]" id="q_merchants_deloitte">
+        <label class="text-sm text-primary flex items-center gap-2" for="q_merchants_deloitte">
+          <div style="background-color: color-mix(in oklab, #db5a54 10%, transparent);
+border-color: color-mix(in oklab, #db5a54 10%, transparent);
+color: #db5a54;" class="flex justify-center items-center shrink-0 w-6 h-6 rounded-full border">
+    <span class="text-center font-medium uppercase text-xs">D</span>
+</div>
+
+          Deloitte
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Montepio">
+        <input class="checkbox checkbox--light" type="checkbox" value="Montepio" name="q[merchants][]" id="q_merchants_montepio">
+        <label class="text-sm text-primary flex items-center gap-2" for="q_merchants_montepio">
+          <div style="background-color: color-mix(in oklab, #805dee 10%, transparent);
+border-color: color-mix(in oklab, #805dee 10%, transparent);
+color: #805dee;" class="flex justify-center items-center shrink-0 w-6 h-6 rounded-full border">
+    <span class="text-center font-medium uppercase text-xs">M</span>
+</div>
+
+          Montepio
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Portuguese Governement">
+        <input class="checkbox checkbox--light" type="checkbox" value="Portuguese Governement" name="q[merchants][]" id="q_merchants_portuguese_governement">
+        <label class="text-sm text-primary flex items-center gap-2" for="q_merchants_portuguese_governement">
+          <div style="background-color: color-mix(in oklab, #4da568 10%, transparent);
+border-color: color-mix(in oklab, #4da568 10%, transparent);
+color: #4da568;" class="flex justify-center items-center shrink-0 w-6 h-6 rounded-full border">
+    <span class="text-center font-medium uppercase text-xs">P</span>
+</div>
+
+          Portuguese Governement
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="PwC">
+        <input class="checkbox checkbox--light" type="checkbox" value="PwC" name="q[merchants][]" id="q_merchants_pwc">
+        <label class="text-sm text-primary flex items-center gap-2" for="q_merchants_pwc">
+          <div style="background-color: color-mix(in oklab, #db5a54 10%, transparent);
+border-color: color-mix(in oklab, #db5a54 10%, transparent);
+color: #db5a54;" class="flex justify-center items-center shrink-0 w-6 h-6 rounded-full border">
+    <span class="text-center font-medium uppercase text-xs">P</span>
+</div>
+
+          PwC
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="SAP">
+        <input class="checkbox checkbox--light" type="checkbox" value="SAP" name="q[merchants][]" id="q_merchants_sap">
+        <label class="text-sm text-primary flex items-center gap-2" for="q_merchants_sap">
+          <div style="background-color: color-mix(in oklab, #6471eb 10%, transparent);
+border-color: color-mix(in oklab, #6471eb 10%, transparent);
+color: #6471eb;" class="flex justify-center items-center shrink-0 w-6 h-6 rounded-full border">
+    <span class="text-center font-medium uppercase text-xs">S</span>
+</div>
+
+          SAP
+</label>      </div>
+      <div class="filterable-item flex items-center gap-2 p-2" data-filter-name="Uber">
+        <input class="checkbox checkbox--light" type="checkbox" value="Uber" name="q[merchants][]" id="q_merchants_uber">
+        <label class="text-sm text-primary flex items-center gap-2" for="q_merchants_uber">
+          <div style="background-color: color-mix(in oklab, #805dee 10%, transparent);
+border-color: color-mix(in oklab, #805dee 10%, transparent);
+color: #805dee;" class="flex justify-center items-center shrink-0 w-6 h-6 rounded-full border">
+    <span class="text-center font-medium uppercase text-xs">U</span>
+</div>
+
+          Uber
+</label>      </div>
+  </div>
+</div>
+
+</div>      </div>
+
+      <div class="flex justify-between items-center gap-2 bg-container p-3 shrink-0">
+        <div>
+            <a class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm text-primary bg-transparent hover:bg-gray-100 theme-dark:hover:bg-gray-700" href="/transactions?clear_filters=true">
+
+    Clear filters
+
+</a>
+        </div>
+
+        <div>
+          <button type="button" class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm text-primary bg-transparent hover:bg-gray-100 theme-dark:hover:bg-gray-700" data-action="DS--menu#close">
+
+    Cancel
+
+</button>
+          <button class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm text-inverse bg-inverse hover:bg-inverse-hover disabled:bg-gray-500 theme-dark:disabled:bg-gray-400">
+
+    Apply
+
+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</div>    </div>
+  </div>
+</div>  </div>
+</form>
+
+<ul id="transaction-search-filters" class="flex items-center flex-wrap gap-2 mb-4">
+          <li class="flex items-center gap-1 text-sm border border-secondary rounded-3xl p-1.5">
+    <div class="flex items-center gap-2">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+      <p>
+          on or after 2026-02-01
+      </p>
+    </div>
+
+  <form class="button_to" method="post" action="/transactions/clear_filter?param_key=start_date&amp;param_value=2026-02-01&amp;q%5Bcategories%5D%5B%5D=Childcare&amp;q%5Bend_date%5D=2026-02-28&amp;q%5Bstart_date%5D=2026-02-01"><input type="hidden" name="_method" value="delete" autocomplete="off"><button data-turbo="false" class="flex items-center cursor-pointer" type="submit">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 fg-gray hover:text-primary"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+</button><input type="hidden" name="authenticity_token" value="kXspv6zn1wQOOt5GNMNkkuUXmYT0yNQ2G5YSxBQElaSQY5CxiOr4aVp9i1IjicOXTJ5nQs4PPozdBywR_81XIw" autocomplete="off"></form></li>
+
+          <li class="flex items-center gap-1 text-sm border border-secondary rounded-3xl p-1.5">
+    <div class="flex items-center gap-2">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+      <p>
+          on or before 2026-02-28
+      </p>
+    </div>
+
+  <form class="button_to" method="post" action="/transactions/clear_filter?param_key=end_date&amp;param_value=2026-02-28&amp;q%5Bcategories%5D%5B%5D=Childcare&amp;q%5Bend_date%5D=2026-02-28&amp;q%5Bstart_date%5D=2026-02-01"><input type="hidden" name="_method" value="delete" autocomplete="off"><button data-turbo="false" class="flex items-center cursor-pointer" type="submit">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 fg-gray hover:text-primary"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+</button><input type="hidden" name="authenticity_token" value="4bX0AXXz-1poEdaWwLdeGgZBSHxmJkxe9YIKPAcbTD3grU0PUf7UNzxWg4LX_fkfr8i2ulzhpuQzEzTp7NKOug" autocomplete="off"></form></li>
+
+          <li class="flex items-center gap-1 text-sm border border-secondary rounded-3xl p-1.5">
+    <div class="flex items-center gap-2">
+      <p>Childcare</p>
+    </div>
+
+  <form class="button_to" method="post" action="/transactions/clear_filter?param_key=categories&amp;param_value=Childcare&amp;q%5Bcategories%5D%5B%5D=Childcare&amp;q%5Bend_date%5D=2026-02-28&amp;q%5Bstart_date%5D=2026-02-01"><input type="hidden" name="_method" value="delete" autocomplete="off"><button data-turbo="false" class="flex items-center cursor-pointer" type="submit">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 fg-gray hover:text-primary"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+</button><input type="hidden" name="authenticity_token" value="NURYy9CoGoAIvntkoKEiPX5n5b0aS_HYweB3vFjEIlo0XOHF9KU17Vz5LnC364U41-4beyCMG2IHcUlpsw3g3Q" autocomplete="off"></form></li>
+
+</ul>
+
+
+    <div id="entry-selection-bar" data-bulk-select-target="selectionBar" class="flex justify-center hidden">
+      <div class="fixed bottom-30 md:bottom-6 z-10 flex items-center justify-between rounded-xl bg-gray-900 px-4 text-sm text-white md:w-[420px] w-[90%] py-1.5">
+  <div class="flex items-center gap-2">
+    <input type="checkbox" name="entry_selection" id="entry_selection" value="1" class="checkbox checkbox--dark" data-action="bulk-select#deselectAll" checked="checked">
+
+    <p data-bulk-select-target="selectionBarText">0 transactions selected</p>
+  </div>
+
+  <div class="flex items-center gap-1 text-secondary">
+    <turbo-frame id="bulk_transaction_edit_drawer"></turbo-frame>
+    <a class="p-1.5 group hover:bg-inverse flex items-center justify-center rounded-md" title="Edit" data-turbo-frame="bulk_transaction_edit_drawer" href="/transactions/bulk_update/new">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray group-hover:text-inverse"><path d="M12 20h9"></path><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"></path><path d="m15 5 3 3"></path></svg>
+</a>
+    <form data-turbo-confirm="true" data-turbo-frame="_top" action="/transactions/bulk_deletion" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="YMtHlHfRo9Qxydheeoj2yWDxixrp_JFbuRT0N5jAfwpsDahM9qwQYk2EJfzDUwfwmnwEfBfkyOX7AZIsMWm62g" autocomplete="off">
+      <button type="button" data-bulk-select-scope-param="bulk_delete" data-action="bulk-select#submitBulkRequest" class="p-1.5 group hover:bg-inverse flex items-center justify-center rounded-md" title="Delete">
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray group-hover:text-inverse"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg>
+      </button>
+</form>  </div>
+</div>
+
+    </div>
+
+      <div class="grow overflow-y-auto">
+        <div class="grid-cols-12 bg-container-inset rounded-xl px-5 py-3 text-xs uppercase font-medium text-secondary items-center mb-4 hidden md:grid">
+          <div class="pl-0.5 col-span-8 flex items-center gap-4">
+            <input type="checkbox" name="selection_entry" id="selection_entry" value="1" class="checkbox checkbox--light" data-action="bulk-select#togglePageSelection">
+            <p>transaction</p>
+          </div>
+
+          <p class="col-span-2">category</p>
+          <p class="col-span-2 justify-self-end">amount</p>
+        </div>
+
+          <div class="md:hidden text-xs uppercase font-medium text-secondary mb-2 px-2">
+            <input type="checkbox" name="selection_entry" id="selection_entry" value="1" class="checkbox checkbox--light mr-2 ml-1" data-action="bulk-select#togglePageSelection">
+            <span>TRANSACTION</span>
+          </div>
+
+        <div class="space-y-6">
+          
+<div id="entry-group-2026-02-03" class="bg-container-inset rounded-xl p-1 w-full" data-bulk-select-target="group">
+  <div class="py-2 px-4 flex items-center justify-between font-medium text-xs text-secondary">
+    <div class="flex pl-0.5 items-center gap-4">
+        <input type="checkbox" name="2026-02-03_entries_selection" id="selection_entry_2026-02-03" value="1" class="checkbox checkbox--light" data-action="bulk-select#toggleGroupSelection">
+
+      <p class="uppercase space-x-1.5">
+        <span>February 03, 2026</span>
+        <span>·</span>
+        <span>1</span>
+      </p>
+    </div>
+
+      <div id="entry-group-2026-02-03-totals">
+        -€296.00
+      </div>
+  </div>
+  <div class="bg-container shadow-border-xs rounded-lg">
+    
+            
+
+
+<turbo-frame id="entry_12c8768e-1c2f-4bfb-8265-6d67f95e9d20">
+  <turbo-frame id="transaction_7496d153-286a-4f40-abaf-d4b4411e4d39">
+    <div class="grid grid-cols-12 items-center text-primary text-sm font-medium p-4 lg:p-4 ">
+
+      <div class="pr-4 lg:pr-10 flex items-center gap-3 lg:gap-4 col-span-8">
+        <input type="checkbox" name="selection_entry_12c8768e-1c2f-4bfb-8265-6d67f95e9d20" id="selection_entry_12c8768e-1c2f-4bfb-8265-6d67f95e9d20" value="1" class="checkbox checkbox--light" data-id="12c8768e-1c2f-4bfb-8265-6d67f95e9d20" data-bulk-select-target="row" data-action="bulk-select#toggleRowSelection">
+
+        <div class="max-w-full">
+          <div class="flex items-center gap-2">
+              <div style="background-color: color-mix(in oklab, var(--color-gray-500) 10%, transparent);
+border-color: color-mix(in oklab, var(--color-gray-500) 10%, transparent);
+color: var(--color-gray-500);" class="flex justify-center items-center shrink-0 w-6 h-6 rounded-full border">
+    <span class="text-center font-medium uppercase text-xs">e</span>
+</div>
+
+            <div class="truncate">
+              <div class="space-y-0.5">
+                <div class="flex items-center gap-1 min-w-0">
+                  <div class="truncate flex-shrink">
+                      <a data-turbo-frame="drawer" data-turbo-prefetch="false" class="hover:underline" href="/transactions/12c8768e-1c2f-4bfb-8265-6d67f95e9d20">escola vicente e teresa 2026</a>
+                  </div>
+
+                  <div class="flex items-center gap-1 flex-shrink-0">
+
+                  </div>
+                </div>
+
+                <div class="text-secondary text-xs font-normal hidden lg:block">
+                    <a data-turbo-frame="_top" class="hover:underline" href="/accounts/04ed9253-d71e-4206-ab8d-e0c6ccec4247?tab=transactions">CoverFlex</a>
+                </div>
+              </div>
+            </div>
+</div>        </div>
+      </div>
+
+      <div class="hidden lg:flex items-center gap-1 col-span-2">
+        
+<div id="category_menu_transaction_7496d153-286a-4f40-abaf-d4b4411e4d39">
+    
+<div data-controller="DS--menu" data-ds--menu-placement-value="bottom-end" data-ds--menu-offset-value="12">
+    <button data-ds--menu-target="button">
+<div>
+  <span class="flex items-center gap-1 text-sm font-medium rounded-full px-1.5 py-1 border truncate focus-visible:outline-none focus-visible:ring-0" style="
+          background-color: color-mix(in oklab, #c44fe9 10%, transparent);
+          border-color: color-mix(in oklab, #c44fe9 10%, transparent);
+          color: #c44fe9;">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 text-current"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"></path><rect x="3" y="14" width="7" height="7" rx="1"></rect><circle cx="17.5" cy="17.5" r="3.5"></circle></svg>
+    Childcare
+  </span>
+</div>
+</button>
+
+  <div data-ds--menu-target="content" class="px-2 lg:px-0 max-w-full hidden z-50" style="position: fixed; left: 948.255px; top: 504.786px;">
+    <div class="mx-auto min-w-[200px] shadow-border-xs bg-container rounded-lg">
+      
+
+      <div class="py-1">
+
+            <turbo-frame loading="lazy" id="category_dropdown" src="/category/dropdown?category_id=67c99232-b5f0-4411-8d0e-8cd6996c54b3&amp;transaction_id=7496d153-286a-4f40-abaf-d4b4411e4d39">
+      <div class="p-6 flex items-center justify-center">
+        <p class="text-sm text-secondary animate-pulse">Loading...</p>
+      </div>
+</turbo-frame>
+</div>    </div>
+  </div>
+</div>
+</div>
+
+      </div>
+
+      <div class="col-span-2 ml-auto text-right">
+        <p class="">-€296.00</p>
+      </div>
+    </div>
+</turbo-frame></turbo-frame>
+
+
+  </div>
+</div>
+        </div>
+      </div>
+
+    <div class="pt-4">
+      
+<nav class="flex w-full items-center justify-between">
+  <div class="flex items-center gap-1">
+    <div>
+        <div class="inline-flex items-center p-2 text-sm font-medium hover:border-secondary">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="m15 18-6-6 6-6"></path></svg>
+        </div>
+    </div>
+    <div class="rounded-xl p-1 bg-container-inset">
+          <a data-turbo-frame="_top" class="rounded-md px-2 py-1 bg-container border border-secondary shadow-xs inline-flex items-center text-sm font-medium text-primary" href="/transactions?q%5Bcategories%5D%5B%5D=Childcare&amp;q%5Bend_date%5D=2026-02-28&amp;q%5Bstart_date%5D=2026-02-01&amp;page=1">
+            1
+</a>    </div>
+    <div>
+        <div class="inline-flex items-center p-2 text-sm font-medium hover:border-secondary">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="m9 18 6-6-6-6"></path></svg>
+        </div>
+    </div>
+  </div>
+  <div class="flex items-center gap-4">
+    <select name="per_page" id="per_page" data-controller="selectable-link" class="py-1.5 pr-8 text-sm text-primary font-medium bg-container-inset border border-secondary rounded-lg focus:border-secondary focus:ring-secondary focus-visible:ring-secondary"><option value="10">10</option>
+<option selected="selected" value="20">20</option>
+<option value="30">30</option>
+<option value="50">50</option></select>
+  </div>
+</nav>
+
+    </div>
+  </div>
