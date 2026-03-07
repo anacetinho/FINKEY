@@ -1,8 +1,9 @@
 class Security::Resolver
-  def initialize(symbol, exchange_operating_mic: nil, country_code: nil)
+  def initialize(symbol, exchange_operating_mic: nil, country_code: nil, manual: false)
     @symbol = validate_symbol!(symbol)
     @exchange_operating_mic = exchange_operating_mic
     @country_code = country_code
+    @manual = manual
   end
 
   # Attempts several paths to resolve a security:
@@ -13,14 +14,17 @@ class Security::Resolver
   def resolve
     return nil if symbol.blank?
 
-    exact_match_from_db ||
-      exact_match_from_provider ||
-      close_match_from_provider ||
-      offline_security
+    security = exact_match_from_db ||
+               exact_match_from_provider ||
+               close_match_from_provider ||
+               offline_security
+
+    security.update!(manual: true) if manual && security && !security.manual?
+    security
   end
 
   private
-    attr_reader :symbol, :exchange_operating_mic, :country_code
+    attr_reader :symbol, :exchange_operating_mic, :country_code, :manual
 
     def validate_symbol!(symbol)
       raise ArgumentError, "Symbol is required and cannot be blank" if symbol.blank?
@@ -35,7 +39,8 @@ class Security::Resolver
 
       security.assign_attributes(
         country_code: country_code,
-        offline: true # This tells us that we shouldn't try to fetch prices later
+        offline: true, # This tells us that we shouldn't try to fetch prices later
+        manual: manual
       )
 
       security.save!
@@ -107,6 +112,7 @@ class Security::Resolver
       )
 
       security.country_code = match.country_code
+      security.manual = manual
       security.save!
 
       security

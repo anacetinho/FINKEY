@@ -44,7 +44,7 @@ module Security::Provided
     end
 
     # Make sure we have a data provider before fetching
-    return nil unless provider.present?
+    return nil unless provider.present? && !manual?
     response = provider.fetch_security_price(
       symbol: ticker,
       exchange_operating_mic: exchange_operating_mic,

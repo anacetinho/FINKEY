@@ -25,22 +25,29 @@ class Holding < ApplicationRecord
     account.balance.to_f == 0 ? 1 : amount / account.balance * 100
   end
 
-  # Basic approximation of cost-basis
+  # Calculates the weighted average cost basis for the holding based on BUY trades
   def avg_cost
-    avg_cost = account.trades
+    total_cost, total_qty = account.trades
       .with_entry
       .joins(ActiveRecord::Base.sanitize_sql_array([
         "LEFT JOIN exchange_rates ON (
           exchange_rates.date = entries.date AND
           exchange_rates.from_currency = trades.currency AND
           exchange_rates.to_currency = ?
-        )", account.currency
+        )", currency
       ]))
       .where(security_id: security.id)
       .where("trades.qty > 0 AND entries.date <= ?", date)
-      .average("trades.price * COALESCE(exchange_rates.rate, 1)")
+      .pick(
+        Arel.sql("SUM(trades.qty * trades.price * COALESCE(exchange_rates.rate, 1))"),
+        Arel.sql("SUM(trades.qty)")
+      )
 
-    Money.new(avg_cost || price, currency)
+    if total_qty.present? && total_qty.to_d > 0
+      Money.new(total_cost.to_d / total_qty.to_d, currency)
+    else
+      Money.new(price, currency)
+    end
   end
 
   def trend

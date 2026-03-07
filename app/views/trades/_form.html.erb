@@ -24,7 +24,16 @@
         }} %>
 
       <% if %w[buy sell].include?(type) %>
-        <%= form.text_field :manual_ticker, label: "Ticker symbol", placeholder: "AAPL", required: true %>
+        <div class="space-y-4 py-2">
+          <%= form.text_field :manual_ticker, label: "Ticker symbol", placeholder: "AAPL", required: true %>
+          <div class="flex items-start gap-2">
+            <%= form.check_box :manual_security, class: "mt-1" %>
+            <div class="text-sm">
+              <label for="model_manual_security" class="font-medium text-primary">Manage price manually</label>
+              <p class="text-secondary">If checked, prices for this security will not be updated via YFinance. You will need to provide prices manually.</p>
+            </div>
+          </div>
+        </div>
       <% end %>
 
       <%= form.date_field :date, label: true, value: model.date || Date.current, required: true %>

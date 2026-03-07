@@ -2,7 +2,7 @@ class Trade::CreateForm
   include ActiveModel::Model
 
   attr_accessor :account, :date, :amount, :currency, :qty,
-                :price, :ticker, :manual_ticker, :type, :transfer_account_id
+                :price, :ticker, :manual_ticker, :manual_security, :type, :transfer_account_id
 
   # Either creates a trade, transaction, or transfer based on type
   # Returns the model, regardless of success or failure
@@ -24,7 +24,8 @@ class Trade::CreateForm
 
       Security::Resolver.new(
         ticker_symbol,
-        exchange_operating_mic: exchange_operating_mic
+        exchange_operating_mic: exchange_operating_mic,
+        manual: manual_security == "1" || manual_security == true
       ).resolve
     end
 
