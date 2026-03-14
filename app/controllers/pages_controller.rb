@@ -50,35 +50,43 @@ class PagesController < ApplicationController
     @release_notes = {
       avatar: nil,
       username: "finkey-contributors",
-      name: "FinKey v1.4",
-      published_at: Date.new(2025, 10, 19),
+      name: "FinKey v1.5",
+      published_at: Date.new(2026, 3, 14),
       body: <<~HTML
-        <h1>Welcome to FinKey 1.4</h1>
-        <p>FinKey is a fork of Maybe Finance with enhanced features for self-hosted personal finance management.</p>
-
-        <h2>What's New in v1.4</h2>
+        <h1>What's New in v1.5</h1>
+        
+        <h2>📊 Yearly Budget Totals</h2>
         <ul>
-          <li><strong>🔧 Fixed Local AI Model Caching Issue</strong> - Local LLM model changes now take effect immediately without requiring a server restart. The settings cache has been updated to properly refresh when you change the model name.</li>
+          <li><strong>Aggregated Yearly Views</strong>: You can now view your entire year's budget at a glance. Simply click on the year in the budget picker to see yearly totals, monthly averages, and aggregated spending breakdown.</li>
+          <li><strong>Budget Management</strong>: Added the ability to deactivate/reset budgets for individual months if you need to start your planning over.</li>
         </ul>
 
-        <h2>Previous Updates (v1.2)</h2>
+        <h2>📈 Advanced Forecasting</h2>
         <ul>
-          <li><strong>🤖 AI Assistant Configuration via UI</strong> - Configure your AI assistant directly in the settings interface without editing environment variables. Choose between OpenAI or local LLM providers (like Ollama, LM Studio, etc.) with OpenAI-compatible endpoints.</li>
+          <li><strong>Rolling 12-Month Averages</strong>: The forecasting engine now uses a stable 12-month rolling average for income and expenses. This provides a much more accurate baseline for projections by smoothing out one-time windfalls or unusual spending months.</li>
+          <li><strong>Historical Context</strong>: The forecast chart now shows 2 years of historical net worth data alongside your projections for better long-term perspective.</li>
+        </ul>
+
+        <h2>💰 Holding Enhancements</h2>
+        <ul>
+          <li><strong>Manual Holding Management</strong>: Full support for holdings not available via public APIs. You can now flag instruments as "manually managed" to prevent automatic overrides and enter prices manually.</li>
+          <li><strong>Multi-Currency Cost Basis</strong>: Holdings now use real-time exchange rates to calculate average cost basis and performance trends accurately across different currencies.</li>
+        </ul>
+
+        <hr>
+
+        <h2>Previous Updates (v1.4)</h2>
+        <ul>
+          <li><strong>🔧 Fixed Local AI Model Caching Issue</strong> - Local LLM model changes now take effect immediately without requiring a server restart.</li>
         </ul>
 
         <h2>Key Features</h2>
         <ul>
-          <li><strong>🤖 Flexible AI Assistant</strong> - Use OpenAI or run your own local LLM with full UI configuration</li>
+          <li><strong>🤖 Flexible AI Assistant</strong> - OpenAI or local LLM with full UI configuration</li>
           <li><strong>🌍 Yahoo Finance Integration</strong> - Real-time exchange rates for accurate multi-currency tracking</li>
-          <li><strong>💸 Advanced Expense Reimbursement System</strong> - Handle complex transaction scenarios with ease</li>
-          <li><strong>⚡ Enhanced Docker Setup</strong> - Improved deployment and development experience</li>
-          <li><strong>📊 Extended Forecasting</strong> - Advanced financial projections and analytics</li>
+          <li><strong>💸 Advanced Expense Reimbursement System</strong> - Handle complex transaction scenarios</li>
+          <li><strong>📊 Extended Forecasting</strong> - 24-month projections with trend analysis</li>
         </ul>
-
-        <h2>About FinKey</h2>
-        <p>FinKey builds upon the solid foundation of Maybe Finance, adding powerful features for users who want complete control over their financial data through self-hosting.</p>
-
-        <p>This project is open source and licensed under AGPLv3. It is not affiliated with or endorsed by Maybe Finance Inc.</p>
       HTML
     }
 

@@ -17,6 +17,11 @@ class BudgetsController < ApplicationController
     redirect_to budget_budget_categories_path(@budget)
   end
 
+  def destroy
+    @budget.destroy!
+    redirect_to budget_path(@budget)
+  end
+
   def picker
     render partial: "budgets/picker", locals: {
       family: Current.family,
@@ -35,11 +40,19 @@ class BudgetsController < ApplicationController
     end
 
     def set_budget
-      start_date = Budget.param_to_date(params[:month_year])
-      @budget = Budget.find_or_bootstrap(Current.family, start_date: start_date)
-      raise ActiveRecord::RecordNotFound unless @budget
-    end
+      if params[:month_year] =~ /^\d{4}$/
+        @budget = YearlyBudget.new(Current.family, params[:month_year].to_i)
+      else
+        start_date = Budget.param_to_date(params[:month_year])
+        @budget = Budget.find_or_bootstrap(Current.family, start_date: start_date)
+        raise ActiveRecord::RecordNotFound unless @budget
+      end
 
+      # Required for generic navigation
+      @previous_budget = @budget.previous_budget_param
+      @next_budget = @budget.next_budget_param
+    end
+...
     def redirect_to_current_month_budget
       current_budget = Budget.find_or_bootstrap(Current.family, start_date: Date.current)
       redirect_to budget_path(current_budget)

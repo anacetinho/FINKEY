@@ -72,6 +72,38 @@ class IncomeStatement
     end
   end
 
+  # Returns the average monthly income and expenses based on the rolling
+  # last 12 complete months (excludes the current, partial month).
+  # Returns a struct with :income and :expense (both raw numeric amounts).
+  Rolling12mAverages = Data.define(:income, :expense)
+
+  def rolling_12m_averages
+    Rails.cache.fetch([
+      "income_statement", "rolling_12m_averages", family.id,
+      family.entries_cache_version, family.accounts_cache_version
+    ]) do
+      period_start = 12.months.ago.beginning_of_month.to_date
+      period_end   = 1.month.ago.end_of_month.to_date
+
+      # Explicitly scope to active/draft accounts only (disabled accounts are excluded)
+      scope = family.transactions
+                    .joins(:entry => :account)
+                    .where(accounts: { status: [ "draft", "active" ] })
+                    .where(entries: { date: period_start..period_end, excluded: false })
+
+      rows = totals_query(transactions_scope: scope)
+
+      income_total  = rows.select { |r| r.classification == "income"  }.sum(&:total).to_f
+      expense_total = rows.select { |r| r.classification == "expense" }.sum(&:total).abs.to_f
+
+      # Divide by 12 (full months in window) to get the monthly average
+      Rolling12mAverages.new(
+        income:  income_total  / 12.0,
+        expense: expense_total / 12.0
+      )
+    end
+  end
+
   private
     ScopeTotals = Data.define(:transactions_count, :income_money, :expense_money)
     PeriodTotal = Data.define(:classification, :total, :currency, :category_totals)

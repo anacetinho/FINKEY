@@ -14,7 +14,8 @@ FinKey builds upon the solid foundation of Maybe Finance with enhanced features:
 - **🌍 Yahoo Finance Integration** - Real-time exchange rates for accurate multi-currency tracking
 - **💸 Advanced Expense Reimbursement System** - Handle complex transaction scenarios with ease
 - **⚡ Enhanced Docker Setup** - Improved deployment and development experience
-- **📊 Extended Forecasting** - Advanced financial projections and analytics
+- **📊 Advanced Forecasting** - 24-month projections using a 12-month rolling average for stable, seasonal-aware trend analysis
+- **📅 Yearly Budgeting** - View aggregated yearly totals and monthly averages alongside standard monthly views
 
 ## 🚀 Quick Start - One-Click Setup!
 
@@ -111,9 +112,10 @@ Visit `http://localhost:3000` to access your development instance.
 ### Enhanced Features (FinKey Exclusive)
 - **UI-Based AI Configuration**: Set up OpenAI or local LLMs through the web interface
 - **Expense Reimbursement**: Complex transaction handling
-- **Advanced Forecasting**: 24-month projections with trend analysis
-- **Improved Docker**: Enhanced deployment and scaling
-- **Performance Optimizations**: Faster data processing and UI
+- **📊 Advanced Forecasting**: 24-month projections with 12-month rolling average trend analysis and future event integration
+- **📅 Yearly Budget Views**: Aggregated yearly totals and monthly averages for better long-term planning
+- **💰 Manual Holding Management**: Track assets not found on public exchanges with manual price management and currency-aware cost basis tracking
+- **Performance Optimizations**: Faster data processing and responsive UI through advanced memoization
 
 ## 🤝 Contributing
 

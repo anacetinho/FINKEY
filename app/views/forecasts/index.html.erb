@@ -98,14 +98,14 @@
       
       <div class="space-y-4">
         <div class="flex justify-between items-center py-2 border-b border-secondary/20">
-          <span class="text-sm text-secondary">Monthly Income (median)</span>
+          <span class="text-sm text-secondary">Monthly Income (12-month avg)</span>
           <%= link_to transactions_path(q: { start_date: 24.months.ago.to_date, types: ["income"] }), class: "group" do %>
             <span class="text-sm font-medium text-primary group-hover:underline"><%= @forecast.monthly_income.format %></span>
           <% end %>
         </div>
         
         <div class="flex justify-between items-center py-2 border-b border-secondary/20">
-          <span class="text-sm text-secondary">Monthly Expenses (median)</span>
+          <span class="text-sm text-secondary">Monthly Expenses (12-month avg)</span>
           <%= link_to transactions_path(q: { start_date: 24.months.ago.to_date, types: ["expense"] }), class: "group" do %>
             <span class="text-sm font-medium text-primary group-hover:underline"><%= @forecast.monthly_expenses.format %></span>
           <% end %>

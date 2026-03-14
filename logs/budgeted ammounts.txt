@@ -1,0 +1,48 @@
+<div data-id="budgeted" data-ds--tabs-target="panel">              <div class="bg-container rounded-xl shadow-border-xs">
+                
+<div>
+  <div class="p-4 border-b border-secondary">
+    <h3 class="text-sm text-secondary mb-2">Expected income</h3>
+
+    <span class="inline-block mb-2 text-xl font-medium text-primary">
+      € 7.633,30
+    </span>
+
+    <div>
+      <div class="flex h-1.5 mb-3 gap-1">
+          <div class="rounded-md h-1.5 bg-green-500" style="width: -13.34259101568129118467766234787%"></div>
+          <div class="rounded-md h-1.5 bg-green-500" style="width: 113.34259101568129118467766234787%"></div>
+      </div>
+      <div class="flex justify-between text-sm">
+        <p class="text-secondary">€ 16.285,08 earned</p>
+        <p class="font-medium">
+            <span class="text-green-500">€ 8.651,78 over</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-4">
+    <h3 class="text-sm text-secondary mb-2">Budgeted</h3>
+
+    <span class="inline-block mb-2 text-xl font-medium text-primary">
+      € 3.545,30
+    </span>
+
+    <div>
+      <div class="flex h-1.5 mb-3 gap-1">
+          <div class="rounded-md h-1.5 bg-inverse" style="width: 51.1819087502905629645432880271550646%"></div>
+          <div class="rounded-md h-1.5 bg-destructive" style="width: 48.8180912497094370354567119728449354%"></div>
+      </div>
+      <div class="flex justify-between text-sm">
+        <p class="text-secondary">€ 6.926,86 spent</p>
+        <p class="font-medium">
+            <span class="text-destructive">€ 3.381,56 over</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+              </div>
+</div>

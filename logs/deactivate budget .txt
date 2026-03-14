@@ -1,0 +1,837 @@
+first you click on
+
+<a class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-md px-2 py-1 text-sm text-primary bg-gray-50 theme-dark:bg-gray-700 hover:bg-gray-100 theme-dark:hover:bg-gray-600 disabled:bg-gray-200 theme-dark:disabled:bg-gray-600" href="/budgets/oct-2025/edit">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 fg-gray"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg>
+
+    of € 3.545,30
+
+</a>
+
+
+then 
+ in this screen if the budget was enabled there should be a option to deactivate it like a button
+
+
+<html lang="en" data-theme="light" data-controller="theme intercom" data-theme-user-preference-value="light" class="h-full text-primary overflow-hidden lg:overflow-auto font-sans windows"><head><style type="text/css">.turbo-progress-bar {
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: #0076ff;
+  z-index: 2147483647;
+  transition:
+    width 300ms ease-out,
+    opacity 150ms 150ms ease-in;
+  transform: translate3d(0, 0, 0);
+}
+</style>
+    
+  <title>FinKey</title>
+
+  <meta name="csrf-param" content="authenticity_token">
+
+  
+
+  <link rel="stylesheet" href="/assets/tailwind-5b4b82c3.css" data-turbo-track="reload">
+
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+  <link rel="stylesheet" href="/assets/hotwire_combobox-f35a07fc.css">
+
+  <script type="importmap" data-turbo-track="reload">{
+  "imports": {
+    "controllers/hw_combobox_controller": "/assets/hotwire_combobox.esm-c1203551.js",
+    "application": "/assets/application-3844c946.js",
+    "@hotwired/turbo-rails": "/assets/turbo.min-3a2e143f.js",
+    "@hotwired/stimulus": "/assets/stimulus.min-4b1e420e.js",
+    "@hotwired/stimulus-loading": "/assets/stimulus-loading-1fc53fe7.js",
+    "@github/hotkey": "/assets/@github--hotkey-9ba48063.js",
+    "@simonwep/pickr": "/assets/@simonwep--pickr-67bdb03b.js",
+    "d3": "/assets/d3-1337d2d9.js",
+    "d3-array": "/assets/shims/d3-array-default-6551b730.js",
+    "d3-axis": "/assets/d3-axis-85fa0849.js",
+    "d3-brush": "/assets/d3-brush-fbd8b7f4.js",
+    "d3-chord": "/assets/d3-chord-fb006d87.js",
+    "d3-color": "/assets/d3-color-105ebb5b.js",
+    "d3-contour": "/assets/d3-contour-f8d81ff4.js",
+    "d3-delaunay": "/assets/d3-delaunay-42a3bc59.js",
+    "d3-dispatch": "/assets/d3-dispatch-79ecb6ed.js",
+    "d3-drag": "/assets/d3-drag-1641fd0c.js",
+    "d3-dsv": "/assets/d3-dsv-0a36d31b.js",
+    "d3-ease": "/assets/d3-ease-7cefd8e9.js",
+    "d3-fetch": "/assets/d3-fetch-72a3c2eb.js",
+    "d3-force": "/assets/d3-force-5d1545f7.js",
+    "d3-format": "/assets/d3-format-89ab33aa.js",
+    "d3-geo": "/assets/d3-geo-85871f22.js",
+    "d3-hierarchy": "/assets/d3-hierarchy-e550ac50.js",
+    "d3-interpolate": "/assets/d3-interpolate-46876ef7.js",
+    "d3-path": "/assets/d3-path-9309aabd.js",
+    "d3-polygon": "/assets/d3-polygon-d04ed820.js",
+    "d3-quadtree": "/assets/d3-quadtree-6793b4ae.js",
+    "d3-random": "/assets/d3-random-2f15e44b.js",
+    "d3-scale": "/assets/d3-scale-541e3be4.js",
+    "d3-scale-chromatic": "/assets/d3-scale-chromatic-194b7e0a.js",
+    "d3-selection": "/assets/d3-selection-6536d848.js",
+    "d3-shape": "/assets/shims/d3-shape-default-beec2cbd.js",
+    "d3-time": "/assets/d3-time-0c5ea8a2.js",
+    "d3-time-format": "/assets/d3-time-format-7c088be1.js",
+    "d3-timer": "/assets/d3-timer-82d936b5.js",
+    "d3-transition": "/assets/d3-transition-e0ccac69.js",
+    "d3-zoom": "/assets/d3-zoom-f8d842d9.js",
+    "delaunator": "/assets/delaunator-f7d3bb2a.js",
+    "internmap": "/assets/internmap-1a2ce1e6.js",
+    "robust-predicates": "/assets/robust-predicates-ee031280.js",
+    "@floating-ui/dom": "/assets/@floating-ui--dom-dcb62c4d.js",
+    "@floating-ui/core": "/assets/@floating-ui--core-916475eb.js",
+    "@floating-ui/utils": "/assets/@floating-ui--utils-20282ad6.js",
+    "@floating-ui/utils/dom": "/assets/@floating-ui--utils--dom-ffff1bce.js",
+    "d3-sankey": "/assets/d3-sankey-31151e50.js",
+    "d3-array-src": "/assets/d3-array-dcc21360.js",
+    "d3-shape-src": "/assets/d3-shape-2e289679.js",
+    "controllers/app_layout_controller": "/assets/controllers/app_layout_controller-0487bd16.js",
+    "controllers/application": "/assets/controllers/application-01e32596.js",
+    "controllers/auto_submit_form_controller": "/assets/controllers/auto_submit_form_controller-1eeda434.js",
+    "controllers/budget_form_controller": "/assets/controllers/budget_form_controller-295c21e3.js",
+    "controllers/bulk_select_controller": "/assets/controllers/bulk_select_controller-560f4e0d.js",
+    "controllers/category_controller": "/assets/controllers/category_controller-1d0e21a9.js",
+    "controllers/chat_controller": "/assets/controllers/chat_controller-1a6e9e1a.js",
+    "controllers/clipboard_controller": "/assets/controllers/clipboard_controller-d003d177.js",
+    "controllers/color_avatar_controller": "/assets/controllers/color_avatar_controller-e07c87d1.js",
+    "controllers/color_select_controller": "/assets/controllers/color_select_controller-3af5d262.js",
+    "controllers/confirm_dialog_controller": "/assets/controllers/confirm_dialog_controller-b60785fa.js",
+    "controllers/deletion_controller": "/assets/controllers/deletion_controller-abd5c785.js",
+    "controllers/donut_chart_controller": "/assets/controllers/donut_chart_controller-442e8e4c.js",
+    "controllers/element_removal_controller": "/assets/controllers/element_removal_controller-21d93512.js",
+    "controllers/file_upload_controller": "/assets/controllers/file_upload_controller-685b33a6.js",
+    "controllers/hotkey_controller": "/assets/controllers/hotkey_controller-bad4f2fd.js",
+    "controllers/import_controller": "/assets/controllers/import_controller-5d3a46de.js",
+    "controllers": "/assets/controllers/index-236ab973.js",
+    "controllers/intercom_controller": "/assets/controllers/intercom_controller-86e38e97.js",
+    "controllers/list_filter_controller": "/assets/controllers/list_filter_controller-4226439f.js",
+    "controllers/list_keyboard_navigation_controller": "/assets/controllers/list_keyboard_navigation_controller-312ee58a.js",
+    "controllers/mobile_cell_interaction_controller": "/assets/controllers/mobile_cell_interaction_controller-d289cee2.js",
+    "controllers/money_field_controller": "/assets/controllers/money_field_controller-cd2cad1a.js",
+    "controllers/onboarding_controller": "/assets/controllers/onboarding_controller-4fd7a957.js",
+    "controllers/password_validator_controller": "/assets/controllers/password_validator_controller-ad3aa125.js",
+    "controllers/password_visibility_controller": "/assets/controllers/password_visibility_controller-d18a8351.js",
+    "controllers/plaid_controller": "/assets/controllers/plaid_controller-0bb17cba.js",
+    "controllers/preserve_scroll_controller": "/assets/controllers/preserve_scroll_controller-31638673.js",
+    "controllers/profile_image_preview_controller": "/assets/controllers/profile_image_preview_controller-4a0e9b72.js",
+    "controllers/rule/actions_controller": "/assets/controllers/rule/actions_controller-b9916bc7.js",
+    "controllers/rule/conditions_controller": "/assets/controllers/rule/conditions_controller-ad2d7ee6.js",
+    "controllers/rules_controller": "/assets/controllers/rules_controller-946943b6.js",
+    "controllers/sankey_chart_controller": "/assets/controllers/sankey_chart_controller-103cdc2c.js",
+    "controllers/scroll_on_connect_controller": "/assets/controllers/scroll_on_connect_controller-df45518c.js",
+    "controllers/selectable_link_controller": "/assets/controllers/selectable_link_controller-8c9a9800.js",
+    "controllers/theme_controller": "/assets/controllers/theme_controller-ab4b65c2.js",
+    "controllers/time_series_chart_controller": "/assets/controllers/time_series_chart_controller-f59be771.js",
+    "controllers/tooltip_controller": "/assets/controllers/tooltip_controller-d713e701.js",
+    "controllers/trade_form_controller": "/assets/controllers/trade_form_controller-cdf427cb.js",
+    "controllers/transfer_match_controller": "/assets/controllers/transfer_match_controller-9d72e1ed.js",
+    "controllers/turbo_frame_timeout_controller": "/assets/controllers/turbo_frame_timeout_controller-72eefd0e.js",
+    "controllers/DS/dialog_controller": "/assets/DS/dialog_controller-d1ebadfe.js",
+    "controllers/DS/menu_controller": "/assets/DS/menu_controller-3b2ab27f.js",
+    "controllers/DS/tabs_controller": "/assets/DS/tabs_controller-902700aa.js",
+    "controllers/DS/tooltip_controller": "/assets/DS/tooltip_controller-de9fd5e3.js",
+    "services/currencies_service": "/assets/services/currencies_service-4485eddc.js"
+  }
+}</script>
+<link rel="modulepreload" href="/assets/hotwire_combobox.esm-c1203551.js">
+<link rel="modulepreload" href="/assets/application-3844c946.js">
+<link rel="modulepreload" href="/assets/turbo.min-3a2e143f.js">
+<link rel="modulepreload" href="/assets/stimulus.min-4b1e420e.js">
+<link rel="modulepreload" href="/assets/stimulus-loading-1fc53fe7.js">
+<link rel="modulepreload" href="/assets/@github--hotkey-9ba48063.js">
+<link rel="modulepreload" href="/assets/@simonwep--pickr-67bdb03b.js">
+<link rel="modulepreload" href="/assets/d3-1337d2d9.js">
+<link rel="modulepreload" href="/assets/shims/d3-array-default-6551b730.js">
+<link rel="modulepreload" href="/assets/d3-axis-85fa0849.js">
+<link rel="modulepreload" href="/assets/d3-brush-fbd8b7f4.js">
+<link rel="modulepreload" href="/assets/d3-chord-fb006d87.js">
+<link rel="modulepreload" href="/assets/d3-color-105ebb5b.js">
+<link rel="modulepreload" href="/assets/d3-contour-f8d81ff4.js">
+<link rel="modulepreload" href="/assets/d3-delaunay-42a3bc59.js">
+<link rel="modulepreload" href="/assets/d3-dispatch-79ecb6ed.js">
+<link rel="modulepreload" href="/assets/d3-drag-1641fd0c.js">
+<link rel="modulepreload" href="/assets/d3-dsv-0a36d31b.js">
+<link rel="modulepreload" href="/assets/d3-ease-7cefd8e9.js">
+<link rel="modulepreload" href="/assets/d3-fetch-72a3c2eb.js">
+<link rel="modulepreload" href="/assets/d3-force-5d1545f7.js">
+<link rel="modulepreload" href="/assets/d3-format-89ab33aa.js">
+<link rel="modulepreload" href="/assets/d3-geo-85871f22.js">
+<link rel="modulepreload" href="/assets/d3-hierarchy-e550ac50.js">
+<link rel="modulepreload" href="/assets/d3-interpolate-46876ef7.js">
+<link rel="modulepreload" href="/assets/d3-path-9309aabd.js">
+<link rel="modulepreload" href="/assets/d3-polygon-d04ed820.js">
+<link rel="modulepreload" href="/assets/d3-quadtree-6793b4ae.js">
+<link rel="modulepreload" href="/assets/d3-random-2f15e44b.js">
+<link rel="modulepreload" href="/assets/d3-scale-541e3be4.js">
+<link rel="modulepreload" href="/assets/d3-scale-chromatic-194b7e0a.js">
+<link rel="modulepreload" href="/assets/d3-selection-6536d848.js">
+<link rel="modulepreload" href="/assets/shims/d3-shape-default-beec2cbd.js">
+<link rel="modulepreload" href="/assets/d3-time-0c5ea8a2.js">
+<link rel="modulepreload" href="/assets/d3-time-format-7c088be1.js">
+<link rel="modulepreload" href="/assets/d3-timer-82d936b5.js">
+<link rel="modulepreload" href="/assets/d3-transition-e0ccac69.js">
+<link rel="modulepreload" href="/assets/d3-zoom-f8d842d9.js">
+<link rel="modulepreload" href="/assets/delaunator-f7d3bb2a.js">
+<link rel="modulepreload" href="/assets/internmap-1a2ce1e6.js">
+<link rel="modulepreload" href="/assets/robust-predicates-ee031280.js">
+<link rel="modulepreload" href="/assets/@floating-ui--dom-dcb62c4d.js">
+<link rel="modulepreload" href="/assets/@floating-ui--core-916475eb.js">
+<link rel="modulepreload" href="/assets/@floating-ui--utils-20282ad6.js">
+<link rel="modulepreload" href="/assets/@floating-ui--utils--dom-ffff1bce.js">
+<link rel="modulepreload" href="/assets/d3-sankey-31151e50.js">
+<link rel="modulepreload" href="/assets/d3-array-dcc21360.js">
+<link rel="modulepreload" href="/assets/d3-shape-2e289679.js">
+<link rel="modulepreload" href="/assets/controllers/app_layout_controller-0487bd16.js">
+<link rel="modulepreload" href="/assets/controllers/application-01e32596.js">
+<link rel="modulepreload" href="/assets/controllers/auto_submit_form_controller-1eeda434.js">
+<link rel="modulepreload" href="/assets/controllers/budget_form_controller-295c21e3.js">
+<link rel="modulepreload" href="/assets/controllers/bulk_select_controller-560f4e0d.js">
+<link rel="modulepreload" href="/assets/controllers/category_controller-1d0e21a9.js">
+<link rel="modulepreload" href="/assets/controllers/chat_controller-1a6e9e1a.js">
+<link rel="modulepreload" href="/assets/controllers/clipboard_controller-d003d177.js">
+<link rel="modulepreload" href="/assets/controllers/color_avatar_controller-e07c87d1.js">
+<link rel="modulepreload" href="/assets/controllers/color_select_controller-3af5d262.js">
+<link rel="modulepreload" href="/assets/controllers/confirm_dialog_controller-b60785fa.js">
+<link rel="modulepreload" href="/assets/controllers/deletion_controller-abd5c785.js">
+<link rel="modulepreload" href="/assets/controllers/donut_chart_controller-442e8e4c.js">
+<link rel="modulepreload" href="/assets/controllers/element_removal_controller-21d93512.js">
+<link rel="modulepreload" href="/assets/controllers/file_upload_controller-685b33a6.js">
+<link rel="modulepreload" href="/assets/controllers/hotkey_controller-bad4f2fd.js">
+<link rel="modulepreload" href="/assets/controllers/import_controller-5d3a46de.js">
+<link rel="modulepreload" href="/assets/controllers/index-236ab973.js">
+<link rel="modulepreload" href="/assets/controllers/intercom_controller-86e38e97.js">
+<link rel="modulepreload" href="/assets/controllers/list_filter_controller-4226439f.js">
+<link rel="modulepreload" href="/assets/controllers/list_keyboard_navigation_controller-312ee58a.js">
+<link rel="modulepreload" href="/assets/controllers/mobile_cell_interaction_controller-d289cee2.js">
+<link rel="modulepreload" href="/assets/controllers/money_field_controller-cd2cad1a.js">
+<link rel="modulepreload" href="/assets/controllers/onboarding_controller-4fd7a957.js">
+<link rel="modulepreload" href="/assets/controllers/password_validator_controller-ad3aa125.js">
+<link rel="modulepreload" href="/assets/controllers/password_visibility_controller-d18a8351.js">
+<link rel="modulepreload" href="/assets/controllers/plaid_controller-0bb17cba.js">
+<link rel="modulepreload" href="/assets/controllers/preserve_scroll_controller-31638673.js">
+<link rel="modulepreload" href="/assets/controllers/profile_image_preview_controller-4a0e9b72.js">
+<link rel="modulepreload" href="/assets/controllers/rule/actions_controller-b9916bc7.js">
+<link rel="modulepreload" href="/assets/controllers/rule/conditions_controller-ad2d7ee6.js">
+<link rel="modulepreload" href="/assets/controllers/rules_controller-946943b6.js">
+<link rel="modulepreload" href="/assets/controllers/sankey_chart_controller-103cdc2c.js">
+<link rel="modulepreload" href="/assets/controllers/scroll_on_connect_controller-df45518c.js">
+<link rel="modulepreload" href="/assets/controllers/selectable_link_controller-8c9a9800.js">
+<link rel="modulepreload" href="/assets/controllers/theme_controller-ab4b65c2.js">
+<link rel="modulepreload" href="/assets/controllers/time_series_chart_controller-f59be771.js">
+<link rel="modulepreload" href="/assets/controllers/tooltip_controller-d713e701.js">
+<link rel="modulepreload" href="/assets/controllers/trade_form_controller-cdf427cb.js">
+<link rel="modulepreload" href="/assets/controllers/transfer_match_controller-9d72e1ed.js">
+<link rel="modulepreload" href="/assets/controllers/turbo_frame_timeout_controller-72eefd0e.js">
+<link rel="modulepreload" href="/assets/DS/dialog_controller-d1ebadfe.js">
+<link rel="modulepreload" href="/assets/DS/menu_controller-3b2ab27f.js">
+<link rel="modulepreload" href="/assets/DS/tabs_controller-902700aa.js">
+<link rel="modulepreload" href="/assets/DS/tooltip_controller-de9fd5e3.js">
+<link rel="modulepreload" href="/assets/services/currencies_service-4485eddc.js">
+<script type="module">import "application"</script>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FinKey">
+
+  <meta name="msapplication-TileColor" content="#F9F9F9">
+  <meta name="theme-color" content="#F9F9F9">
+
+  <!-- Favicon links for all browsers -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon-16x16.svg">
+  <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32x32.svg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="manifest" href="/manifest">
+  <link rel="apple-touch-icon" href="/logo-pwa.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="/logo-pwa.png">
+
+  <meta name="turbo-refresh-method" content="morph"><meta name="turbo-refresh-scroll" content="preserve">
+<meta name="turbo-refresh-method" content="morph"><meta name="turbo-refresh-scroll" content="preserve"><meta name="csrf-token" content="aJHO7jssnMsbmAgxMjA1yTHrczvSty_autyGG_DYAAgqw6mJQQmXTz1pqqoUNhwj5X0dYKBrBT80ZLLCt_r7-Q"></head>
+
+    
+  
+
+  <body class="h-full overflow-hidden lg:overflow-auto antialiased">
+
+    <div class="fixed z-50 top-6 md:top-4 left-1/2 -translate-x-1/2 w-full md:w-80 px-4 md:px-0 mx-auto md:mx-0 md:right-auto mt-safe">
+      <div id="notification-tray" class="space-y-1 w-full">
+        
+
+        <div id="cta"></div>
+      </div>
+    </div>
+
+      <turbo-cable-stream-source channel="Turbo::StreamsChannel" signed-stream-name="IloybGtPaTh2Wm1sdUxXdGxlUzlHWVcxcGJIa3ZPRFZtWlRjMFltSXRPREU1WXkwMFlqTXpMV0kzTkRZdE1HWTFOVFE0TWpobVpHTXgi--9cd4f84da32316e284713c7e894dc72b8c1735f7a9c0b9d6373272fee81d9039" connected=""></turbo-cable-stream-source>
+
+    <turbo-frame id="modal"></turbo-frame>
+    <turbo-frame id="drawer"></turbo-frame>
+
+    <div>
+  <dialog class="w-full h-full bg-transparent theme-dark:backdrop:bg-alpha-black-900 backdrop:bg-overlay lg:p-1" id="confirm-dialog" data-controller="DS--dialog hotkey confirm-dialog" data-ds--dialog-auto-open-value="false" data-ds--dialog-reload-on-close-value="false" data-action="mousedown-&gt;DS--dialog#clickOutside" data-hotkey="esc:DS--dialog#close">
+    <div class="flex h-full w-full items-center justify-center">
+      <div class="flex flex-col bg-container rounded-xl shadow-border-xs mx-3 lg:mx-0 w-full overflow-hidden max-h-full lg:max-w-[300px]" data-ds--dialog-target="content">
+        <div class="grow overflow-y-auto py-4 space-y-4 flex flex-col">
+
+            <div class="px-4 grow">
+                  <form method="dialog" class="space-y-4">
+      <div class="space-y-2">
+        <div class="flex items-center justify-between gap-2">
+          <h3 class="font-medium text-primary" data-confirm-dialog-target="title">Are you sure?</h3>
+          <button type="submit" value="cancel" class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-lg justify-center w-9 h-9 text-sm hover:bg-gray-100 theme-dark:hover:bg-gray-700">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+
+
+</button>
+        </div>
+
+        <p class="text-sm text-secondary" data-confirm-dialog-target="subtitle">This action cannot be undone.</p>
+      </div>
+
+      <div>
+          <button autofocus="autofocus" value="confirm" hidden="hidden" class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-lg w-full justify-center px-3 py-2 text-sm text-inverse bg-inverse hover:bg-inverse-hover disabled:bg-gray-500 theme-dark:disabled:bg-gray-400" data-variant="primary" data-confirm-dialog-target="confirmButton">
+
+    Confirm
+
+</button>
+          <button autofocus="autofocus" value="confirm" hidden="hidden" class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-lg w-full justify-center px-3 py-2 text-sm text-destructive border border-secondary bg-transparent hover:bg-gray-100 theme-dark:hover:bg-gray-700" data-variant="outline-destructive" data-confirm-dialog-target="confirmButton">
+
+    Confirm
+
+</button>
+          <button autofocus="autofocus" value="confirm" hidden="hidden" class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-lg w-full justify-center px-3 py-2 text-sm text-inverse bg-red-500 theme-dark:bg-red-400 hover:bg-red-600 theme-dark:hover:bg-red-500 disabled:bg-red-200 theme-dark:disabled:bg-red-600" data-variant="destructive" data-confirm-dialog-target="confirmButton">
+
+    Confirm
+
+</button>
+      </div>
+    </form>
+
+
+            </div>
+
+          
+        </div>
+
+</div></div></dialog></div>
+
+    
+    
+
+    
+  <div class="bg-surface flex flex-col h-full">
+    <header class="flex items-center justify-between p-8">
+        <a class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-lg justify-center w-9 h-9 text-sm hover:bg-gray-100 theme-dark:hover:bg-gray-700" href="/budgets/oct-2025">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
+
+
+</a>
+
+      <nav>
+        
+  
+
+<ul class="flex items-center gap-2">
+    <li class="flex items-center gap-2 group">
+
+
+      <a class="flex items-center gap-3" href="/budgets/oct-2025/edit">
+        <div class="flex items-center gap-2 text-sm font-medium text-primary">
+          <span class="bg-primary text-primary w-7 h-7 rounded-full shrink-0 inline-flex items-center justify-center border border-transparent">
+            1
+          </span>
+
+          <span>Setup</span>
+        </div>
+</a>
+      <hr class="border border-secondary w-12 group-last:hidden">
+    </li>
+    <li class="flex items-center gap-2 group">
+
+
+      <a class="flex items-center gap-3" href="/budgets/oct-2025/budget_categories">
+        <div class="flex items-center gap-2 text-sm font-medium text-green-600">
+          <span class="bg-green-600/10 border-alpha-black-25 w-7 h-7 rounded-full shrink-0 inline-flex items-center justify-center border border-transparent">
+            <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 fg-gray"><path d="M20 6 9 17l-5-5"></path></svg>
+          </span>
+
+          <span>Categories</span>
+        </div>
+</a>
+      <hr class="border border-secondary w-12 group-last:hidden">
+    </li>
+</ul>
+
+
+      </nav>
+
+        <a class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-lg justify-center w-9 h-9 text-sm hover:bg-gray-100 theme-dark:hover:bg-gray-700" href="/budgets/oct-2025">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+
+
+</a>
+    </header>
+
+    <main class="grow px-8 pt-12 pb-32 overflow-y-auto">
+      
+
+
+
+<div>
+  <div class="space-y-4">
+    <div class="text-center space-y-2">
+      <h1 class="text-3xl text-primary font-medium">Setup your budget</h1>
+      <p class="text-secondary text-sm max-w-sm mx-auto">
+        Enter your monthly earnings and planned spending below to setup your budget.
+      </p>
+    </div>
+
+    <div class="mx-auto max-w-lg">
+      <form class="space-y-3" data-controller="budget-form" action="/budgets/oct-2025" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off"><input type="hidden" name="authenticity_token" value="_2UDVSsX2qorADBUpBosjZT7vdgM3inpqpdJ8VVcVE9dshpbvKMPqNjL8fUo6M5cY60vonnUFMlAe1obZ5gnzw" autocomplete="off">
+        
+
+<div class="form-field " data-controller="money-field">
+
+  <div class="form-field__body">
+      <label class="form-field__label" for="budget_Budgeted spending">
+        Budgeted spending
+          <span class="text-red-500 ml-0.5">*</span>
+</label>
+    <div class="flex items-center gap-1">
+      <div class="flex items-center grow gap-1">
+        <span class="text-subdued text-sm" data-money-field-target="symbol">
+          €
+        </span>
+
+        <input class="form-field__input" placeholder="100" value="3545.30" min="-99999999999999" max="99999999999999" step="0.01" data-money-field-target="amount" required="required" type="number" name="budget[budgeted_spending]" id="budget_budgeted_spending">
+      </div>
+
+        <div>
+          <select class="w-fit pr-5 disabled:text-subdued form-field__input" disabled="disabled" data-money-field-target="currency" data-action="change-&gt;money-field#handleCurrencyChange" name="budget[currency]" id="budget_currency"><option value="USD">USD</option>
+<option selected="selected" value="EUR">EUR</option>
+<option value="GBP">GBP</option>
+<option value="AUD">AUD</option>
+<option value="CAD">CAD</option>
+<option value="JPY">JPY</option>
+<option value="BYR">BYR</option>
+<option value="AFN">AFN</option>
+<option value="ALL">ALL</option>
+<option value="DZD">DZD</option>
+<option value="AOA">AOA</option>
+<option value="ARS">ARS</option>
+<option value="AMD">AMD</option>
+<option value="AWG">AWG</option>
+<option value="AZN">AZN</option>
+<option value="BSD">BSD</option>
+<option value="BHD">BHD</option>
+<option value="BDT">BDT</option>
+<option value="BBD">BBD</option>
+<option value="BYN">BYN</option>
+<option value="BZD">BZD</option>
+<option value="BMD">BMD</option>
+<option value="BTN">BTN</option>
+<option value="BTC">BTC</option>
+<option value="BOB">BOB</option>
+<option value="BAM">BAM</option>
+<option value="BWP">BWP</option>
+<option value="BRL">BRL</option>
+<option value="GBX">GBX</option>
+<option value="BND">BND</option>
+<option value="BGN">BGN</option>
+<option value="BIF">BIF</option>
+<option value="KHR">KHR</option>
+<option value="CVE">CVE</option>
+<option value="KYD">KYD</option>
+<option value="XAF">XAF</option>
+<option value="XPF">XPF</option>
+<option value="CLP">CLP</option>
+<option value="CNY">CNY</option>
+<option value="CNH">CNH</option>
+<option value="XTS">XTS</option>
+<option value="COP">COP</option>
+<option value="KMF">KMF</option>
+<option value="CDF">CDF</option>
+<option value="CRC">CRC</option>
+<option value="CUC">CUC</option>
+<option value="CUP">CUP</option>
+<option value="CZK">CZK</option>
+<option value="DKK">DKK</option>
+<option value="DJF">DJF</option>
+<option value="DOP">DOP</option>
+<option value="XCD">XCD</option>
+<option value="EGP">EGP</option>
+<option value="ERN">ERN</option>
+<option value="ETB">ETB</option>
+<option value="XBA">XBA</option>
+<option value="XBB">XBB</option>
+<option value="XBD">XBD</option>
+<option value="XBC">XBC</option>
+<option value="FKP">FKP</option>
+<option value="FJD">FJD</option>
+<option value="GMD">GMD</option>
+<option value="GEL">GEL</option>
+<option value="GHS">GHS</option>
+<option value="GIP">GIP</option>
+<option value="XAU">XAU</option>
+<option value="GTQ">GTQ</option>
+<option value="GGP">GGP</option>
+<option value="GNF">GNF</option>
+<option value="GYD">GYD</option>
+<option value="HTG">HTG</option>
+<option value="HNL">HNL</option>
+<option value="HKD">HKD</option>
+<option value="HUF">HUF</option>
+<option value="ISK">ISK</option>
+<option value="INR">INR</option>
+<option value="IDR">IDR</option>
+<option value="IRR">IRR</option>
+<option value="IQD">IQD</option>
+<option value="IMP">IMP</option>
+<option value="ILS">ILS</option>
+<option value="JMD">JMD</option>
+<option value="JEP">JEP</option>
+<option value="JOD">JOD</option>
+<option value="KZT">KZT</option>
+<option value="KES">KES</option>
+<option value="KWD">KWD</option>
+<option value="KGS">KGS</option>
+<option value="LAK">LAK</option>
+<option value="LBP">LBP</option>
+<option value="LSL">LSL</option>
+<option value="LRD">LRD</option>
+<option value="LYD">LYD</option>
+<option value="MOP">MOP</option>
+<option value="MKD">MKD</option>
+<option value="MGA">MGA</option>
+<option value="MWK">MWK</option>
+<option value="MYR">MYR</option>
+<option value="MVR">MVR</option>
+<option value="MRU">MRU</option>
+<option value="MUR">MUR</option>
+<option value="MXN">MXN</option>
+<option value="MDL">MDL</option>
+<option value="MNT">MNT</option>
+<option value="MAD">MAD</option>
+<option value="MZN">MZN</option>
+<option value="MMK">MMK</option>
+<option value="NAD">NAD</option>
+<option value="NPR">NPR</option>
+<option value="ANG">ANG</option>
+<option value="SLE">SLE</option>
+<option value="TWD">TWD</option>
+<option value="NZD">NZD</option>
+<option value="NIO">NIO</option>
+<option value="NGN">NGN</option>
+<option value="KPW">KPW</option>
+<option value="NOK">NOK</option>
+<option value="OMR">OMR</option>
+<option value="PKR">PKR</option>
+<option value="XPD">XPD</option>
+<option value="PAB">PAB</option>
+<option value="PGK">PGK</option>
+<option value="PYG">PYG</option>
+<option value="PEN">PEN</option>
+<option value="PHP">PHP</option>
+<option value="XPT">XPT</option>
+<option value="PLN">PLN</option>
+<option value="QAR">QAR</option>
+<option value="RON">RON</option>
+<option value="RUB">RUB</option>
+<option value="RWF">RWF</option>
+<option value="SHP">SHP</option>
+<option value="SVC">SVC</option>
+<option value="WST">WST</option>
+<option value="SAR">SAR</option>
+<option value="RSD">RSD</option>
+<option value="SCR">SCR</option>
+<option value="SLL">SLL</option>
+<option value="XAG">XAG</option>
+<option value="SGD">SGD</option>
+<option value="SKK">SKK</option>
+<option value="SBD">SBD</option>
+<option value="SOS">SOS</option>
+<option value="ZAR">ZAR</option>
+<option value="KRW">KRW</option>
+<option value="SSP">SSP</option>
+<option value="XDR">XDR</option>
+<option value="LKR">LKR</option>
+<option value="SDG">SDG</option>
+<option value="SRD">SRD</option>
+<option value="SZL">SZL</option>
+<option value="SEK">SEK</option>
+<option value="CHF">CHF</option>
+<option value="SYP">SYP</option>
+<option value="STD">STD</option>
+<option value="STN">STN</option>
+<option value="TJS">TJS</option>
+<option value="TZS">TZS</option>
+<option value="THB">THB</option>
+<option value="TOP">TOP</option>
+<option value="TTD">TTD</option>
+<option value="TND">TND</option>
+<option value="TRY">TRY</option>
+<option value="TMT">TMT</option>
+<option value="XFU">XFU</option>
+<option value="USDC">USDC</option>
+<option value="UGX">UGX</option>
+<option value="UAH">UAH</option>
+<option value="CLF">CLF</option>
+<option value="AED">AED</option>
+<option value="UYU">UYU</option>
+<option value="UZS">UZS</option>
+<option value="VUV">VUV</option>
+<option value="VES">VES</option>
+<option value="VND">VND</option>
+<option value="XOF">XOF</option>
+<option value="YER">YER</option>
+<option value="ZMK">ZMK</option>
+<option value="ZMW">ZMW</option></select>
+        </div>
+    </div>
+  </div>
+</div>
+
+        
+
+<div class="form-field " data-controller="money-field">
+
+  <div class="form-field__body">
+      <label class="form-field__label" for="budget_Expected income">
+        Expected income
+          <span class="text-red-500 ml-0.5">*</span>
+</label>
+    <div class="flex items-center gap-1">
+      <div class="flex items-center grow gap-1">
+        <span class="text-subdued text-sm" data-money-field-target="symbol">
+          €
+        </span>
+
+        <input class="form-field__input" placeholder="100" value="7633.30" min="-99999999999999" max="99999999999999" step="0.01" data-money-field-target="amount" required="required" type="number" name="budget[expected_income]" id="budget_expected_income">
+      </div>
+
+        <div>
+          <select class="w-fit pr-5 disabled:text-subdued form-field__input" disabled="disabled" data-money-field-target="currency" data-action="change-&gt;money-field#handleCurrencyChange" name="budget[currency]" id="budget_currency"><option value="USD">USD</option>
+<option selected="selected" value="EUR">EUR</option>
+<option value="GBP">GBP</option>
+<option value="AUD">AUD</option>
+<option value="CAD">CAD</option>
+<option value="JPY">JPY</option>
+<option value="BYR">BYR</option>
+<option value="AFN">AFN</option>
+<option value="ALL">ALL</option>
+<option value="DZD">DZD</option>
+<option value="AOA">AOA</option>
+<option value="ARS">ARS</option>
+<option value="AMD">AMD</option>
+<option value="AWG">AWG</option>
+<option value="AZN">AZN</option>
+<option value="BSD">BSD</option>
+<option value="BHD">BHD</option>
+<option value="BDT">BDT</option>
+<option value="BBD">BBD</option>
+<option value="BYN">BYN</option>
+<option value="BZD">BZD</option>
+<option value="BMD">BMD</option>
+<option value="BTN">BTN</option>
+<option value="BTC">BTC</option>
+<option value="BOB">BOB</option>
+<option value="BAM">BAM</option>
+<option value="BWP">BWP</option>
+<option value="BRL">BRL</option>
+<option value="GBX">GBX</option>
+<option value="BND">BND</option>
+<option value="BGN">BGN</option>
+<option value="BIF">BIF</option>
+<option value="KHR">KHR</option>
+<option value="CVE">CVE</option>
+<option value="KYD">KYD</option>
+<option value="XAF">XAF</option>
+<option value="XPF">XPF</option>
+<option value="CLP">CLP</option>
+<option value="CNY">CNY</option>
+<option value="CNH">CNH</option>
+<option value="XTS">XTS</option>
+<option value="COP">COP</option>
+<option value="KMF">KMF</option>
+<option value="CDF">CDF</option>
+<option value="CRC">CRC</option>
+<option value="CUC">CUC</option>
+<option value="CUP">CUP</option>
+<option value="CZK">CZK</option>
+<option value="DKK">DKK</option>
+<option value="DJF">DJF</option>
+<option value="DOP">DOP</option>
+<option value="XCD">XCD</option>
+<option value="EGP">EGP</option>
+<option value="ERN">ERN</option>
+<option value="ETB">ETB</option>
+<option value="XBA">XBA</option>
+<option value="XBB">XBB</option>
+<option value="XBD">XBD</option>
+<option value="XBC">XBC</option>
+<option value="FKP">FKP</option>
+<option value="FJD">FJD</option>
+<option value="GMD">GMD</option>
+<option value="GEL">GEL</option>
+<option value="GHS">GHS</option>
+<option value="GIP">GIP</option>
+<option value="XAU">XAU</option>
+<option value="GTQ">GTQ</option>
+<option value="GGP">GGP</option>
+<option value="GNF">GNF</option>
+<option value="GYD">GYD</option>
+<option value="HTG">HTG</option>
+<option value="HNL">HNL</option>
+<option value="HKD">HKD</option>
+<option value="HUF">HUF</option>
+<option value="ISK">ISK</option>
+<option value="INR">INR</option>
+<option value="IDR">IDR</option>
+<option value="IRR">IRR</option>
+<option value="IQD">IQD</option>
+<option value="IMP">IMP</option>
+<option value="ILS">ILS</option>
+<option value="JMD">JMD</option>
+<option value="JEP">JEP</option>
+<option value="JOD">JOD</option>
+<option value="KZT">KZT</option>
+<option value="KES">KES</option>
+<option value="KWD">KWD</option>
+<option value="KGS">KGS</option>
+<option value="LAK">LAK</option>
+<option value="LBP">LBP</option>
+<option value="LSL">LSL</option>
+<option value="LRD">LRD</option>
+<option value="LYD">LYD</option>
+<option value="MOP">MOP</option>
+<option value="MKD">MKD</option>
+<option value="MGA">MGA</option>
+<option value="MWK">MWK</option>
+<option value="MYR">MYR</option>
+<option value="MVR">MVR</option>
+<option value="MRU">MRU</option>
+<option value="MUR">MUR</option>
+<option value="MXN">MXN</option>
+<option value="MDL">MDL</option>
+<option value="MNT">MNT</option>
+<option value="MAD">MAD</option>
+<option value="MZN">MZN</option>
+<option value="MMK">MMK</option>
+<option value="NAD">NAD</option>
+<option value="NPR">NPR</option>
+<option value="ANG">ANG</option>
+<option value="SLE">SLE</option>
+<option value="TWD">TWD</option>
+<option value="NZD">NZD</option>
+<option value="NIO">NIO</option>
+<option value="NGN">NGN</option>
+<option value="KPW">KPW</option>
+<option value="NOK">NOK</option>
+<option value="OMR">OMR</option>
+<option value="PKR">PKR</option>
+<option value="XPD">XPD</option>
+<option value="PAB">PAB</option>
+<option value="PGK">PGK</option>
+<option value="PYG">PYG</option>
+<option value="PEN">PEN</option>
+<option value="PHP">PHP</option>
+<option value="XPT">XPT</option>
+<option value="PLN">PLN</option>
+<option value="QAR">QAR</option>
+<option value="RON">RON</option>
+<option value="RUB">RUB</option>
+<option value="RWF">RWF</option>
+<option value="SHP">SHP</option>
+<option value="SVC">SVC</option>
+<option value="WST">WST</option>
+<option value="SAR">SAR</option>
+<option value="RSD">RSD</option>
+<option value="SCR">SCR</option>
+<option value="SLL">SLL</option>
+<option value="XAG">XAG</option>
+<option value="SGD">SGD</option>
+<option value="SKK">SKK</option>
+<option value="SBD">SBD</option>
+<option value="SOS">SOS</option>
+<option value="ZAR">ZAR</option>
+<option value="KRW">KRW</option>
+<option value="SSP">SSP</option>
+<option value="XDR">XDR</option>
+<option value="LKR">LKR</option>
+<option value="SDG">SDG</option>
+<option value="SRD">SRD</option>
+<option value="SZL">SZL</option>
+<option value="SEK">SEK</option>
+<option value="CHF">CHF</option>
+<option value="SYP">SYP</option>
+<option value="STD">STD</option>
+<option value="STN">STN</option>
+<option value="TJS">TJS</option>
+<option value="TZS">TZS</option>
+<option value="THB">THB</option>
+<option value="TOP">TOP</option>
+<option value="TTD">TTD</option>
+<option value="TND">TND</option>
+<option value="TRY">TRY</option>
+<option value="TMT">TMT</option>
+<option value="XFU">XFU</option>
+<option value="USDC">USDC</option>
+<option value="UGX">UGX</option>
+<option value="UAH">UAH</option>
+<option value="CLF">CLF</option>
+<option value="AED">AED</option>
+<option value="UYU">UYU</option>
+<option value="UZS">UZS</option>
+<option value="VUV">VUV</option>
+<option value="VES">VES</option>
+<option value="VND">VND</option>
+<option value="XOF">XOF</option>
+<option value="YER">YER</option>
+<option value="ZMK">ZMK</option>
+<option value="ZMW">ZMW</option></select>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+          <div class="border border-tertiary rounded-lg p-3 flex">
+            <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-5 h-5 fg-gray"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg>
+            <div class="ml-2 space-y-1 text-sm">
+              <h4 class="text-primary">Autosuggest income &amp; spending budget</h4>
+              <p class="text-secondary">
+                This will be based on transaction history. AI can make mistakes, verify before continuing.
+              </p>
+            </div>
+
+            <div class="relative inline-block select-none">
+  <input type="hidden" value="0" autocomplete="off">
+  <input type="checkbox" id="auto_fill" value="1" class="sr-only peer" data-action="change-&gt;budget-form#toggleAutoFill" data-budget-form-income-param="{&quot;key&quot;:&quot;budget_expected_income&quot;,&quot;value&quot;:&quot;6805.41&quot;}" data-budget-form-spending-param="{&quot;key&quot;:&quot;budget_budgeted_spending&quot;,&quot;value&quot;:&quot;3465.21&quot;}">
+  <label class="block w-9 h-5 cursor-pointer rounded-full bg-gray-100 theme-dark:bg-gray-700 transition-colors duration-300 after:content-[''] after:block after:bg-white after:absolute after:rounded-full after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:transition-transform after:duration-300 after:ease-in-out peer-checked:bg-green-600 peer-checked:after:translate-x-4 peer-disabled:opacity-70 peer-disabled:cursor-not-allowed" for="auto_fill">&nbsp;</label>
+</div>
+
+          </div>
+
+        <button class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-lg w-full justify-center px-3 py-2 text-sm text-inverse bg-inverse hover:bg-inverse-hover disabled:bg-gray-500 theme-dark:disabled:bg-gray-400" data-turbo-submits-with="Submitting...">
+
+    Continue
+
+</button>
+</form>    </div>
+  </div>
+</div>
+
+    </main>
+
+  </div>
+
+  
+
+</body></html>"

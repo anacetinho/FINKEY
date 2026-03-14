@@ -41,11 +41,11 @@ class Account < ApplicationRecord
       transitions from: [ :draft, :disabled ], to: :active
     end
 
-    event :disable do
+    event :disable, after: :touch do
       transitions from: [ :draft, :active ], to: :disabled
     end
 
-    event :enable do
+    event :enable, after: :touch do
       transitions from: :disabled, to: :active
     end
 

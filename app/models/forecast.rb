@@ -37,16 +37,16 @@ class Forecast
 
   def monthly_income
     @monthly_income ||= begin
-      # Use historical data for more accurate median calculation
-      raw_amount = family.income_statement.median_income(interval: "month") || 0
+      # Use rolling 12-month average (last 12 full months) for a stable, recency-weighted baseline
+      raw_amount = family.income_statement.rolling_12m_averages.income
       Money.new(raw_amount, family.currency)
     end
   end
 
-  def monthly_expenses  
+  def monthly_expenses
     @monthly_expenses ||= begin
-      # Use historical data for more accurate median calculation
-      raw_amount = family.income_statement.median_expense(interval: "month") || 0
+      # Use rolling 12-month average (last 12 full months) for a stable, recency-weighted baseline
+      raw_amount = family.income_statement.rolling_12m_averages.expense
       Money.new(raw_amount.abs, family.currency)
     end
   end

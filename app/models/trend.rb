@@ -51,8 +51,11 @@ class Trend
   end
 
   def value
-    # Use float arithmetic to avoid CoercedNumeric struct issues
-    if current.respond_to?(:to_f) && previous.respond_to?(:to_f)
+    # Return a Money object when both operands are Money, to preserve currency.
+    # Falling back to float arithmetic would cause format_money to default to USD.
+    if current.is_a?(Money) && previous.is_a?(Money)
+      Money.new(current.amount - previous.amount, current.currency)
+    elsif current.respond_to?(:to_f) && previous.respond_to?(:to_f)
       current.to_f - previous.to_f
     else
       current - previous

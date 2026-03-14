@@ -48,7 +48,7 @@
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-lg font-medium">Categories</h2>
 
-        <% if @budget.initialized? %>
+        <% if @budget.initialized? && !@budget.is_a?(YearlyBudget) %>
           <%= render DS::Link.new(
             text: "Edit",
             variant: "secondary",

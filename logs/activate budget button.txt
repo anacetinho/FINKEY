@@ -1,0 +1,6 @@
+<a class="font-medium whitespace-nowrap inline-flex items-center gap-1 rounded-md px-2 py-1 text-sm text-inverse bg-inverse hover:bg-inverse-hover disabled:bg-gray-500 theme-dark:disabled:bg-gray-400" href="/budgets/mar-2026/edit">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 w-4 h-4 fg-inverse"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+
+    New budget
+
+</a>

@@ -14,7 +14,7 @@ module FinKey
 
     private
       def semver
-        "1.4.0"
+        "1.5.0"
       end
   end
 end
