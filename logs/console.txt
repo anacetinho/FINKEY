@@ -1,0 +1,25 @@
+:3000/budgets/oct-2025:8364 [Intervention] Images loaded lazily and replaced with placeholders. Load events are deferred. See https://go.microsoft.com/fwlink/?linkid=2048113
+index.iife.js:1 content script loaded
+:3000/budgets/oct-2025:1  Error while trying to use the following icon from the Manifest: http://localhost:3000/logo-pwa.png (Download error or resource isn't a valid image)
+refresh.js:27  WebSocket connection to 'ws://localhost:8081/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+initClient @ refresh.js:27
+[NEW] Explain Console errors by using Copilot in Edge: click
+         
+         to explain an error. 
+        Learn more
+        Don't show again
+edit:1  The resource https://cdn.plaid.com/link/v2/stable/link-initialize.js was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+turbo.es2017-esm.js:766   POST http://localhost:3000/budgets/oct-2025?_method=delete 500 (Internal Server Error)
+$ @ turbo.es2017-esm.js:766
+perform @ turbo.es2017-esm.js:897
+await in perform
+start @ turbo.es2017-esm.js:1189
+await in start
+submitForm @ turbo.es2017-esm.js:4756
+formSubmitted @ turbo.es2017-esm.js:5959
+submitBubbled @ turbo.es2017-esm.js:1470
+(anonymous) @ turbo.es2017-esm.js:1787
+requestAnimationFrame
+followedLinkToLocation @ turbo.es2017-esm.js:1787
+clickBubbled @ turbo.es2017-esm.js:1703
+edit:1  The resource https://cdn.plaid.com/link/v2/stable/link-initialize.js was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.

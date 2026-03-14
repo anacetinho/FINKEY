@@ -99,14 +99,15 @@
 
             <% if @holding.security.manual %>
                <div class="p-3 border-t border-secondary space-y-3">
-                  <h4 class="text-primary text-sm font-medium">Update Current Price</h4>
+                  <h4 class="text-primary text-sm font-medium">Update Price</h4>
                   <%= styled_form_with model: Security::Price.new, url: security_prices_path(@holding.security), scope: :price do |f| %>
-                    <div class="flex items-end gap-2">
-                      <div class="grow">
+                    <div class="space-y-4">
+                      <div class="grid grid-cols-2 gap-3">
                         <%= f.money_field :price, label: "Price", value: @holding.security.current_price&.amount, required: true %>
-                        <%= f.hidden_field :currency, value: @holding.currency %>
+                        <%= f.date_field :date, value: Date.current, label: "Date", required: true %>
                       </div>
-                      <%= f.submit "Update", class: "rounded-lg h-10 px-3 py-2 text-sm font-medium border border-secondary" %>
+                      <%= f.hidden_field :currency, value: @holding.currency %>
+                      <%= f.submit "Update Price" %>
                     </div>
                   <% end %>
                </div>

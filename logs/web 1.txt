@@ -1,0 +1,16 @@
+2026-03-14 13:23:21.594 | => Booting Puma
+2026-03-14 13:23:21.594 | => Rails 7.2.2.1 application starting in production 
+2026-03-14 13:23:21.594 | => Run `bin/rails server --help` for more startup options
+2026-03-14 13:23:22.726 | Puma starting in single mode...
+2026-03-14 13:23:22.726 | * Puma version: 6.6.0 ("Return to Forever")
+2026-03-14 13:23:22.726 | * Ruby version: ruby 3.4.4 (2025-05-14 revision a38531fd3f) +YJIT +PRISM [aarch64-linux]
+2026-03-14 13:23:22.726 | *  Min threads: 3
+2026-03-14 13:23:22.726 | *  Max threads: 3
+2026-03-14 13:23:22.726 | *  Environment: production
+2026-03-14 13:23:22.726 | *          PID: 1
+2026-03-14 13:23:22.726 | * Listening on http://0.0.0.0:3000
+2026-03-14 13:23:22.729 | Use Ctrl-C to stop
+2026-03-14 13:42:43.348 | F, [2026-03-14T13:42:43.347395 #1] FATAL -- : NoMethodError (undefined method 'destroy!' for nil)
+2026-03-14 13:44:17.177 | INFO  2026-03-14T13:44:17.176Z pid=1 tid=mp5: Sidekiq 8.0.5 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://redis:6379/1"}
+2026-03-14 14:43:28.811 | F, [2026-03-14T14:43:28.810100 #1] FATAL -- : NoMethodError (undefined method 'destroy!' for nil)
+2026-03-14 14:43:48.451 | F, [2026-03-14T14:43:48.450554 #1] FATAL -- : NoMethodError (undefined method 'destroy!' for nil)

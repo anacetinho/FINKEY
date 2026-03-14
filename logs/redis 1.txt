@@ -1,0 +1,167 @@
+2026-03-14 13:23:13.622 | Starting Redis Server
+2026-03-14 13:23:13.666 | 1:C 14 Mar 2026 13:23:13.666 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+2026-03-14 13:23:13.666 | 1:C 14 Mar 2026 13:23:13.666 * Redis version=8.4.0, bits=64, commit=00000000, modified=1, pid=1, just started
+2026-03-14 13:23:13.666 | 1:C 14 Mar 2026 13:23:13.666 * Configuration loaded
+2026-03-14 13:23:13.667 | 1:M 14 Mar 2026 13:23:13.667 * monotonic clock: POSIX clock_gettime
+2026-03-14 13:23:13.669 | 1:M 14 Mar 2026 13:23:13.669 * Running mode=standalone, port=6379.
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * <bf> RedisBloom version 8.4.0 (Git=unknown)
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * <bf> Registering configuration options: [
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * <bf> 	{ bf-error-rate       :      0.01 }
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * <bf> 	{ bf-initial-size     :       100 }
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * <bf> 	{ bf-expansion-factor :         2 }
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * <bf> 	{ cf-bucket-size      :         2 }
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * <bf> 	{ cf-initial-size     :      1024 }
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * <bf> 	{ cf-max-iterations   :        20 }
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * <bf> 	{ cf-expansion-factor :         1 }
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * <bf> 	{ cf-max-expansions   :        32 }
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * <bf> ]
+2026-03-14 13:23:13.671 | 1:M 14 Mar 2026 13:23:13.671 * Module 'bf' loaded from /usr/local/lib/redis/modules//redisbloom.so
+2026-03-14 13:23:13.692 | 1:M 14 Mar 2026 13:23:13.692 * <search> Redis version found by RedisSearch : 8.4.0 - oss
+2026-03-14 13:23:13.692 | 1:M 14 Mar 2026 13:23:13.692 * <search> RediSearch version 8.4.2 (Git=9e2b676)
+2026-03-14 13:23:13.692 | 1:M 14 Mar 2026 13:23:13.692 * <search> Low level api version 1 initialized successfully
+2026-03-14 13:23:13.693 | 1:M 14 Mar 2026 13:23:13.693 * <search> gc: ON, prefix min length: 2, min word length to stem: 4, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, oom policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  1000000, default scorer: BM25STD, 
+2026-03-14 13:23:13.694 | 1:M 14 Mar 2026 13:23:13.694 * <search> Initialized thread pools!
+2026-03-14 13:23:13.694 | 1:M 14 Mar 2026 13:23:13.694 * <search> Disabled workers threadpool of size 0
+2026-03-14 13:23:13.694 | 1:M 14 Mar 2026 13:23:13.694 * <search> Subscribe to config changes
+2026-03-14 13:23:13.694 | 1:M 14 Mar 2026 13:23:13.694 * <search> Subscribe to cluster slot migration events
+2026-03-14 13:23:13.694 | 1:M 14 Mar 2026 13:23:13.694 * <search> Enabled role change notification
+2026-03-14 13:23:13.695 | 1:M 14 Mar 2026 13:23:13.694 * <search> Cluster configuration: AUTO partitions, type: 0, coordinator timeout: 0ms
+2026-03-14 13:23:13.695 | 1:M 14 Mar 2026 13:23:13.695 * <search> Register write commands
+2026-03-14 13:23:13.695 | 1:M 14 Mar 2026 13:23:13.695 * Module 'search' loaded from /usr/local/lib/redis/modules//redisearch.so
+2026-03-14 13:23:13.697 | 1:M 14 Mar 2026 13:23:13.697 * <timeseries> RedisTimeSeries version 80400, git_sha=3520a1568ad69076d60885c70711fbdc9b448749
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> Redis version found by RedisTimeSeries : 8.4.0 - oss
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> Registering configuration options: [
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> 	{ ts-compaction-policy   :              }
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> 	{ ts-num-threads         :            3 }
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> 	{ ts-retention-policy    :            0 }
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> 	{ ts-duplicate-policy    :        block }
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> 	{ ts-chunk-size-bytes    :         4096 }
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> 	{ ts-encoding            :   compressed }
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> 	{ ts-ignore-max-time-diff:            0 }
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> 	{ ts-ignore-max-val-diff :     0.000000 }
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> ]
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> Detected redis oss
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> Subscribe to ASM events
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * <timeseries> Enabled diskless replication
+2026-03-14 13:23:13.698 | 1:M 14 Mar 2026 13:23:13.698 * Module 'timeseries' loaded from /usr/local/lib/redis/modules//redistimeseries.so
+2026-03-14 13:23:13.706 | 1:M 14 Mar 2026 13:23:13.705 * <ReJSON> Created new data type 'ReJSON-RL'
+2026-03-14 13:23:13.707 | 1:M 14 Mar 2026 13:23:13.706 * <ReJSON> version: 80400 git sha: unknown branch: unknown
+2026-03-14 13:23:13.707 | 1:M 14 Mar 2026 13:23:13.707 * <ReJSON> Exported RedisJSON_V1 API
+2026-03-14 13:23:13.707 | 1:M 14 Mar 2026 13:23:13.707 * <ReJSON> Exported RedisJSON_V2 API
+2026-03-14 13:23:13.707 | 1:M 14 Mar 2026 13:23:13.707 * <ReJSON> Exported RedisJSON_V3 API
+2026-03-14 13:23:13.707 | 1:M 14 Mar 2026 13:23:13.707 * <ReJSON> Exported RedisJSON_V4 API
+2026-03-14 13:23:13.707 | 1:M 14 Mar 2026 13:23:13.707 * <ReJSON> Exported RedisJSON_V5 API
+2026-03-14 13:23:13.707 | 1:M 14 Mar 2026 13:23:13.707 * <ReJSON> Exported RedisJSON_V6 API
+2026-03-14 13:23:13.707 | 1:M 14 Mar 2026 13:23:13.707 * <ReJSON> Enabled diskless replication
+2026-03-14 13:23:13.707 | 1:M 14 Mar 2026 13:23:13.707 * <ReJSON> Initialized shared string cache, thread safe: true.
+2026-03-14 13:23:13.707 | 1:M 14 Mar 2026 13:23:13.707 * Module 'ReJSON' loaded from /usr/local/lib/redis/modules//rejson.so
+2026-03-14 13:23:13.707 | 1:M 14 Mar 2026 13:23:13.707 * <search> Acquired RedisJSON_V6 API
+2026-03-14 13:23:13.708 | 1:M 14 Mar 2026 13:23:13.708 * Server initialized
+2026-03-14 13:23:13.710 | 1:M 14 Mar 2026 13:23:13.709 * <search> Loading event starts
+2026-03-14 13:23:13.710 | 1:M 14 Mar 2026 13:23:13.709 * <search> Changing workers threadpool size from 0 to 4
+2026-03-14 13:23:13.710 | 1:M 14 Mar 2026 13:23:13.709 * <search> Enabled workers threadpool of size 4
+2026-03-14 13:23:13.710 | 1:M 14 Mar 2026 13:23:13.710 * Loading RDB produced by version 8.4.0
+2026-03-14 13:23:13.710 | 1:M 14 Mar 2026 13:23:13.710 * RDB age 602 seconds
+2026-03-14 13:23:13.710 | 1:M 14 Mar 2026 13:23:13.710 * RDB memory usage when created 1.68 Mb
+2026-03-14 13:23:13.711 | 1:M 14 Mar 2026 13:23:13.711 * Done loading RDB, keys loaded: 237, keys expired: 2.
+2026-03-14 13:23:13.711 | 1:M 14 Mar 2026 13:23:13.711 * <search> Changing workers threadpool size from 4 to 0
+2026-03-14 13:23:13.711 | 1:M 14 Mar 2026 13:23:13.711 * <search> Disabled workers threadpool of size 4
+2026-03-14 13:23:13.711 | 1:M 14 Mar 2026 13:23:13.711 * <search> Loading event ends
+2026-03-14 13:23:13.711 | 1:M 14 Mar 2026 13:23:13.711 * DB loaded from disk: 0.003 seconds
+2026-03-14 13:23:13.711 | 1:M 14 Mar 2026 13:23:13.711 * Ready to accept connections tcp
+2026-03-14 13:28:14.002 | 1:M 14 Mar 2026 13:28:14.002 * 100 changes in 300 seconds. Saving...
+2026-03-14 13:28:14.003 | 1:M 14 Mar 2026 13:28:14.003 * Background saving started by pid 390
+2026-03-14 13:28:14.005 | 390:C 14 Mar 2026 13:28:14.005 * BGSAVE done, 238 keys saved, 0 keys skipped, 14993 bytes written.
+2026-03-14 13:28:14.009 | 390:C 14 Mar 2026 13:28:14.009 * DB saved on disk
+2026-03-14 13:28:14.010 | 390:C 14 Mar 2026 13:28:14.009 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 13:28:14.104 | 1:M 14 Mar 2026 13:28:14.103 * Background saving terminated with success
+2026-03-14 13:33:15.031 | 1:M 14 Mar 2026 13:33:15.030 * 100 changes in 300 seconds. Saving...
+2026-03-14 13:33:15.033 | 1:M 14 Mar 2026 13:33:15.032 * Background saving started by pid 749
+2026-03-14 13:33:15.036 | 749:C 14 Mar 2026 13:33:15.035 * BGSAVE done, 238 keys saved, 0 keys skipped, 14995 bytes written.
+2026-03-14 13:33:15.046 | 749:C 14 Mar 2026 13:33:15.046 * DB saved on disk
+2026-03-14 13:33:15.047 | 749:C 14 Mar 2026 13:33:15.046 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 13:33:15.136 | 1:M 14 Mar 2026 13:33:15.134 * Background saving terminated with success
+2026-03-14 13:38:16.088 | 1:M 14 Mar 2026 13:38:16.087 * 100 changes in 300 seconds. Saving...
+2026-03-14 13:38:16.088 | 1:M 14 Mar 2026 13:38:16.088 * Background saving started by pid 1116
+2026-03-14 13:38:16.091 | 1116:C 14 Mar 2026 13:38:16.091 * BGSAVE done, 238 keys saved, 0 keys skipped, 14995 bytes written.
+2026-03-14 13:38:16.102 | 1116:C 14 Mar 2026 13:38:16.101 * DB saved on disk
+2026-03-14 13:38:16.102 | 1116:C 14 Mar 2026 13:38:16.102 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 13:38:16.190 | 1:M 14 Mar 2026 13:38:16.189 * Background saving terminated with success
+2026-03-14 13:43:17.025 | 1:M 14 Mar 2026 13:43:17.025 * 100 changes in 300 seconds. Saving...
+2026-03-14 13:43:17.026 | 1:M 14 Mar 2026 13:43:17.026 * Background saving started by pid 1475
+2026-03-14 13:43:17.027 | 1475:C 14 Mar 2026 13:43:17.027 * BGSAVE done, 238 keys saved, 0 keys skipped, 14994 bytes written.
+2026-03-14 13:43:17.033 | 1475:C 14 Mar 2026 13:43:17.032 * DB saved on disk
+2026-03-14 13:43:17.033 | 1475:C 14 Mar 2026 13:43:17.033 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 13:43:17.127 | 1:M 14 Mar 2026 13:43:17.127 * Background saving terminated with success
+2026-03-14 13:48:18.014 | 1:M 14 Mar 2026 13:48:18.014 * 100 changes in 300 seconds. Saving...
+2026-03-14 13:48:18.014 | 1:M 14 Mar 2026 13:48:18.014 * Background saving started by pid 1837
+2026-03-14 13:48:18.016 | 1837:C 14 Mar 2026 13:48:18.016 * BGSAVE done, 243 keys saved, 0 keys skipped, 15282 bytes written.
+2026-03-14 13:48:18.021 | 1837:C 14 Mar 2026 13:48:18.021 * DB saved on disk
+2026-03-14 13:48:18.021 | 1837:C 14 Mar 2026 13:48:18.021 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 13:48:18.115 | 1:M 14 Mar 2026 13:48:18.115 * Background saving terminated with success
+2026-03-14 13:53:19.075 | 1:M 14 Mar 2026 13:53:19.074 * 100 changes in 300 seconds. Saving...
+2026-03-14 13:53:19.075 | 1:M 14 Mar 2026 13:53:19.075 * Background saving started by pid 2193
+2026-03-14 13:53:19.078 | 2193:C 14 Mar 2026 13:53:19.077 * BGSAVE done, 243 keys saved, 0 keys skipped, 15281 bytes written.
+2026-03-14 13:53:19.090 | 2193:C 14 Mar 2026 13:53:19.089 * DB saved on disk
+2026-03-14 13:53:19.090 | 2193:C 14 Mar 2026 13:53:19.090 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 13:53:19.178 | 1:M 14 Mar 2026 13:53:19.177 * Background saving terminated with success
+2026-03-14 13:58:20.015 | 1:M 14 Mar 2026 13:58:20.015 * 100 changes in 300 seconds. Saving...
+2026-03-14 13:58:20.016 | 1:M 14 Mar 2026 13:58:20.016 * Background saving started by pid 2556
+2026-03-14 13:58:20.018 | 2556:C 14 Mar 2026 13:58:20.018 * BGSAVE done, 243 keys saved, 0 keys skipped, 15281 bytes written.
+2026-03-14 13:58:20.024 | 2556:C 14 Mar 2026 13:58:20.023 * DB saved on disk
+2026-03-14 13:58:20.024 | 2556:C 14 Mar 2026 13:58:20.024 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 13:58:20.116 | 1:M 14 Mar 2026 13:58:20.116 * Background saving terminated with success
+2026-03-14 14:03:21.024 | 1:M 14 Mar 2026 14:03:21.023 * 100 changes in 300 seconds. Saving...
+2026-03-14 14:03:21.031 | 1:M 14 Mar 2026 14:03:21.026 * Background saving started by pid 2910
+2026-03-14 14:03:21.038 | 2910:C 14 Mar 2026 14:03:21.037 * BGSAVE done, 249 keys saved, 0 keys skipped, 15638 bytes written.
+2026-03-14 14:03:21.047 | 2910:C 14 Mar 2026 14:03:21.046 * DB saved on disk
+2026-03-14 14:03:21.048 | 2910:C 14 Mar 2026 14:03:21.047 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 14:03:21.127 | 1:M 14 Mar 2026 14:03:21.127 * Background saving terminated with success
+2026-03-14 14:08:22.057 | 1:M 14 Mar 2026 14:08:22.055 * 100 changes in 300 seconds. Saving...
+2026-03-14 14:08:22.058 | 1:M 14 Mar 2026 14:08:22.057 * Background saving started by pid 3272
+2026-03-14 14:08:22.061 | 3272:C 14 Mar 2026 14:08:22.060 * BGSAVE done, 249 keys saved, 0 keys skipped, 15639 bytes written.
+2026-03-14 14:08:22.068 | 3272:C 14 Mar 2026 14:08:22.068 * DB saved on disk
+2026-03-14 14:08:22.069 | 3272:C 14 Mar 2026 14:08:22.068 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 14:08:22.158 | 1:M 14 Mar 2026 14:08:22.158 * Background saving terminated with success
+2026-03-14 14:13:23.054 | 1:M 14 Mar 2026 14:13:23.054 * 100 changes in 300 seconds. Saving...
+2026-03-14 14:13:23.055 | 1:M 14 Mar 2026 14:13:23.055 * Background saving started by pid 3628
+2026-03-14 14:13:23.056 | 3628:C 14 Mar 2026 14:13:23.056 * BGSAVE done, 249 keys saved, 0 keys skipped, 15638 bytes written.
+2026-03-14 14:13:23.061 | 3628:C 14 Mar 2026 14:13:23.060 * DB saved on disk
+2026-03-14 14:13:23.061 | 3628:C 14 Mar 2026 14:13:23.061 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 14:13:23.157 | 1:M 14 Mar 2026 14:13:23.156 * Background saving terminated with success
+2026-03-14 14:18:24.064 | 1:M 14 Mar 2026 14:18:24.064 * 100 changes in 300 seconds. Saving...
+2026-03-14 14:18:24.070 | 1:M 14 Mar 2026 14:18:24.065 * Background saving started by pid 3991
+2026-03-14 14:18:24.072 | 3991:C 14 Mar 2026 14:18:24.072 * BGSAVE done, 249 keys saved, 0 keys skipped, 15638 bytes written.
+2026-03-14 14:18:24.076 | 3991:C 14 Mar 2026 14:18:24.076 * DB saved on disk
+2026-03-14 14:18:24.076 | 3991:C 14 Mar 2026 14:18:24.076 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 14:18:24.166 | 1:M 14 Mar 2026 14:18:24.165 * Background saving terminated with success
+2026-03-14 14:23:25.039 | 1:M 14 Mar 2026 14:23:25.038 * 100 changes in 300 seconds. Saving...
+2026-03-14 14:23:25.040 | 1:M 14 Mar 2026 14:23:25.039 * Background saving started by pid 4346
+2026-03-14 14:23:25.042 | 4346:C 14 Mar 2026 14:23:25.042 * BGSAVE done, 249 keys saved, 0 keys skipped, 15639 bytes written.
+2026-03-14 14:23:25.047 | 4346:C 14 Mar 2026 14:23:25.047 * DB saved on disk
+2026-03-14 14:23:25.048 | 4346:C 14 Mar 2026 14:23:25.047 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 14:23:25.140 | 1:M 14 Mar 2026 14:23:25.140 * Background saving terminated with success
+2026-03-14 14:28:26.054 | 1:M 14 Mar 2026 14:28:26.054 * 100 changes in 300 seconds. Saving...
+2026-03-14 14:28:26.055 | 1:M 14 Mar 2026 14:28:26.055 * Background saving started by pid 4710
+2026-03-14 14:28:26.056 | 4710:C 14 Mar 2026 14:28:26.056 * BGSAVE done, 249 keys saved, 0 keys skipped, 15638 bytes written.
+2026-03-14 14:28:26.062 | 4710:C 14 Mar 2026 14:28:26.062 * DB saved on disk
+2026-03-14 14:28:26.062 | 4710:C 14 Mar 2026 14:28:26.062 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 14:28:26.155 | 1:M 14 Mar 2026 14:28:26.155 * Background saving terminated with success
+2026-03-14 14:33:27.041 | 1:M 14 Mar 2026 14:33:27.041 * 100 changes in 300 seconds. Saving...
+2026-03-14 14:33:27.042 | 1:M 14 Mar 2026 14:33:27.042 * Background saving started by pid 5068
+2026-03-14 14:33:27.044 | 5068:C 14 Mar 2026 14:33:27.043 * BGSAVE done, 249 keys saved, 0 keys skipped, 15639 bytes written.
+2026-03-14 14:33:27.050 | 5068:C 14 Mar 2026 14:33:27.050 * DB saved on disk
+2026-03-14 14:33:27.051 | 5068:C 14 Mar 2026 14:33:27.050 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 14:33:27.142 | 1:M 14 Mar 2026 14:33:27.142 * Background saving terminated with success
+2026-03-14 14:38:28.080 | 1:M 14 Mar 2026 14:38:28.078 * 100 changes in 300 seconds. Saving...
+2026-03-14 14:38:28.080 | 1:M 14 Mar 2026 14:38:28.079 * Background saving started by pid 5431
+2026-03-14 14:38:28.083 | 5431:C 14 Mar 2026 14:38:28.082 * BGSAVE done, 249 keys saved, 0 keys skipped, 15638 bytes written.
+2026-03-14 14:38:28.094 | 5431:C 14 Mar 2026 14:38:28.094 * DB saved on disk
+2026-03-14 14:38:28.095 | 5431:C 14 Mar 2026 14:38:28.095 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 14:38:28.180 | 1:M 14 Mar 2026 14:38:28.180 * Background saving terminated with success
+2026-03-14 14:43:29.028 | 1:M 14 Mar 2026 14:43:29.028 * 100 changes in 300 seconds. Saving...
+2026-03-14 14:43:29.029 | 1:M 14 Mar 2026 14:43:29.029 * Background saving started by pid 5787
+2026-03-14 14:43:29.031 | 5787:C 14 Mar 2026 14:43:29.031 * BGSAVE done, 249 keys saved, 0 keys skipped, 15639 bytes written.
+2026-03-14 14:43:29.037 | 5787:C 14 Mar 2026 14:43:29.037 * DB saved on disk
+2026-03-14 14:43:29.037 | 5787:C 14 Mar 2026 14:43:29.037 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+2026-03-14 14:43:29.130 | 1:M 14 Mar 2026 14:43:29.129 * Background saving terminated with success

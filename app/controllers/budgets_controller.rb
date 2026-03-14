@@ -1,5 +1,5 @@
 class BudgetsController < ApplicationController
-  before_action :set_budget, only: %i[show edit update]
+  before_action :set_budget, only: %i[show edit update destroy]
 
   def index
     redirect_to_current_month_budget
@@ -18,8 +18,13 @@ class BudgetsController < ApplicationController
   end
 
   def destroy
-    @budget.destroy!
-    redirect_to budget_path(@budget)
+    if @budget.respond_to?(:persisted?) && @budget.persisted?
+      month_year = @budget.to_param
+      @budget.destroy!
+      redirect_to budget_path(month_year)
+    else
+      redirect_to budgets_path
+    end
   end
 
   def picker

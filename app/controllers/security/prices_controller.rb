@@ -1,7 +1,7 @@
 class Security::PricesController < ApplicationController
   def create
     @security = Security.find(params[:security_id])
-    @price = @security.prices.find_or_initialize_by(date: Date.current)
+    @price = @security.prices.find_or_initialize_by(date: price_params[:date] || Date.current)
     @price.price = price_params[:price]
     @price.currency = price_params[:currency]
 
@@ -13,12 +13,12 @@ class Security::PricesController < ApplicationController
 
       redirect_back fallback_location: root_path, notice: "Price updated"
     else
-      redirect_back fallback_location: root_path, alert: "Failed to update price"
+      redirect_back fallback_location: root_path, alert: @price.errors.full_messages.to_sentence
     end
   end
 
   private
     def price_params
-      params.require(:price).permit(:price, :currency)
+      params.require(:price).permit(:price, :currency, :date)
     end
 end
