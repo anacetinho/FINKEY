@@ -30,29 +30,40 @@ class Provider::Openai::ChatParser
     end
 
     def messages
-      message_items = object.dig("output").filter { |item| item.dig("type") == "message" }
+      choices = object.dig("choices") || []
+      
+      choices.map do |choice|
+        message = choice.dig("message")
+        next if message.nil?
 
-      message_items.map do |message_item|
+        content = message.dig("content")
+        reasoning = message.dig("reasoning_content")
+        
+        # Combine reasoning and content if both are present
+        output_text = [ 
+          (reasoning.present? ? "> Thought: #{reasoning}" : nil), 
+          content 
+        ].compact.join("\n\n")
+
+        next if output_text.blank?
+
         ChatMessage.new(
-          id: message_item.dig("id"),
-          output_text: message_item.dig("content").map do |content|
-            text = content.dig("text")
-            refusal = content.dig("refusal")
-            text || refusal
-          end.flatten.join("\n")
+          id: response_id, 
+          output_text: output_text
         )
-      end
+      end.compact
     end
 
     def function_requests
-      function_items = object.dig("output").filter { |item| item.dig("type") == "function_call" }
+      choices = object.dig("choices") || []
+      tool_calls = choices.flat_map { |c| c.dig("message", "tool_calls") }.compact
 
-      function_items.map do |function_item|
+      tool_calls.map do |tool_call|
         ChatFunctionRequest.new(
-          id: function_item.dig("id"),
-          call_id: function_item.dig("call_id"),
-          function_name: function_item.dig("name"),
-          function_args: function_item.dig("arguments")
+          id: tool_call.dig("id"),
+          call_id: tool_call.dig("id"), # In Chat Completions, id and call_id are often the same
+          function_name: tool_call.dig("function", "name"),
+          function_args: JSON.parse(tool_call.dig("function", "arguments"))
         )
       end
     end

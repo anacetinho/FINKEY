@@ -11,6 +11,7 @@ class YahooFinanceService
     result = execute_python_script(script)
     
     return nil if result.nil?
+    raise Error, result["error"] if result["error"]
     
     {
       symbol: symbol,
@@ -24,7 +25,9 @@ class YahooFinanceService
     script = build_historical_script(symbol, start_date, end_date)
     result = execute_python_script(script)
     
-    return [] if result.nil? || result["prices"].nil?
+    return [] if result.nil?
+    raise Error, result["error"] if result["error"]
+    return [] if result["prices"].nil?
     
     result["prices"].map do |price_data|
       {
@@ -41,6 +44,7 @@ class YahooFinanceService
     result = execute_python_script(script)
     
     return nil if result.nil?
+    raise Error, result["error"] if result["error"]
     
     {
       symbol: symbol,
@@ -55,6 +59,7 @@ class YahooFinanceService
     result = execute_python_script(script)
     
     return nil if result.nil?
+    raise Error, result["error"] if result["error"]
     
     {
       from: from_currency,
@@ -68,7 +73,9 @@ class YahooFinanceService
     script = build_historical_exchange_rate_script(from_currency, to_currency, start_date, end_date)
     result = execute_python_script(script)
     
-    return [] if result.nil? || result["rates"].nil?
+    return [] if result.nil?
+    raise Error, result["error"] if result["error"]
+    return [] if result["rates"].nil?
     
     result["rates"].map do |rate_data|
       {
@@ -170,7 +177,7 @@ class YahooFinanceService
                       "currency": currency
                   }
           except Exception as e:
-              return None
+              return {"error": str(e)}
 
       result = get_price()
       if result:
@@ -218,7 +225,7 @@ class YahooFinanceService
                       "currency": currency
                   }
           except Exception as e:
-              return None
+              return {"error": str(e)}
 
       result = get_historical_prices()
       if result:
@@ -250,7 +257,7 @@ class YahooFinanceService
                       "exchange": info.get('exchange', 'UNKNOWN')
                   }
           except Exception as e:
-              return None
+              return {"error": str(e)}
 
       result = get_info()
       if result:
@@ -292,7 +299,7 @@ class YahooFinanceService
                       "date": latest_date
                   }
           except Exception as e:
-              return None
+              return {"error": str(e)}
 
       result = get_exchange_rate()
       if result:
@@ -335,7 +342,7 @@ class YahooFinanceService
                       "rates": rates
                   }
           except Exception as e:
-              return None
+              return {"error": str(e)}
 
       result = get_historical_exchange_rates()
       if result:

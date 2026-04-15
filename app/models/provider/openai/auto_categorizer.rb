@@ -1,28 +1,35 @@
 class Provider::Openai::AutoCategorizer
-  def initialize(client, transactions: [], user_categories: [])
+  def initialize(client, model: nil, transactions: [], user_categories: [])
     @client = client
+    @model = model || "gpt-4o-mini"
     @transactions = transactions
     @user_categories = user_categories
   end
 
   def auto_categorize
-    response = client.responses.create(parameters: {
-      model: "gpt-4.1-mini",
-      input: [ { role: "developer", content: developer_message } ],
-      text: {
-        format: {
-          type: "json_schema",
+    response = client.chat(parameters: {
+      model: @model,
+      messages: [ 
+        { role: "system", content: instructions },
+        { role: "user", content: developer_message } 
+      ],
+      response_format: {
+        type: "json_schema",
+        json_schema: {
           name: "auto_categorize_personal_finance_transactions",
           strict: true,
           schema: json_schema
         }
       },
-      instructions: instructions
+      max_tokens: 12276
     })
 
-    Rails.logger.info("Tokens used to auto-categorize transactions: #{response.dig("usage").dig("total_tokens")}")
+    # extracting message content from standard OpenAI response
+    content = response.dig("choices", 0, "message", "content")
+    
+    # Rails.logger.info("Tokens used to auto-categorize transactions: #{response.dig("usage").dig("total_tokens")}") rescue nil
 
-    build_response(extract_categorizations(response))
+    build_response(extract_categorizations(content))
   end
 
   private
@@ -45,8 +52,8 @@ class Provider::Openai::AutoCategorizer
       category_name
     end
 
-    def extract_categorizations(response)
-      response_json = JSON.parse(response.dig("output")[0].dig("content")[0].dig("text"))
+    def extract_categorizations(content)
+      response_json = JSON.parse(content)
       response_json.dig("categorizations")
     end
 

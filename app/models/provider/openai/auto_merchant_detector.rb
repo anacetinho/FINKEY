@@ -1,28 +1,34 @@
 class Provider::Openai::AutoMerchantDetector
-  def initialize(client, transactions:, user_merchants:)
+  def initialize(client, model: nil, transactions:, user_merchants:)
     @client = client
+    @model = model || "gpt-4o-mini"
     @transactions = transactions
     @user_merchants = user_merchants
   end
 
   def auto_detect_merchants
-    response = client.responses.create(parameters: {
-      model: "gpt-4.1-mini",
-      input: [ { role: "developer", content: developer_message } ],
-      text: {
-        format: {
-          type: "json_schema",
+    response = client.chat(parameters: {
+      model: @model,
+      messages: [ 
+        { role: "system", content: instructions },
+        { role: "user", content: developer_message } 
+      ],
+      response_format: {
+        type: "json_schema",
+        json_schema: {
           name: "auto_detect_personal_finance_merchants",
           strict: true,
           schema: json_schema
         }
       },
-      instructions: instructions
+      max_tokens: 12276
     })
 
-    Rails.logger.info("Tokens used to auto-detect merchants: #{response.dig("usage").dig("total_tokens")}")
+    content = response.dig("choices", 0, "message", "content")
+    
+    # Rails.logger.info("Tokens used to auto-detect merchants: #{response.dig("usage").dig("total_tokens")}") rescue nil
 
-    build_response(extract_categorizations(response))
+    build_response(extract_categorizations(content))
   end
 
   private
@@ -46,8 +52,8 @@ class Provider::Openai::AutoMerchantDetector
       ai_value
     end
 
-    def extract_categorizations(response)
-      response_json = JSON.parse(response.dig("output")[0].dig("content")[0].dig("text"))
+    def extract_categorizations(content)
+      response_json = JSON.parse(content)
       response_json.dig("merchants")
     end
 

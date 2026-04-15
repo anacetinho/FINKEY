@@ -1,0 +1,17 @@
+<div class="space-y-4">
+    <div>
+      <h3 class="font-medium text-sm mb-1">AI Assistant</h3>
+      <p class="text-secondary text-xs mb-3">Configure AI-powered chat and categorization features.</p>
+    </div>
+
+    <form data-controller="auto-submit-form" data-auto-submit-form-trigger-event-value="change" action="/settings/hosting" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off"><input type="hidden" name="authenticity_token" value="4Qx7ZKtoxo1q-Tr2BTjZ95OP7__TfHN2IgNlbXqNffIvnHAU_LgXfKedD3d6XktV4R6qpFgKxOWy8lI-vk7zwA" autocomplete="off">
+      <input name="setting[ai_assistant_enabled]" type="hidden" value="0" autocomplete="off"><input label="Enable AI Assistant" container_class="mb-4" data-auto-submit-form-target="auto" type="checkbox" value="1" checked="checked" name="setting[ai_assistant_enabled]" id="setting_ai_assistant_enabled">
+</form>
+      <form data-controller="auto-submit-form" data-auto-submit-form-trigger-event-value="change" action="/settings/hosting" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off"><input type="hidden" name="authenticity_token" value="8yfZnbrDuF7O2l8Cd2FQv-4HFmkWQOGfnGET_G-KhcU9t9Lt7RNprwO-aoMIB8IdnJZTMp02VgwMkCSvq0kL9w" autocomplete="off">
+        <div class="form-field"><div class="form-field__body"><select class="form-field__input" label="AI Provider" container_class="mb-4" data-auto-submit-form-target="auto" name="setting[ai_provider]" id="setting_ai_provider"><option value="openai">OpenAI</option>
+<option selected="selected" value="local">Local LLM (OpenAI-compatible)</option></select></div></div>
+</form>
+        <form data-controller="auto-submit-form" data-auto-submit-form-trigger-event-value="blur" action="/settings/hosting" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off"><input type="hidden" name="authenticity_token" value="zgamJqHk4BcgFZ9GOzPjVwphW9lOrS-uGkV2fgbb0-EAlq1W9jQx5u1xqsdEVXH1ePAegsXbmD2KtEEtwhhd0w" autocomplete="off">
+          <div class="form-field mb-4"><div class="form-field__body"><label class="form-field__label" for="setting_local_llm_base_url">Base URL</label><input class="form-field__input" type="text" placeholder="http://localhost:11434/v1" value="http://192.168.1.116:1234/v1" data-auto-submit-form-target="auto" name="setting[local_llm_base_url]" id="setting_local_llm_base_url"></div></div>
+          <div class="form-field mb-4"><div class="form-field__body"><label class="form-field__label" for="setting_local_llm_model">Model Name</label><input class="form-field__input" type="text" placeholder="llama3.2" value="nvidia/nemotron-3-nano-4b" data-auto-submit-form-target="auto" name="setting[local_llm_model]" id="setting_local_llm_model"></div></div>
+</form>  </div>

@@ -10,10 +10,11 @@ class Setting < RailsSettings::Base
 
   # AI Assistant Configuration
   field :ai_assistant_enabled, type: :boolean, default: false
-  field :ai_provider, type: :string, default: "openai" # "openai" or "local"
+  field :ai_provider, type: :string, default: ENV["AI_PROVIDER"].presence || "openai" # "openai" or "local"
   field :openai_access_token, type: :string, default: ENV["OPENAI_ACCESS_TOKEN"]
-  field :local_llm_base_url, type: :string, default: ""
-  field :local_llm_model, type: :string, default: ""
+  field :openai_model, type: :string, default: ENV.fetch("OPENAI_MODEL", "gpt-4.1")
+  field :local_llm_base_url, type: :string, default: ENV["AI_BASE_URL"].presence || ""
+  field :local_llm_model, type: :string, default: ENV["AI_MODEL"].presence || ""
   field :ai_assistant_max_transactions, type: :integer, default: 500 # Max transactions per AI request
 
   # User management settings

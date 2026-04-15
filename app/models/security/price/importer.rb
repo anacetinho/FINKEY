@@ -19,8 +19,7 @@ class Security::Price::Importer
     end
 
     if provider_prices.empty?
-      Rails.logger.warn("Could not fetch prices for #{security.ticker} between #{start_date} and #{end_date} because provider returned no prices")
-      return 0
+      raise MissingSecurityPriceError, "Could not fetch prices for #{security.ticker} because provider returned no prices"
     end
 
     prev_price_value = start_price_value

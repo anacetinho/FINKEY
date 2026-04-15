@@ -9,4 +9,14 @@ module ChatsHelper
 
     chat.persisted? ? chat_path(chat) : new_chat_path
   end
+
+  # Returns the model name that should be sent with every chat request.
+  # Always derived from application settings — never hardcoded.
+  def configured_ai_model
+    if Setting.ai_provider == "local"
+      Setting.local_llm_model
+    else
+      Setting.openai_model
+    end
+  end
 end

@@ -8,27 +8,31 @@ class Provider::Openai::ChatConfig
     functions.map do |fn|
       {
         type: "function",
-        name: fn[:name],
-        description: fn[:description],
-        parameters: fn[:params_schema],
-        strict: fn[:strict]
+        function: {
+          name: fn[:name],
+          description: fn[:description],
+          parameters: fn[:params_schema],
+          strict: fn[:strict]
+        }.compact
       }
     end
   end
 
-  def build_input(prompt)
-    results = function_results.map do |fn_result|
-      {
-        type: "function_call_output",
-        call_id: fn_result[:call_id],
-        output: fn_result[:output].to_json
+  def build_messages(prompt, instructions: nil)
+    messages = []
+    
+    messages << { role: "system", content: instructions } if instructions.present?
+    messages << { role: "user", content: prompt }
+
+    function_results.each do |fn_result|
+      messages << {
+        role: "tool",
+        tool_call_id: fn_result[:call_id],
+        content: fn_result[:output].to_json
       }
     end
 
-    [
-      { role: "user", content: prompt },
-      *results
-    ]
+    messages
   end
 
   private

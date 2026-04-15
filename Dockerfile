@@ -53,7 +53,7 @@ COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 
 # Install Python dependencies for Yahoo Finance
-RUN pip3 install --no-cache-dir --break-system-packages yfinance pandas requests
+RUN pip3 install --no-cache-dir --break-system-packages --upgrade yfinance pandas requests
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \

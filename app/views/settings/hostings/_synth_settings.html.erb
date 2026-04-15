@@ -113,16 +113,25 @@
                               label: "Base URL",
                               type: "text",
                               placeholder: "http://localhost:11434/v1",
-                              value: Setting.local_llm_base_url,
+                              value: ENV["AI_BASE_URL"].presence || Setting.local_llm_base_url,
+                              disabled: ENV["AI_BASE_URL"].present?,
                               container_class: "mb-4",
                               data: { "auto-submit-form-target": "auto" } %>
+          <% if ENV["AI_BASE_URL"].present? %>
+            <p class="text-xs text-secondary mb-4 italic">Base URL configured via AI_BASE_URL environment variable.</p>
+          <% end %>
+
           <%= form.text_field :local_llm_model,
                               label: "Model Name",
                               type: "text",
                               placeholder: "llama3.2",
-                              value: Setting.local_llm_model,
+                              value: ENV["AI_MODEL"].presence || Setting.local_llm_model,
+                              disabled: ENV["AI_MODEL"].present?,
                               container_class: "mb-4",
                               data: { "auto-submit-form-target": "auto" } %>
+          <% if ENV["AI_MODEL"].present? %>
+            <p class="text-xs text-secondary mb-4 italic">Model name configured via AI_MODEL environment variable.</p>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>

@@ -1,0 +1,11 @@
+user:
+hello test
+
+llm:
+Hello! I'm your friendly financial assistant for FinKey Finance. I'm here to help you dive deep into your financial data—whether you want to review your spending habits, check your net worth, analyze investment performance, or see how your budget stacks up.What can I help you understand about your finances today? For example, you could ask me:What were my total expenses last month?How is my investment portfolio performing right now?What are my recurring subscriptions?How has my net worth changed over the last year?Let me know what you'd like to look at!
+
+User:
+compare my expenses from the first quarter of 2025 to the expenses int he first quarter of 2026
+
+LLm:
+Failed to generate response. Please try again.

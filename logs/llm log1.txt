@@ -1,0 +1,473 @@
+{
+  "messages": [
+    {
+      "content": "## Your identity\n\nYou are a friendly financial assistant for an open source personal finance application called \"FinKey\", which is short for \"FinKey Finance\".\n\n## Your purpose\n\nYou help users understand their financial data by answering questions about their accounts, transactions, income, expenses, net worth, investment holdings, trading activity, budgets, subscriptions, forecasting and more.\n\n## Your rules\n\nFollow all rules below at all times.\n\n### General rules\n\n- Provide comprehensive, detailed analysis with all relevant numbers and insights\n- You have access to extensive financial data - use it to provide thorough, in-depth responses\n- Include supporting details, context, and explanations\n- When analyzing investments, include holdings details, performance metrics, and allocation analysis\n- Be conversational and helpful, but maintain professionalism\n\n- Ask follow-up questions to keep the conversation going. Help educate the user about their own data and entice them to ask more questions.\n- Do NOT apologize or explain limitations\n\n### Formatting rules\n\n- Format all responses in markdown\n- Format all monetary values according to the user's preferred currency\n- Format dates in the user's preferred format: %d-%m-%Y\n\n#### User's preferred currency\n\nFinKey is a multi-currency app where each user has a \"preferred currency\" setting.\n\nWhen no currency is specified, use the user's preferred currency for formatting and displaying monetary values.\n\n- Symbol: €\n- ISO code: EUR\n- Default precision: 2\n- Default format: %u%n\n  - Separator: ,\n  - Delimiter: .\n\n### Rules about financial advice\n\nYou should focus on educating the user about personal finance using their own data so they can make informed decisions.\n\n- Do not tell the user to buy or sell specific financial products or investments.\n- Do not make assumptions about the user's financial situation. Use the functions available to get the data you need.\n\n### Function calling rules\n\n- Use the functions available to you to get user financial data and enhance your responses\n- For functions that require dates, use the current date as your reference point: 2026-04-12\n- If you suspect that you do not have enough data to 100% accurately answer, be transparent about it and state exactly what\n  the data you're presenting represents and what context it is in (i.e. date range, account, etc.)\n",
+      "role": "system"
+    },
+    {
+      "content": "hello ",
+      "role": "user"
+    }
+  ],
+  "model": "docker.io/gemma4:E4B",
+  "stream": true,
+  "tools": [
+    {
+      "description": "Use this to search user's transactions by using various optional filters.\n\nThis function is great for things like:\n- Finding specific transactions\n- Getting basic stats about a small group of transactions\n\nThis function is not great for:\n- Large time periods (use the get_income_statement function for this)\n\nNote on pagination:\n\nThis function can be paginated.  You can expect the following properties in the response:\n\n- `total_pages`: The total number of pages of results\n- `page`: The current page of results\n- `page_size`: The number of results per page (this will always be 500)\n- `total_results`: The total number of results for the given filters\n- `total_income`: The total income for the given filters\n- `total_expenses`: The total expenses for the given filters\n\nSimple example (transactions from the last 30 days):\n\n```\nget_transactions({\n  page: 1,\n  start_date: \"2026-03-13\",\n  end_date: \"2026-04-12\"\n})\n```\n\nMore complex example (various filters):\n\n```\nget_transactions({\n  page: 1,\n  search: \"mcdonalds\",\n  accounts: [\"Checking\", \"Savings\"],\n  start_date: \"2026-03-13\",\n  end_date: \"2026-04-12\",\n  categories: [\"Restaurants\"],\n  merchants: [\"McDonald's\"],\n  tags: [\"Food\"],\n  amount: \"100\",\n  amount_operator: \"less\"\n})\n```\n",
+      "name": "get_transactions",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "accounts": {
+            "description": "Filter transactions by account name",
+            "items": {
+              "enum": [
+                "Caução / Deposit",
+                "Conjunta Caução Casa",
+                "Mutualista Montepio",
+                "Montepio Prazo",
+                "Swiss Francs",
+                "GAB",
+                "Mutualista 1",
+                "Mutualista 5",
+                "Seguros/Subsidios/Reembolsos por receber",
+                "Algés - T1 - 1º DRT (1/2)",
+                "Tech (valor em 2ª mão)",
+                "Ovar Quinta (1/6)",
+                "Caução Sap",
+                "Cauções Arrendamentos",
+                "Certificados Aforro",
+                "Nicehash",
+                "Conjunta - Ativo Poupança",
+                "Conjunta (USD)",
+                "Lu Netfuturo",
+                "Baloise",
+                "PPR - PT",
+                "CoverFlex",
+                "BIG Ordem",
+                "Conjunta - BIG Investimento",
+                "BIG Prazo",
+                "Dividas a privados",
+                "Euros",
+                "LU Bonus SAP",
+                "Montepio Ordem",
+                "seg social",
+                "UBS",
+                "Coverflex food + wallet",
+                "Lu Ativo Ordem",
+                "Ouro",
+                "Carro Avó Eduarda",
+                "BIG - Acções + Opções",
+                "Conjunta - Envelope",
+                "Algés - Loja (1/2)",
+                "Algés - T1 - RC (1/2)",
+                "LU Equate Plus",
+                "LU RSU",
+                "Conjunta - Mealheiro Miudos",
+                "Lu Ativo Poupança",
+                "LU Ativo Poupança 2",
+                "Conjunta - Big Ordem",
+                "BIG - Obrigações e fundos",
+                "LU Cartão Alimentação"
+              ]
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "amount": {
+            "description": "Amount for transactions (must be used with amount_operator)",
+            "type": "string"
+          },
+          "amount_operator": {
+            "description": "Operator for amount (must be used with amount)",
+            "enum": [
+              "equal",
+              "less",
+              "greater"
+            ],
+            "type": "string"
+          },
+          "categories": {
+            "description": "Filter transactions by category name",
+            "items": {
+              "enum": [
+                "Income",
+                "Loan Payments",
+                "Fees",
+                "Entertainment",
+                "Food & Drink",
+                "Shopping",
+                "Home Improvement",
+                "Healthcare",
+                "Services",
+                "Gifts & Donations",
+                "Transportation",
+                "Rent & Utilities",
+                "Interest",
+                "Bonus",
+                "Base Salary",
+                "Subsidies",
+                "Take Away",
+                "Restaurants",
+                "Supermarket",
+                "Taxes",
+                "Education",
+                "Childcare",
+                "Expense Reimbursement 2",
+                "Public Transportation",
+                "Gasoline",
+                "Taxi / Uber / Bolt",
+                "Personal Care",
+                "Travel & Leisure",
+                "Subscriptions",
+                "Rental Income",
+                "Gifts Received",
+                "Uncategorized"
+              ]
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "end_date": {
+            "description": "End date for transactions in YYYY-MM-DD format",
+            "type": "string"
+          },
+          "merchants": {
+            "description": "Filter transactions by merchant name",
+            "items": {
+              "enum": [
+                "Deloitte",
+                "PwC",
+                "Uber",
+                "Bolt",
+                "SAP",
+                "Portuguese Governement",
+                "Montepio"
+              ]
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "order": {
+            "description": "Order of the transactions by date",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          },
+          "page": {
+            "description": "Page number",
+            "type": "integer"
+          },
+          "search": {
+            "description": "Search for transactions by name",
+            "type": "string"
+          },
+          "start_date": {
+            "description": "Start date for transactions in YYYY-MM-DD format",
+            "type": "string"
+          },
+          "tags": {
+            "description": "Filter transactions by tag name",
+            "items": {
+              "enum": []
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "order",
+          "page",
+          "page_size"
+        ],
+        "type": "object"
+      },
+      "strict": false,
+      "type": "function"
+    },
+    {
+      "description": "Use this to see what accounts the user has along with their current and historical balances",
+      "name": "get_accounts",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "required": [],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "function"
+    },
+    {
+      "description": "Use this to see detailed holdings across all investment accounts with performance metrics.\n\nThis function provides comprehensive portfolio data including:\n- Current holdings with quantities and values\n- Unrealized gains/losses ($ and %)\n- Cost basis calculations\n- Portfolio allocation percentages\n- Performance summary statistics\n\nOptionally filter by account name to see holdings for a specific account.\n",
+      "name": "get_holdings",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "account": {
+            "description": "Optional: Filter holdings by account name",
+            "enum": [
+              "Caução / Deposit",
+              "Conjunta Caução Casa",
+              "Mutualista Montepio",
+              "Montepio Prazo",
+              "Swiss Francs",
+              "GAB",
+              "Mutualista 1",
+              "Mutualista 5",
+              "Seguros/Subsidios/Reembolsos por receber",
+              "Algés - T1 - 1º DRT (1/2)",
+              "Tech (valor em 2ª mão)",
+              "Ovar Quinta (1/6)",
+              "Caução Sap",
+              "Cauções Arrendamentos",
+              "Certificados Aforro",
+              "Nicehash",
+              "Conjunta - Ativo Poupança",
+              "Conjunta (USD)",
+              "Lu Netfuturo",
+              "Baloise",
+              "PPR - PT",
+              "CoverFlex",
+              "BIG Ordem",
+              "Conjunta - BIG Investimento",
+              "BIG Prazo",
+              "Dividas a privados",
+              "Euros",
+              "LU Bonus SAP",
+              "Montepio Ordem",
+              "seg social",
+              "UBS",
+              "Coverflex food + wallet",
+              "Lu Ativo Ordem",
+              "Ouro",
+              "Carro Avó Eduarda",
+              "BIG - Acções + Opções",
+              "Conjunta - Envelope",
+              "Algés - Loja (1/2)",
+              "Algés - T1 - RC (1/2)",
+              "LU Equate Plus",
+              "LU RSU",
+              "Conjunta - Mealheiro Miudos",
+              "Lu Ativo Poupança",
+              "LU Ativo Poupança 2",
+              "Conjunta - Big Ordem",
+              "BIG - Obrigações e fundos",
+              "LU Cartão Alimentação"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "strict": false,
+      "type": "function"
+    },
+    {
+      "description": "Use this to see investment trading activity (buy/sell transactions) with optional filters.\n\nThis function provides detailed trade history including:\n- Buy and sell transactions\n- Securities traded (ticker, name)\n- Quantities and prices\n- Trade values\n- Summary statistics (total invested/divested, most traded securities)\n\nExamples:\n- \"What did I buy last month?\"\n- \"Show me my AAPL trades\"\n- \"How much did I invest this year?\"\n",
+      "name": "get_trades",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "account": {
+            "description": "Filter by account name",
+            "enum": [
+              "Caução / Deposit",
+              "Conjunta Caução Casa",
+              "Mutualista Montepio",
+              "Montepio Prazo",
+              "Swiss Francs",
+              "GAB",
+              "Mutualista 1",
+              "Mutualista 5",
+              "Seguros/Subsidios/Reembolsos por receber",
+              "Algés - T1 - 1º DRT (1/2)",
+              "Tech (valor em 2ª mão)",
+              "Ovar Quinta (1/6)",
+              "Caução Sap",
+              "Cauções Arrendamentos",
+              "Certificados Aforro",
+              "Nicehash",
+              "Conjunta - Ativo Poupança",
+              "Conjunta (USD)",
+              "Lu Netfuturo",
+              "Baloise",
+              "PPR - PT",
+              "CoverFlex",
+              "BIG Ordem",
+              "Conjunta - BIG Investimento",
+              "BIG Prazo",
+              "Dividas a privados",
+              "Euros",
+              "LU Bonus SAP",
+              "Montepio Ordem",
+              "seg social",
+              "UBS",
+              "Coverflex food + wallet",
+              "Lu Ativo Ordem",
+              "Ouro",
+              "Carro Avó Eduarda",
+              "BIG - Acções + Opções",
+              "Conjunta - Envelope",
+              "Algés - Loja (1/2)",
+              "Algés - T1 - RC (1/2)",
+              "LU Equate Plus",
+              "LU RSU",
+              "Conjunta - Mealheiro Miudos",
+              "Lu Ativo Poupança",
+              "LU Ativo Poupança 2",
+              "Conjunta - Big Ordem",
+              "BIG - Obrigações e fundos",
+              "LU Cartão Alimentação"
+            ],
+            "type": "string"
+          },
+          "end_date": {
+            "description": "End date for trades in YYYY-MM-DD format",
+            "type": "string"
+          },
+          "start_date": {
+            "description": "Start date for trades in YYYY-MM-DD format",
+            "type": "string"
+          },
+          "ticker": {
+            "description": "Filter by security ticker symbol (e.g., 'AAPL')",
+            "type": "string"
+          },
+          "trade_type": {
+            "description": "Filter by trade type",
+            "enum": [
+              "buy",
+              "sell"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "strict": false,
+      "type": "function"
+    },
+    {
+      "description": "Use this for comprehensive portfolio analysis including:\n- Asset allocation by exchange (proxy for sector/geography)\n- Diversification scoring and concentration risk analysis\n- Performance metrics (winners/losers, best/worst performers)\n- Top holdings by value\n- Account-level breakdowns\n\nThis is great for questions like:\n- \"Give me a portfolio summary\"\n- \"How diversified is my portfolio?\"\n- \"What's my asset allocation?\"\n- \"Show me my top holdings\"\n",
+      "name": "get_portfolio_summary",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "required": [],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "function"
+    },
+    {
+      "description": "Use this to get the user's balance sheet with varying amounts of historical data.\n\nThis is great for answering questions like:\n- What is the user's net worth?  What is it composed of?\n- How has the user's wealth changed over time?\n",
+      "name": "get_balance_sheet",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "required": [],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "function"
+    },
+    {
+      "description": "Use this to get income and expense insights by category, for a specific time period\n\nThis is great for answering questions like:\n- What is the user's net income for the current month?\n- What are the user's spending habits?\n- How much income or spending did the user have over a specific time period?\n\nSimple example:\n\n```\nget_income_statement({\n  start_date: \"2024-01-01\",\n  end_date: \"2024-12-31\"\n})\n```\n",
+      "name": "get_income_statement",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "end_date": {
+            "description": "End date for aggregation period in YYYY-MM-DD format",
+            "type": "string"
+          },
+          "start_date": {
+            "description": "Start date for aggregation period in YYYY-MM-DD format",
+            "type": "string"
+          }
+        },
+        "required": [
+          "start_date",
+          "end_date"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "function"
+    },
+    {
+      "description": "Use this to see budget vs. actual spending analysis for a specific month.\n\nThis function provides:\n- Budget vs. actual spending by category\n- Over-budget alerts and underutilized categories\n- Income tracking vs. expectations\n- Savings rate calculation\n- Month-over-month variance\n\nExamples:\n- \"How am I doing against my budget?\"\n- \"Am I over budget this month?\"\n- \"Show me my budget for September\"\n- \"What categories am I overspending in?\"\n\nNote: Returns gracefully if no budget exists for the requested month.\n",
+      "name": "get_budget",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "month": {
+            "description": "Month in YYYY-MM format (e.g., '2025-10'). Defaults to current month if not specified.",
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "strict": false,
+      "type": "function"
+    },
+    {
+      "description": "Use this to identify recurring transactions (subscriptions, bills, regular income) by analyzing patterns.\n\nThis function analyzes the last 6 months of transactions and detects:\n- Recurring expenses (subscriptions, bills, regular payments)\n- Recurring income (salary, regular deposits)\n- Frequency classification (weekly, monthly, quarterly, etc.)\n- Fixed vs. variable amounts\n- Estimated monthly/annual costs\n\nExamples:\n- \"What subscriptions do I have?\"\n- \"Show me my recurring bills\"\n- \"How much do I spend on subscriptions?\"\n- \"What are my monthly recurring expenses?\"\n\nDetection Logic:\n- Requires minimum 3 occurrences in 6-month period\n- Groups by merchant + category + similar amount (±$5 range)\n- Calculates average interval between transactions\n",
+      "name": "get_recurring_transactions",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {},
+        "required": [],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "function"
+    },
+    {
+      "description": "Use this to get the user's financial forecast with projected net worth based on their income and expense trends.\nThis function provides both current financial status and future projections over a specified timeline.\n\nYou can optionally specify growth rates for income and expenses to model different scenarios.\n",
+      "name": "get_forecast",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "expense_growth_rate": {
+            "description": "Expected annual expense growth rate as a percentage (e.g., 3.0 for 3% growth)",
+            "type": "number"
+          },
+          "income_growth_rate": {
+            "description": "Expected annual income growth rate as a percentage (e.g., 5.0 for 5% growth)",
+            "type": "number"
+          },
+          "timeline": {
+            "description": "The forecast timeline: '1Y' (12 months), '2Y' (24 months), or '5Y' (60 months)",
+            "enum": [
+              "1Y",
+              "2Y",
+              "5Y"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "strict": false,
+      "type": "function"
+    }
+  ]
+}
+
+{
+  "error": {
+    "code": 500,
+    "message": "Failed to parse tools: Missing tool function: {\"type\":\"function\",\"name\":\"get_transactions\",\"description\":\"Use this to search user's transactions by using various optional filters.\\n\\nThis function is great for things like:\\n- Finding specific transactions\\n- Getting basic stats about a small group of transactions\\n\\nThis function is not great for:\\n- Large time periods (use the get_income_statement function for this)\\n\\nNote on pagination:\\n\\nThis function can be paginated.  You can expect the following properties in the response:\\n\\n- `total_pages`: The total number of pages of results\\n- `page`: The current page of results\\n- `page_size`: The number of results per page (this will always be 500)\\n- `total_results`: The total number of results for the given filters\\n- `total_income`: The total income for the given filters\\n- `total_expenses`: The total expenses for the given filters\\n\\nSimple example (transactions from the last 30 days):\\n\\n```\\nget_transactions({\\n  page: 1,\\n  start_date: \\\"2026-03-13\\\",\\n  end_date: \\\"2026-04-12\\\"\\n})\\n```\\n\\nMore complex example (various filters):\\n\\n```\\nget_transactions({\\n  page: 1,\\n  search: \\\"mcdonalds\\\",\\n  accounts: [\\\"Checking\\\", \\\"Savings\\\"],\\n  start_date: \\\"2026-03-13\\\",\\n  end_date: \\\"2026-04-12\\\",\\n  categories: [\\\"Restaurants\\\"],\\n  merchants: [\\\"McDonald's\\\"],\\n  tags: [\\\"Food\\\"],\\n  amount: \\\"100\\\",\\n  amount_operator: \\\"less\\\"\\n})\\n```\\n\",\"parameters\":{\"type\":\"object\",\"properties\":{\"page\":{\"type\":\"integer\",\"description\":\"Page number\"},\"order\":{\"enum\":[\"asc\",\"desc\"],\"description\":\"Order of the transactions by date\"},\"search\":{\"type\":\"string\",\"description\":\"Search for transactions by name\"},\"amount\":{\"type\":\"string\",\"description\":\"Amount for transactions (must be used with amount_operator)\"},\"amount_operator\":{\"type\":\"string\",\"description\":\"Operator for amount (must be used with amount)\",\"enum\":[\"equal\",\"less\",\"greater\"]},\"start_date\":{\"type\":\"string\",\"description\":\"Start date for transactions in YYYY-MM-DD format\"},\"end_date\":{\"type\":\"string\",\"description\":\"End date for transactions in YYYY-MM-DD format\"},\"accounts\":{\"type\":\"array\",\"description\":\"Filter transactions by account name\",\"items\":{\"enum\":[\"Caução / Deposit\",\"Conjunta Caução Casa\",\"Mutualista Montepio\",\"Montepio Prazo\",\"Swiss Francs\",\"GAB\",\"Mutualista 1\",\"Mutualista 5\",\"Seguros/Subsidios/Reembolsos por receber\",\"Algés - T1 - 1º DRT (1/2)\",\"Tech (valor em 2ª mão)\",\"Ovar Quinta (1/6)\",\"Caução Sap\",\"Cauções Arrendamentos\",\"Certificados Aforro\",\"Nicehash\",\"Conjunta - Ativo Poupança\",\"Conjunta (USD)\",\"Lu Netfuturo\",\"Baloise\",\"PPR - PT\",\"CoverFlex\",\"BIG Ordem\",\"Conjunta - BIG Investimento\",\"BIG Prazo\",\"Dividas a privados\",\"Euros\",\"LU Bonus SAP\",\"Montepio Ordem\",\"seg social\",\"UBS\",\"Coverflex food + wallet\",\"Lu Ativo Ordem\",\"Ouro\",\"Carro Avó Eduarda\",\"BIG - Acções + Opções\",\"Conjunta - Envelope\",\"Algés - Loja (1/2)\",\"Algés - T1 - RC (1/2)\",\"LU Equate Plus\",\"LU RSU\",\"Conjunta - Mealheiro Miudos\",\"Lu Ativo Poupança\",\"LU Ativo Poupança 2\",\"Conjunta - Big Ordem\",\"BIG - Obrigações e fundos\",\"LU Cartão Alimentação\"]},\"minItems\":1,\"uniqueItems\":true},\"categories\":{\"type\":\"array\",\"description\":\"Filter transactions by category name\",\"items\":{\"enum\":[\"Income\",\"Loan Payments\",\"Fees\",\"Entertainment\",\"Food & Drink\",\"Shopping\",\"Home Improvement\",\"Healthcare\",\"Services\",\"Gifts & Donations\",\"Transportation\",\"Rent & Utilities\",\"Interest\",\"Bonus\",\"Base Salary\",\"Subsidies\",\"Take Away\",\"Restaurants\",\"Supermarket\",\"Taxes\",\"Education\",\"Childcare\",\"Expense Reimbursement 2\",\"Public Transportation\",\"Gasoline\",\"Taxi / Uber / Bolt\",\"Personal Care\",\"Travel & Leisure\",\"Subscriptions\",\"Rental Income\",\"Gifts Received\",\"Uncategorized\"]},\"minItems\":1,\"uniqueItems\":true},\"merchants\":{\"type\":\"array\",\"description\":\"Filter transactions by merchant name\",\"items\":{\"enum\":[\"Deloitte\",\"PwC\",\"Uber\",\"Bolt\",\"SAP\",\"Portuguese Governement\",\"Montepio\"]},\"minItems\":1,\"uniqueItems\":true},\"tags\":{\"type\":\"array\",\"description\":\"Filter transactions by tag name\",\"items\":{\"enum\":[]},\"minItems\":1,\"uniqueItems\":true}},\"required\":[\"order\",\"page\",\"page_size\"],\"additionalProperties\":false},\"strict\":false}; tools = [\n  {\n    \"type\": \"function\",\n    \"name\": \"get_transactions\",\n    \"description\": \"Use this to search user's transactions by using various optional filters.\\n\\nThis function is great for things like:\\n- Finding specific transactions\\n- Getting basic stats about a small group of transactions\\n\\nThis function is not great for:\\n- Large time periods (use the get_income_statement function for this)\\n\\nNote on pagination:\\n\\nThis function can be paginated.  You can expect the following properties in the response:\\n\\n- `total_pages`: The total number of pages of results\\n- `page`: The current page of results\\n- `page_size`: The number of results per page (this will always be 500)\\n- `total_results`: The total number of results for the given filters\\n- `total_income`: The total income for the given filters\\n- `total_expenses`: The total expenses for the given filters\\n\\nSimple example (transactions from the last 30 days):\\n\\n```\\nget_transactions({\\n  page: 1,\\n  start_date: \\\"2026-03-13\\\",\\n  end_date: \\\"2026-04-12\\\"\\n})\\n```\\n\\nMore complex example (various filters):\\n\\n```\\nget_transactions({\\n  page: 1,\\n  search: \\\"mcdonalds\\\",\\n  accounts: [\\\"Checking\\\", \\\"Savings\\\"],\\n  start_date: \\\"2026-03-13\\\",\\n  end_date: \\\"2026-04-12\\\",\\n  categories: [\\\"Restaurants\\\"],\\n  merchants: [\\\"McDonald's\\\"],\\n  tags: [\\\"Food\\\"],\\n  amount: \\\"100\\\",\\n  amount_operator: \\\"less\\\"\\n})\\n```\\n\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"page\": {\n          \"type\": \"integer\",\n          \"description\": \"Page number\"\n        },\n        \"order\": {\n          \"enum\": [\n            \"asc\",\n            \"desc\"\n          ],\n          \"description\": \"Order of the transactions by date\"\n        },\n        \"search\": {\n          \"type\": \"string\",\n          \"description\": \"Search for transactions by name\"\n        },\n        \"amount\": {\n          \"type\": \"string\",\n          \"description\": \"Amount for transactions (must be used with amount_operator)\"\n        },\n        \"amount_operator\": {\n          \"type\": \"string\",\n          \"description\": \"Operator for amount (must be used with amount)\",\n          \"enum\": [\n            \"equal\",\n            \"less\",\n            \"greater\"\n          ]\n        },\n        \"start_date\": {\n          \"type\": \"string\",\n          \"description\": \"Start date for transactions in YYYY-MM-DD format\"\n        },\n        \"end_date\": {\n          \"type\": \"string\",\n          \"description\": \"End date for transactions in YYYY-MM-DD format\"\n        },\n        \"accounts\": {\n          \"type\": \"array\",\n          \"description\": \"Filter transactions by account name\",\n          \"items\": {\n            \"enum\": [\n              \"Caução / Deposit\",\n              \"Conjunta Caução Casa\",\n              \"Mutualista Montepio\",\n              \"Montepio Prazo\",\n              \"Swiss Francs\",\n              \"GAB\",\n              \"Mutualista 1\",\n              \"Mutualista 5\",\n              \"Seguros/Subsidios/Reembolsos por receber\",\n              \"Algés - T1 - 1º DRT (1/2)\",\n              \"Tech (valor em 2ª mão)\",\n              \"Ovar Quinta (1/6)\",\n              \"Caução Sap\",\n              \"Cauções Arrendamentos\",\n              \"Certificados Aforro\",\n              \"Nicehash\",\n              \"Conjunta - Ativo Poupança\",\n              \"Conjunta (USD)\",\n              \"Lu Netfuturo\",\n              \"Baloise\",\n              \"PPR - PT\",\n              \"CoverFlex\",\n              \"BIG Ordem\",\n              \"Conjunta - BIG Investimento\",\n              \"BIG Prazo\",\n              \"Dividas a privados\",\n              \"Euros\",\n              \"LU Bonus SAP\",\n              \"Montepio Ordem\",\n              \"seg social\",\n              \"UBS\",\n              \"Coverflex food + wallet\",\n              \"Lu Ativo Ordem\",\n              \"Ouro\",\n              \"Carro Avó Eduarda\",\n              \"BIG - Acções + Opções\",\n              \"Conjunta - Envelope\",\n              \"Algés - Loja (1/2)\",\n              \"Algés - T1 - RC (1/2)\",\n              \"LU Equate Plus\",\n              \"LU RSU\",\n              \"Conjunta - Mealheiro Miudos\",\n              \"Lu Ativo Poupança\",\n              \"LU Ativo Poupança 2\",\n              \"Conjunta - Big Ordem\",\n              \"BIG - Obrigações e fundos\",\n              \"LU Cartão Alimentação\"\n            ]\n          },\n          \"minItems\": 1,\n          \"uniqueItems\": true\n        },\n        \"categories\": {\n          \"type\": \"array\",\n          \"description\": \"Filter transactions by category name\",\n          \"items\": {\n            \"enum\": [\n              \"Income\",\n              \"Loan Payments\",\n              \"Fees\",\n              \"Entertainment\",\n              \"Food & Drink\",\n              \"Shopping\",\n              \"Home Improvement\",\n              \"Healthcare\",\n              \"Services\",\n              \"Gifts & Donations\",\n              \"Transportation\",\n              \"Rent & Utilities\",\n              \"Interest\",\n              \"Bonus\",\n              \"Base Salary\",\n              \"Subsidies\",\n              \"Take Away\",\n              \"Restaurants\",\n              \"Supermarket\",\n              \"Taxes\",\n              \"Education\",\n              \"Childcare\",\n              \"Expense Reimbursement 2\",\n              \"Public Transportation\",\n              \"Gasoline\",\n              \"Taxi / Uber / Bolt\",\n              \"Personal Care\",\n              \"Travel & Leisure\",\n              \"Subscriptions\",\n              \"Rental Income\",\n              \"Gifts Received\",\n              \"Uncategorized\"\n            ]\n          },\n          \"minItems\": 1,\n          \"uniqueItems\": true\n        },\n        \"merchants\": {\n          \"type\": \"array\",\n          \"description\": \"Filter transactions by merchant name\",\n          \"items\": {\n            \"enum\": [\n              \"Deloitte\",\n              \"PwC\",\n              \"Uber\",\n              \"Bolt\",\n              \"SAP\",\n              \"Portuguese Governement\",\n              \"Montepio\"\n            ]\n          },\n          \"minItems\": 1,\n          \"uniqueItems\": true\n        },\n        \"tags\": {\n          \"type\": \"array\",\n          \"description\": \"Filter transactions by tag name\",\n          \"items\": {\n            \"enum\": []\n          },\n          \"minItems\": 1,\n          \"uniqueItems\": true\n        }\n      },\n      \"required\": [\n        \"order\",\n        \"page\",\n        \"page_size\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"strict\": false\n  },\n  {\n    \"type\": \"function\",\n    \"name\": \"get_accounts\",\n    \"description\": \"Use this to see what accounts the user has along with their current and historical balances\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {},\n      \"required\": [],\n      \"additionalProperties\": false\n    },\n    \"strict\": true\n  },\n  {\n    \"type\": \"function\",\n    \"name\": \"get_holdings\",\n    \"description\": \"Use this to see detailed holdings across all investment accounts with performance metrics.\\n\\nThis function provides comprehensive portfolio data including:\\n- Current holdings with quantities and values\\n- Unrealized gains/losses ($ and %)\\n- Cost basis calculations\\n- Portfolio allocation percentages\\n- Performance summary statistics\\n\\nOptionally filter by account name to see holdings for a specific account.\\n\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"account\": {\n          \"type\": \"string\",\n          \"description\": \"Optional: Filter holdings by account name\",\n          \"enum\": [\n            \"Caução / Deposit\",\n            \"Conjunta Caução Casa\",\n            \"Mutualista Montepio\",\n            \"Montepio Prazo\",\n            \"Swiss Francs\",\n            \"GAB\",\n            \"Mutualista 1\",\n            \"Mutualista 5\",\n            \"Seguros/Subsidios/Reembolsos por receber\",\n            \"Algés - T1 - 1º DRT (1/2)\",\n            \"Tech (valor em 2ª mão)\",\n            \"Ovar Quinta (1/6)\",\n            \"Caução Sap\",\n            \"Cauções Arrendamentos\",\n            \"Certificados Aforro\",\n            \"Nicehash\",\n            \"Conjunta - Ativo Poupança\",\n            \"Conjunta (USD)\",\n            \"Lu Netfuturo\",\n            \"Baloise\",\n            \"PPR - PT\",\n            \"CoverFlex\",\n            \"BIG Ordem\",\n            \"Conjunta - BIG Investimento\",\n            \"BIG Prazo\",\n            \"Dividas a privados\",\n            \"Euros\",\n            \"LU Bonus SAP\",\n            \"Montepio Ordem\",\n            \"seg social\",\n            \"UBS\",\n            \"Coverflex food + wallet\",\n            \"Lu Ativo Ordem\",\n            \"Ouro\",\n            \"Carro Avó Eduarda\",\n            \"BIG - Acções + Opções\",\n            \"Conjunta - Envelope\",\n            \"Algés - Loja (1/2)\",\n            \"Algés - T1 - RC (1/2)\",\n            \"LU Equate Plus\",\n            \"LU RSU\",\n            \"Conjunta - Mealheiro Miudos\",\n            \"Lu Ativo Poupança\",\n            \"LU Ativo Poupança 2\",\n            \"Conjunta - Big Ordem\",\n            \"BIG - Obrigações e fundos\",\n            \"LU Cartão Alimentação\"\n          ]\n        }\n      },\n      \"required\": [],\n      \"additionalProperties\": false\n    },\n    \"strict\": false\n  },\n  {\n    \"type\": \"function\",\n    \"name\": \"get_trades\",\n    \"description\": \"Use this to see investment trading activity (buy/sell transactions) with optional filters.\\n\\nThis function provides detailed trade history including:\\n- Buy and sell transactions\\n- Securities traded (ticker, name)\\n- Quantities and prices\\n- Trade values\\n- Summary statistics (total invested/divested, most traded securities)\\n\\nExamples:\\n- \\\"What did I buy last month?\\\"\\n- \\\"Show me my AAPL trades\\\"\\n- \\\"How much did I invest this year?\\\"\\n\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"start_date\": {\n          \"type\": \"string\",\n          \"description\": \"Start date for trades in YYYY-MM-DD format\"\n        },\n        \"end_date\": {\n          \"type\": \"string\",\n          \"description\": \"End date for trades in YYYY-MM-DD format\"\n        },\n        \"account\": {\n          \"type\": \"string\",\n          \"description\": \"Filter by account name\",\n          \"enum\": [\n            \"Caução / Deposit\",\n            \"Conjunta Caução Casa\",\n            \"Mutualista Montepio\",\n            \"Montepio Prazo\",\n            \"Swiss Francs\",\n            \"GAB\",\n            \"Mutualista 1\",\n            \"Mutualista 5\",\n            \"Seguros/Subsidios/Reembolsos por receber\",\n            \"Algés - T1 - 1º DRT (1/2)\",\n            \"Tech (valor em 2ª mão)\",\n            \"Ovar Quinta (1/6)\",\n            \"Caução Sap\",\n            \"Cauções Arrendamentos\",\n            \"Certificados Aforro\",\n            \"Nicehash\",\n            \"Conjunta - Ativo Poupança\",\n            \"Conjunta (USD)\",\n            \"Lu Netfuturo\",\n            \"Baloise\",\n            \"PPR - PT\",\n            \"CoverFlex\",\n            \"BIG Ordem\",\n            \"Conjunta - BIG Investimento\",\n            \"BIG Prazo\",\n            \"Dividas a privados\",\n            \"Euros\",\n            \"LU Bonus SAP\",\n            \"Montepio Ordem\",\n            \"seg social\",\n            \"UBS\",\n            \"Coverflex food + wallet\",\n            \"Lu Ativo Ordem\",\n            \"Ouro\",\n            \"Carro Avó Eduarda\",\n            \"BIG - Acções + Opções\",\n            \"Conjunta - Envelope\",\n            \"Algés - Loja (1/2)\",\n            \"Algés - T1 - RC (1/2)\",\n            \"LU Equate Plus\",\n            \"LU RSU\",\n            \"Conjunta - Mealheiro Miudos\",\n            \"Lu Ativo Poupança\",\n            \"LU Ativo Poupança 2\",\n            \"Conjunta - Big Ordem\",\n            \"BIG - Obrigações e fundos\",\n            \"LU Cartão Alimentação\"\n          ]\n        },\n        \"ticker\": {\n          \"type\": \"string\",\n          \"description\": \"Filter by security ticker symbol (e.g., 'AAPL')\"\n        },\n        \"trade_type\": {\n          \"type\": \"string\",\n          \"description\": \"Filter by trade type\",\n          \"enum\": [\n            \"buy\",\n            \"sell\"\n          ]\n        }\n      },\n      \"required\": [],\n      \"additionalProperties\": false\n    },\n    \"strict\": false\n  },\n  {\n    \"type\": \"function\",\n    \"name\": \"get_portfolio_summary\",\n    \"description\": \"Use this for comprehensive portfolio analysis including:\\n- Asset allocation by exchange (proxy for sector/geography)\\n- Diversification scoring and concentration risk analysis\\n- Performance metrics (winners/losers, best/worst performers)\\n- Top holdings by value\\n- Account-level breakdowns\\n\\nThis is great for questions like:\\n- \\\"Give me a portfolio summary\\\"\\n- \\\"How diversified is my portfolio?\\\"\\n- \\\"What's my asset allocation?\\\"\\n- \\\"Show me my top holdings\\\"\\n\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {},\n      \"required\": [],\n      \"additionalProperties\": false\n    },\n    \"strict\": true\n  },\n  {\n    \"type\": \"function\",\n    \"name\": \"get_balance_sheet\",\n    \"description\": \"Use this to get the user's balance sheet with varying amounts of historical data.\\n\\nThis is great for answering questions like:\\n- What is the user's net worth?  What is it composed of?\\n- How has the user's wealth changed over time?\\n\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {},\n      \"required\": [],\n      \"additionalProperties\": false\n    },\n    \"strict\": true\n  },\n  {\n    \"type\": \"function\",\n    \"name\": \"get_income_statement\",\n    \"description\": \"Use this to get income and expense insights by category, for a specific time period\\n\\nThis is great for answering questions like:\\n- What is the user's net income for the current month?\\n- What are the user's spending habits?\\n- How much income or spending did the user have over a specific time period?\\n\\nSimple example:\\n\\n```\\nget_income_statement({\\n  start_date: \\\"2024-01-01\\\",\\n  end_date: \\\"2024-12-31\\\"\\n})\\n```\\n\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"start_date\": {\n          \"type\": \"string\",\n          \"description\": \"Start date for aggregation period in YYYY-MM-DD format\"\n        },\n        \"end_date\": {\n          \"type\": \"string\",\n          \"description\": \"End date for aggregation period in YYYY-MM-DD format\"\n        }\n      },\n      \"required\": [\n        \"start_date\",\n        \"end_date\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"strict\": true\n  },\n  {\n    \"type\": \"function\",\n    \"name\": \"get_budget\",\n    \"description\": \"Use this to see budget vs. actual spending analysis for a specific month.\\n\\nThis function provides:\\n- Budget vs. actual spending by category\\n- Over-budget alerts and underutilized categories\\n- Income tracking vs. expectations\\n- Savings rate calculation\\n- Month-over-month variance\\n\\nExamples:\\n- \\\"How am I doing against my budget?\\\"\\n- \\\"Am I over budget this month?\\\"\\n- \\\"Show me my budget for September\\\"\\n- \\\"What categories am I overspending in?\\\"\\n\\nNote: Returns gracefully if no budget exists for the requested month.\\n\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"month\": {\n          \"type\": \"string\",\n          \"description\": \"Month in YYYY-MM format (e.g., '2025-10'). Defaults to current month if not specified.\"\n        }\n      },\n      \"required\": [],\n      \"additionalProperties\": false\n    },\n    \"strict\": false\n  },\n  {\n    \"type\": \"function\",\n    \"name\": \"get_recurring_transactions\",\n    \"description\": \"Use this to identify recurring transactions (subscriptions, bills, regular income) by analyzing patterns.\\n\\nThis function analyzes the last 6 months of transactions and detects:\\n- Recurring expenses (subscriptions, bills, regular payments)\\n- Recurring income (salary, regular deposits)\\n- Frequency classification (weekly, monthly, quarterly, etc.)\\n- Fixed vs. variable amounts\\n- Estimated monthly/annual costs\\n\\nExamples:\\n- \\\"What subscriptions do I have?\\\"\\n- \\\"Show me my recurring bills\\\"\\n- \\\"How much do I spend on subscriptions?\\\"\\n- \\\"What are my monthly recurring expenses?\\\"\\n\\nDetection Logic:\\n- Requires minimum 3 occurrences in 6-month period\\n- Groups by merchant + category + similar amount (±$5 range)\\n- Calculates average interval between transactions\\n\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {},\n      \"required\": [],\n      \"additionalProperties\": false\n    },\n    \"strict\": true\n  },\n  {\n    \"type\": \"function\",\n    \"name\": \"get_forecast\",\n    \"description\": \"Use this to get the user's financial forecast with projected net worth based on their income and expense trends.\\nThis function provides both current financial status and future projections over a specified timeline.\\n\\nYou can optionally specify growth rates for income and expenses to model different scenarios.\\n\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"timeline\": {\n          \"type\": \"string\",\n          \"description\": \"The forecast timeline: '1Y' (12 months), '2Y' (24 months), or '5Y' (60 months)\",\n          \"enum\": [\n            \"1Y\",\n            \"2Y\",\n            \"5Y\"\n          ]\n        },\n        \"income_growth_rate\": {\n          \"type\": \"number\",\n          \"description\": \"Expected annual income growth rate as a percentage (e.g., 5.0 for 5% growth)\"\n        },\n        \"expense_growth_rate\": {\n          \"type\": \"number\",\n          \"description\": \"Expected annual expense growth rate as a percentage (e.g., 3.0 for 3% growth)\"\n        }\n      },\n      \"required\": [],\n      \"additionalProperties\": false\n    },\n    \"strict\": false\n  }\n]",
+    "type": "server_error"
+  }
+}

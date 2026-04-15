@@ -31,7 +31,7 @@ class Assistant::Function
 
   # (preferred) when in strict mode, the schema needs to include all properties in required array
   def strict_mode?
-    true
+    false
   end
 
   def to_definition
@@ -47,11 +47,15 @@ class Assistant::Function
     attr_reader :user
 
     def build_schema(properties: {}, required: [])
+      properties = properties.reject do |_, schema|
+        next false unless schema.is_a?(Hash)
+        schema.dig(:items, :enum)&.empty? || schema[:enum]&.empty?
+      end
+
       {
         type: "object",
         properties: properties,
-        required: required,
-        additionalProperties: false
+        required: required & properties.keys
       }
     end
 

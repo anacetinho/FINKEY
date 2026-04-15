@@ -89,7 +89,7 @@ class Provider::Registry
           return nil unless access_token.present?
 
           Rails.logger.info("Provider::Registry: Creating OpenAI provider")
-          Provider::Openai.new(access_token)
+          Provider::Openai.new(access_token, model: Setting.openai_model)
         end
       end
 
